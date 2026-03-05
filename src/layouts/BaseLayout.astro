@@ -1,0 +1,90 @@
+---
+/**
+ * BaseLayout — shared HTML shell for all pages.
+ * Imports design tokens globally and provides base reset + body styles.
+ */
+import '../styles/tokens.css';
+
+interface Props {
+  /** Page <title> — override per page */
+  title?: string;
+  /** Meta description for SEO */
+  description?: string;
+}
+
+const {
+  // TODO: confirm final site name with LeRoy
+  title = 'LBDC',
+  // TODO: finalise meta description copy
+  description = 'Strategic advisory for growth-stage businesses. Clear thinking, practical systems, measurable outcomes.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <!-- Open Graph basics -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    /* Prevent layout shift from scrollbar appearing */
+    overflow-y: scroll;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  img, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-dim);
+    color: var(--color-fg);
+  }
+</style>

@@ -1,17 +1,406 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+// TODO: update title and description with final copy from LeRoy
+const pageTitle = 'LBDC — Strategic Advisory';
+const pageDescription =
+  'LeRoy Barnes advises growth-stage businesses on strategy, systems, and the decisions that compound over time.';
+
+// TODO: replace placeholder mailto with live contact destination (or Formspree endpoint — blocked on #7)
+const contactHref = 'mailto:hello@lbdc.co.za';
+
+const services = [
+  {
+    title: 'Strategic Advisory',
+    // TODO: refine service descriptions with LeRoy
+    description:
+      'Translating ambiguity into direction for leadership teams at decisive moments.',
+  },
+  {
+    title: 'Systems Design',
+    description:
+      'Building the operational and technical infrastructure that scales without losing coherence.',
+  },
+  {
+    title: 'Digital Transformation',
+    description:
+      'Guiding organisations through the people, process, and platform changes that actually stick.',
+  },
+  {
+    title: 'Executive Mentorship',
+    description:
+      'Working directly with founders and senior leaders on the challenges that resist easy answers.',
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={pageTitle} description={pageDescription}>
+
+  <!-- ─── Navigation ───────────────────────────────────────────────────── -->
+  <header class="nav">
+    <nav class="nav__inner" aria-label="Main navigation">
+      {/* TODO: replace with final logotype / wordmark asset when available */}
+      <a href={import.meta.env.BASE_URL} class="nav__wordmark" aria-label="LBDC — home">
+        LBDC
+      </a>
+      <a href={contactHref} class="nav__cta">Get in touch</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <p class="hero__eyebrow" aria-hidden="true">
+          {/* TODO: confirm eyebrow label with LeRoy — or remove */}
+          Strategic Advisory
+        </p>
+        {/* TODO: finalise headline copy with LeRoy */}
+        <h1 id="hero-heading" class="hero__heading">
+          Built on clarity.<br />Measured in outcomes.
+        </h1>
+        {/* TODO: finalise subheadline copy with LeRoy */}
+        <p class="hero__sub">
+          LeRoy Barnes advises growth-stage businesses on the decisions
+          that determine trajectory.
+        </p>
+        <a href={contactHref} class="btn btn--primary">Get in touch</a>
+      </div>
+    </section>
+
+    <!-- ─── About ─────────────────────────────────────────────────────────── -->
+    <section class="about" aria-labelledby="about-heading">
+      <div class="container container--content">
+        <h2 id="about-heading" class="section-label">About</h2>
+        {/* TODO: finalise bio copy with LeRoy — anonymised outcomes, no client names */}
+        <p class="about__body">
+          LeRoy Barnes is an independent advisor working at the intersection
+          of strategy and execution. He has helped growth-stage businesses across
+          multiple sectors clarify their priorities, restructure their operations,
+          and build the capabilities that sustain long-term performance.
+        </p>
+        <p class="about__body">
+          His approach is direct, evidence-based, and oriented towards
+          outcomes that compound.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── Services ──────────────────────────────────────────────────────── -->
+    <section class="services" aria-labelledby="services-heading">
+      <div class="container">
+        <h2 id="services-heading" class="section-label">Capabilities</h2>
+        <ul class="services__grid" role="list">
+          {services.map((svc) => (
+            <li class="service-item">
+              <h3 class="service-item__title">{svc.title}</h3>
+              <p class="service-item__desc">{svc.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── Contact CTA ───────────────────────────────────────────────────── -->
+    {/* TODO: replace this section with embedded contact form once #7 is resolved */}
+    <section class="cta-band" aria-labelledby="cta-heading">
+      <div class="container container--content">
+        {/* TODO: finalise CTA heading copy with LeRoy */}
+        <h2 id="cta-heading" class="cta-band__heading">
+          Ready to get started?
+        </h2>
+        <p class="cta-band__sub">
+          Reach out to discuss how LBDC can support your next stage of growth.
+        </p>
+        <a href={contactHref} class="btn btn--primary">Get in touch</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__copy">
+        {/* TODO: confirm legal name / trading name with LeRoy */}
+        &copy; {new Date().getFullYear()} LBDC. All rights reserved.
+      </span>
+    </div>
+  </footer>
+
+</BaseLayout>
+
+<style>
+  /* ─── Layout helpers ───────────────────────────────────────────────── */
+  .container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  .container--content {
+    max-width: var(--content-width);
+  }
+
+  /* ─── Section label (eyebrow above h2) ────────────────────────────── */
+  .section-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-block-end: var(--space-8);
+  }
+
+  /* ─── Buttons ─────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: var(--space-3) var(--space-8);
+    border-radius: var(--radius-sm);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast),
+      border-color var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .btn--primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+
+  /* ─── Navigation ─────────────────────────────────────────────────── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    border-block-end: 1px solid var(--color-border);
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__inner {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__wordmark {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-fg);
+    transition: color var(--transition-fast);
+  }
+
+  .nav__wordmark:hover {
+    color: var(--color-accent);
+  }
+
+  .nav__cta {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .nav__cta:hover {
+    color: var(--color-fg);
+  }
+
+  /* ─── Hero ────────────────────────────────────────────────────────── */
+  .hero {
+    padding-block: var(--space-32) var(--space-24);
+  }
+
+  .hero__eyebrow {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-block-end: var(--space-6);
+  }
+
+  .hero__heading {
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tightest);
+    line-height: var(--leading-tight);
+    color: var(--color-fg);
+    margin-block-end: var(--space-6);
+    max-width: 14ch;
+  }
+
+  .hero__sub {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    color: var(--color-fg-muted);
+    max-width: 46ch;
+    margin-block-end: var(--space-10);
+  }
+
+  /* ─── About ───────────────────────────────────────────────────────── */
+  .about {
+    padding-block: var(--space-24);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .about__body {
+    font-size: var(--text-lg);
+    line-height: var(--leading-normal);
+    color: var(--color-fg-muted);
+    max-width: 62ch;
+  }
+
+  .about__body + .about__body {
+    margin-block-start: var(--space-4);
+  }
+
+  /* ─── Services ────────────────────────────────────────────────────── */
+  .services {
+    padding-block: var(--space-24);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    list-style: none;
+  }
+
+  .service-item {
+    padding-block: var(--space-8);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .service-item:last-child {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .service-item__title {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg);
+    margin-block-end: var(--space-2);
+  }
+
+  .service-item__desc {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-fg-muted);
+    max-width: 48ch;
+  }
+
+  /* ─── CTA band ────────────────────────────────────────────────────── */
+  .cta-band {
+    padding-block: var(--space-24);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .cta-band__heading {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--color-fg);
+    margin-block-end: var(--space-4);
+  }
+
+  .cta-band__sub {
+    font-size: var(--text-base);
+    color: var(--color-fg-muted);
+    margin-block-end: var(--space-8);
+    max-width: 50ch;
+  }
+
+  /* ─── Footer ──────────────────────────────────────────────────────── */
+  .footer {
+    border-block-start: 1px solid var(--color-border);
+    padding-block: var(--space-8);
+  }
+
+  .footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer__copy {
+    font-size: var(--text-xs);
+    color: var(--color-fg-subtle);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ─── Responsive — tablet (≥ 768px) ──────────────────────────────── */
+  @media (min-width: 768px) {
+    .hero {
+      padding-block: var(--space-40) var(--space-32);
+    }
+
+    .hero__heading {
+      font-size: var(--text-6xl);
+    }
+
+    .services__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .service-item {
+      border-block-start: none;
+      border-block-end: none;
+      padding-inline-end: var(--space-12);
+    }
+
+    .service-item:last-child {
+      border-block-end: none;
+    }
+
+    /* Restore border lines via row separators for 2-col grid */
+    .services__grid {
+      row-gap: 0;
+      column-gap: var(--space-8);
+    }
+
+    .service-item {
+      padding-block: var(--space-8);
+      border-block-start: 1px solid var(--color-border);
+    }
+  }
+
+  /* ─── Responsive — desktop (≥ 1024px) ────────────────────────────── */
+  @media (min-width: 1024px) {
+    .hero__heading {
+      font-size: var(--text-7xl);
+    }
+
+    .hero__sub {
+      font-size: var(--text-xl);
+    }
+  }
+</style>
