@@ -52,68 +52,101 @@ const logo = {
 };
 ---
 
-<BaseLayout title="Colour Palette Sprint Report — LBDC (Legacy)">
+<BaseLayout title="Design UI/UX Sprint Report — LBDC">
   <main class="report">
     <header class="hero">
       <div class="kicker">Design Sprint Report</div>
-      <h1>Colour Palette Options for LBDC</h1>
+      <h1>UI/UX Direction — LBDC Website Rewrite</h1>
       <p class="lede">
-        Three palette directions (A/B/C) aligned to the current logo and your target feel:
-        <strong>premium</strong>, <strong>modern</strong>, <strong>clean</strong>, and <strong>trust</strong> — with a light/white canvas.
+        A concise, all-in-one report covering the current foundation UI, key UX decisions, and the three colour palette options.
       </p>
+
       <div class="meta">
-        <div><span>Scope</span>Palette exploration for website rewrite</div>
-        <div><span>Outputs</span>Tokens + swatches + recommendation</div>
-        <div><span>Status</span>Ready for selection (leaning A)</div>
+        <div><span>Project</span>LBDC Website Redesign</div>
+        <div><span>Scope</span>Foundation UI + palette directions</div>
+        <div><span>Decision needed</span>Pick default palette (A vs B)</div>
       </div>
     </header>
 
     <section class="section">
-      <h2>1) Goals</h2>
-      <ul>
-        <li>Stay consistent with the logo’s base (cool charcoal + white).</li>
-        <li>Keep the overall canvas light and spacious (MetaLab / NexaWorks vibes).</li>
-        <li>Use accent colour with restraint (for CTAs, links, and key highlights only).</li>
-        <li>Maintain strong accessibility potential (contrast-friendly choices).</li>
-      </ul>
+      <h2>1) Executive summary</h2>
+      <div class="callout">
+        <p><strong>Where we are:</strong> a homepage foundation is live (layout + tokens + accessibility baseline).</p>
+        <p><strong>What’s pending:</strong> final copy, contact form flow, and selecting the default colour direction.</p>
+        <p><strong>Recommendation:</strong> default to <strong>Palette A</strong>; keep Palette B as the “more corporate trust” fallback.</p>
+      </div>
     </section>
 
     <section class="section">
-      <h2>2) Brand anchor (from the logo)</h2>
+      <h2>2) Current UI foundation (what’s implemented)</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Homepage structure</h3>
+          <ul class="small">
+            <li>Sticky nav with primary CTA (“Get in touch”)</li>
+            <li>Hero + proof line + services grid</li>
+            <li>Clear CTA band + minimal footer</li>
+            <li>Responsive layout (mobile-first)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>UX / accessibility baseline</h3>
+          <ul class="small">
+            <li>Visible <code>:focus-visible</code> ring for keyboard navigation</li>
+            <li>High-contrast, restrained UI style (no heavy effects)</li>
+            <li>Design tokens centralised in <code>src/styles/tokens.css</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="shots">
+        <figure class="shot">
+          <figcaption>Mobile (375px)</figcaption>
+          <img src="/reports/screens/homepage-375.jpg" alt="Homepage mobile screenshot" loading="lazy" />
+        </figure>
+        <figure class="shot">
+          <figcaption>Desktop (1280px)</figcaption>
+          <img src="/reports/screens/homepage-1280.jpg" alt="Homepage desktop screenshot" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3) Brand anchor (from the logo)</h2>
       <div class="two-col">
         <div class="card">
           <h3>Primary brand pair</h3>
           <div class="swatches">
-            <div class="swatch" style={`background:${logo.dark}`}>
+            <div class="swatch dark" style={`background:${logo.dark}`}>
               <div class="swatchLabel">Logo dark<br />{logo.dark}</div>
             </div>
-            <div class="swatch" style={`background:${logo.light}; border:1px solid rgba(0,0,0,0.15)`}>
+            <div class="swatch" style={`background:${logo.light}`}>
               <div class="swatchLabel">Logo light<br />{logo.light}</div>
             </div>
           </div>
           <p class="small">
-            The logo is intentionally minimal. The site should feel equally confident: calm, precise, and not over-decorated.
+            The logo is intentionally minimal and confident. The site should feel the same: calm, precise, modern.
           </p>
         </div>
 
         <div class="card">
-          <h3>How we use colour (principles)</h3>
+          <h3>How we should use colour</h3>
           <ul class="small">
-            <li><strong>Neutrals first:</strong> typography, spacing, and hierarchy do the heavy lifting.</li>
-            <li><strong>Accent is semantic:</strong> CTA + link + selected states (not decoration).</li>
-            <li><strong>Consistent surfaces:</strong> subtle borders / hairlines, minimal shadows.</li>
+            <li><strong>Neutrals first:</strong> hierarchy and whitespace do the work.</li>
+            <li><strong>Accent is semantic:</strong> CTA + link + selected states.</li>
+            <li><strong>Consistency:</strong> borders/hairlines before shadows.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>3) Palette directions</h2>
+      <h2>4) Palette options</h2>
       <div class="paletteGrid">
         {palettes.map((p) => (
           <article class="paletteCard">
             <div class="paletteHeader">
-              <div class="badge">Palette {p.key}</div>
+              <div class={`badge ${p.key === 'A' ? 'badgeBest' : ''}`}>Palette {p.key}{p.key === 'A' ? ' (recommended)' : ''}</div>
               <h3>{p.name}</h3>
               <p class="small">{p.intent}</p>
             </div>
@@ -139,32 +172,26 @@ const logo = {
           </article>
         ))}
       </div>
-    </section>
 
-    <section class="section">
-      <h2>4) Recommendation</h2>
-      <div class="callout">
+      <div class="callout" style="margin-top:18px">
         <p>
-          <strong>Recommended default:</strong> <strong>Palette A</strong>.
-          It stays closest to the logo’s cool, understated confidence while adding a modern accent that doesn’t scream.
-        </p>
-        <p class="small">
-          If you want something more explicitly “finance / enterprise trust”, Palette B is the runner-up.
+          Next, we’ll implement the <strong>theme switcher</strong> (Issue #10) so you can test A/B/C live via <code>?theme=</code>.
         </p>
       </div>
     </section>
 
     <section class="section">
-      <h2>5) Next step</h2>
+      <h2>5) Next steps / open work</h2>
       <ol>
-        <li>Pick the default palette (A or B).</li>
-        <li>Implement the theme switcher ticket (Issue #10) so you can test A/B/C live via <code>?theme=</code>.</li>
-        <li>Do a quick accessibility pass once the palette is selected (contrast + focus states).</li>
+        <li><strong>Pick default palette:</strong> A vs B.</li>
+        <li>Implement Issue #10 (theme switcher: A/B/C toggle).</li>
+        <li>Copy pass: finalise hero + service pillars + proof line wording.</li>
+        <li>Contact: form submission + spam protection (Issue #7).</li>
       </ol>
 
       <div class="links">
-        <a href="https://github.com/skippies-io/lbdc-website/issues/10" target="_blank" rel="noreferrer">Theme switcher ticket (Issue #10)</a>
-        <a href="https://github.com/skippies-io/lbdc-website/pull/9" target="_blank" rel="noreferrer">Merged foundation PR (PR #9)</a>
+        <a href="/reports/palette/">(Legacy) Palette-only report</a>
+        <a href="https://github.com/skippies-io/lbdc-website/issues/10" target="_blank" rel="noreferrer">Issue #10 — Theme switcher</a>
       </div>
     </section>
   </main>
@@ -173,34 +200,40 @@ const logo = {
     /* Force report readability regardless of site theme tokens */
     :global(body){background:#ffffff !important;color:#111111 !important;}
 
-    .report{max-width:1080px;margin:0 auto;padding:48px 20px 80px;}
-    .hero{padding:28px 0 10px;}
-    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.55);}
-    h1{margin:10px 0 12px;font-size:44px;line-height:1.1;letter-spacing:-0.02em;}
-    .lede{max-width:70ch;font-size:18px;line-height:1.6;color:rgba(0,0,0,.82);}
+    .report{max-width:1120px;margin:0 auto;padding:52px 20px 90px;}
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.60);}
+    h1{margin:10px 0 12px;font-size:46px;line-height:1.08;letter-spacing:-0.02em;color:#111;}
+    .lede{max-width:75ch;font-size:18px;line-height:1.65;color:rgba(0,0,0,.82);}
 
     .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
-    .meta div{border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.7);}
+    .meta div{border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.9);}
     .meta span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,0,0,.55);margin-bottom:6px;}
 
     .section{margin-top:44px;}
-    h2{font-size:22px;margin:0 0 12px;letter-spacing:-0.01em;}
-    h3{font-size:18px;margin:0 0 8px;}
-    h4{font-size:14px;margin:0 0 8px;color:rgba(0,0,0,.7);text-transform:uppercase;letter-spacing:.12em;}
+    h2{font-size:22px;margin:0 0 12px;letter-spacing:-0.01em;color:#111;}
+    h3{font-size:18px;margin:0 0 8px;color:#111;}
+    h4{font-size:13px;margin:0 0 8px;color:rgba(0,0,0,.72);text-transform:uppercase;letter-spacing:.12em;}
     ul,ol{margin:0;padding-left:20px;}
-    li{margin:8px 0;}
+    li{margin:8px 0;color:rgba(0,0,0,.86)}
 
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
     .card{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px 16px 14px;background:#fff;}
 
+    .shots{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+    .shot{border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;padding:14px;}
+    .shot figcaption{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.55);margin-bottom:10px;}
+    .shot img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(0,0,0,.08)}
+
     .swatches{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;}
     .swatch{border-radius:14px;min-height:120px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.10);}
-    .swatchLabel{position:absolute;left:10px;top:10px;font-size:13px;line-height:1.25;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.78);border:1px solid rgba(0,0,0,.08)}
+    .swatch.dark{border-color:rgba(0,0,0,.18)}
+    .swatchLabel{position:absolute;left:10px;top:10px;font-size:13px;line-height:1.25;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.86);border:1px solid rgba(0,0,0,.08)}
 
     .paletteGrid{display:grid;grid-template-columns:1fr;gap:18px;}
     .paletteCard{border:1px solid rgba(0,0,0,.10);border-radius:18px;overflow:hidden;background:#fff;}
     .paletteHeader{padding:16px 16px 0;}
     .badge{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:6px 10px;color:rgba(0,0,0,.65)}
+    .badgeBest{border-color:rgba(47,111,115,.45); color:#25585B;}
     .paletteImgWrap{padding:14px 16px 0;}
     .paletteImgWrap img{width:100%;height:auto;border-radius:14px;border:1px solid rgba(0,0,0,.08)}
     .tokens{padding:14px 16px 18px;}
@@ -209,9 +242,9 @@ const logo = {
     .tokenKey{color:rgba(0,0,0,.72);font-size:14px;}
     .tokenVal{display:flex;gap:10px;align-items:center;}
     .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(0,0,0,.18);display:inline-block;}
-    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;color:#111;}
 
-    .callout{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px;background:rgba(255,255,255,.75)}
+    .callout{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px;background:rgba(250,250,248,.85)}
     .small{color:rgba(0,0,0,.72);font-size:14px;line-height:1.55;}
 
     .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
@@ -222,7 +255,8 @@ const logo = {
       .paletteGrid{grid-template-columns:1fr 1fr 1fr;}
       .paletteCard{display:flex;flex-direction:column;}
       .tokenRows{grid-template-columns:1fr;}
-      h1{font-size:52px;}
+      h1{font-size:56px;}
+      .shots{grid-template-columns:1fr 1fr;}
     }
 
     @media (max-width: 860px){
