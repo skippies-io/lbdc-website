@@ -1,0 +1,91 @@
+/**
+ * Design Tokens — LBDC
+ *
+ * Palette: near-black ground, off-white text, warm bronze accent.
+ * Tone: minimal, premium, confident — MetaLab / NexaWorks register.
+ * All spacing on a 4px base (rem at 16px root).
+ */
+
+:root {
+  /* ─── Colour ─────────────────────────────────────────────────────────── */
+  --color-bg:           #0c0c0c;  /* near-black ground */
+  --color-surface:      #141414;  /* slightly lifted surface */
+  --color-surface-2:    #1e1e1e;  /* card / rule lift */
+  --color-border:       #2c2c2c;  /* subtle dividers */
+  --color-fg:           #f0ece6;  /* off-white, warm tint */
+  --color-fg-muted:     #7a7570;  /* de-emphasised text */
+  --color-fg-subtle:    #4a4643;  /* placeholder / disabled */
+  --color-accent:       #c4975a;  /* warm bronze — the one accent */
+  --color-accent-hover: #d4aa72;  /* hover state */
+  --color-accent-dim:   #3d2e1a;  /* accent at low opacity for bg fills */
+
+  /* ─── Typography ─────────────────────────────────────────────────────── */
+  /* System sans-serif — no external font dependency */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* Scale (1.25 major-third ratio) */
+  --text-xs:    0.75rem;    /* 12px */
+  --text-sm:    0.875rem;   /* 14px */
+  --text-base:  1rem;       /* 16px */
+  --text-lg:    1.125rem;   /* 18px */
+  --text-xl:    1.25rem;    /* 20px */
+  --text-2xl:   1.5rem;     /* 24px */
+  --text-3xl:   1.875rem;   /* 30px */
+  --text-4xl:   2.25rem;    /* 36px */
+  --text-5xl:   3rem;       /* 48px */
+  --text-6xl:   3.75rem;    /* 60px */
+  --text-7xl:   4.5rem;     /* 72px */
+
+  /* Line height */
+  --leading-none:   1;
+  --leading-tight:  1.15;
+  --leading-snug:   1.35;
+  --leading-normal: 1.65;
+
+  /* Letter spacing */
+  --tracking-tightest: -0.04em;
+  --tracking-tight:    -0.02em;
+  --tracking-normal:    0em;
+  --tracking-wide:      0.06em;
+  --tracking-wider:     0.12em;
+
+  /* Font weight */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+
+  /* ─── Spacing ─────────────────────────────────────────────────────────── */
+  --space-1:   0.25rem;   /* 4px  */
+  --space-2:   0.5rem;    /* 8px  */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+  --space-32:  8rem;      /* 128px */
+  --space-40:  10rem;     /* 160px */
+  --space-48:  12rem;     /* 192px */
+
+  /* ─── Border radius ───────────────────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-sm:   2px;   /* sharp, editorial */
+  --radius-md:   4px;   /* the maximum used on this site */
+
+  /* ─── Layout ──────────────────────────────────────────────────────────── */
+  --max-width:     1200px;
+  --content-width:  720px;
+  --nav-height:      64px;
+
+  /* ─── Transitions ─────────────────────────────────────────────────────── */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+}
