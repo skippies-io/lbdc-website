@@ -1,0 +1,54 @@
+/**
+ * Concept A Deep — "Modern Consulting"
+ * Palette A (teal accent) × MetaLab/barvere art direction.
+ *
+ * Design principles:
+ * - Typography does the heavy lifting. Scale is aggressive, tracking tight.
+ * - White canvas. No shadows. Hairline lines, not box borders.
+ * - Teal accent used ONCE per fold for maximum signal strength.
+ * - Extreme whitespace between sections (sections breathe).
+ * - Grid = implicit. No heavy card chrome.
+ */
+
+:root {
+  /* Canvas */
+  --da-bg:        #FAFAF8;
+  --da-surface:   #FFFFFF;
+  --da-ink:       #111210;
+  --da-ink-muted: rgba(17, 18, 16, 0.55);
+  --da-ink-faint: rgba(17, 18, 16, 0.22);
+  --da-line:      rgba(17, 18, 16, 0.10);
+  --da-line-mid:  rgba(17, 18, 16, 0.18);
+
+  /* Accent — used sparingly */
+  --da-accent:     #2F6F73;
+  --da-accent-dim: rgba(47, 111, 115, 0.12);
+
+  /* Type scale */
+  --da-font:        -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --da-display:     clamp(52px, 8vw, 96px);   /* Hero H1 */
+  --da-h2:          clamp(32px, 4vw, 48px);   /* Section heads */
+  --da-h3:          18px;                      /* Pillar titles */
+  --da-body-lg:     18px;
+  --da-body:        16px;
+  --da-label:       12px;
+
+  --da-track-tight: -0.04em;
+  --da-track-head:  -0.02em;
+  --da-track-label: 0.12em;
+
+  --da-lead-tight:  1.05;
+  --da-lead-body:   1.65;
+
+  /* Spacing rhythm */
+  --da-section: clamp(80px, 10vw, 128px);
+  --da-gap:     clamp(40px, 5vw, 64px);
+
+  /* Radius (sharp, editorial) */
+  --da-r-sm: 2px;
+  --da-r:    6px;
+
+  /* Transitions */
+  --da-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
