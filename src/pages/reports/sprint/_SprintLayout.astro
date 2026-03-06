@@ -31,6 +31,7 @@ const conceptLinks: Array<{ key: ConceptKey; name: string }> = [
 
 <BaseLayout title={title} description={description}>
   <div class="sprint" data-report>
+    <div class="accentBar" aria-hidden="true"></div>
     <header class="topbar">
       <a class="brand" href={`${sprintRoot}`}>LBDC — Design Sprint</a>
       <nav class="topnav">
@@ -80,27 +81,33 @@ const conceptLinks: Array<{ key: ConceptKey; name: string }> = [
     /* Report pages must be readable regardless of site theme tokens */
     :global(body){background:#ffffff !important;color:#111111 !important;}
 
+    /* Subtle brand accent (based on logo charcoal + Palette A teal) */
+    :root{--r-ink:#111;--r-muted:rgba(0,0,0,.62);--r-border:rgba(0,0,0,.10);--r-accent:#2F6F73;--r-accentSoft:rgba(47,111,115,.10);} 
+
     .sprint{min-height:100vh;}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid rgba(0,0,0,.10);position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter: blur(8px);z-index:10;}
-    .brand{font-weight:700;letter-spacing:-0.01em;}
+    .accentBar{height:4px;background:linear-gradient(90deg, var(--r-accent), #1D4ED8, #B8894A, #0F766E);} 
+
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid var(--r-border);position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter: blur(8px);z-index:10;}
+    .brand{font-weight:800;letter-spacing:-0.01em;color:var(--r-ink)}
     .topnav{display:flex;gap:14px;flex-wrap:wrap;}
     .topnav a{padding:8px 10px;border-radius:999px;border:1px solid rgba(0,0,0,.12);}
     .topnav a:hover{border-color:rgba(0,0,0,.25)}
 
     .shell{display:grid;grid-template-columns:260px 1fr;}
-    .sidebar{border-right:1px solid rgba(0,0,0,.10);padding:18px 14px 24px;position:sticky;top:68px;height:calc(100vh - 68px);overflow:auto;}
+    .sidebar{border-right:1px solid var(--r-border);padding:18px 14px 24px;position:sticky;top:72px;height:calc(100vh - 72px);overflow:auto;background:linear-gradient(180deg, rgba(47,111,115,.03), transparent 30%);} 
     .content{padding:30px 22px 80px;max-width:1050px;}
 
     .sbSection{margin-bottom:18px;}
-    .sbTitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.55);margin-bottom:10px;}
+    .sbTitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--r-muted);margin-bottom:10px;}
     .sbLinks{display:flex;flex-direction:column;gap:8px;}
     .sbLink{padding:10px 12px;border-radius:12px;border:1px solid rgba(0,0,0,.10);}
-    .sbLink.active{border-color:rgba(0,0,0,.32);background:rgba(0,0,0,.03)}
+    .sbLink:hover{border-color:rgba(0,0,0,.24); background:rgba(0,0,0,.02)}
+    .sbLink.active{border-color:rgba(47,111,115,.55);background:var(--r-accentSoft)}
     .sbText{font-size:13px;line-height:1.55;color:rgba(0,0,0,.72)}
 
     @media (max-width: 980px){
       .shell{grid-template-columns:1fr;}
-      .sidebar{position:relative;top:0;height:auto;border-right:0;border-bottom:1px solid rgba(0,0,0,.10)}
+      .sidebar{position:relative;top:0;height:auto;border-right:0;border-bottom:1px solid var(--r-border)}
     }
   </style>
 </BaseLayout>
