@@ -1,0 +1,230 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const palettes = [
+  {
+    key: "A",
+    name: "Trust + premium editorial (MetaLab-ish)",
+    tokens: {
+      Ink: "#1F2527",
+      Canvas: "#FAFAF8",
+      Surface: "#FFFFFF",
+      Border: "#E6E7E8",
+      Accent: "#2F6F73",
+      "Accent hover": "#25585B",
+    },
+    image: "/reports/palettes/palette-A.png",
+    intent: "Restrained monochrome base with a subtle teal/steel accent. Premium + calm + trustworthy.",
+  },
+  {
+    key: "B",
+    name: "Modern finance / confident blue",
+    tokens: {
+      Ink: "#111827",
+      Canvas: "#F8FAFC",
+      Surface: "#FFFFFF",
+      Border: "#E5E7EB",
+      Accent: "#1D4ED8",
+      "Accent soft": "#DBEAFE",
+    },
+    image: "/reports/palettes/palette-B.png",
+    intent: "Crisp, modern, high-trust blue. Reads ‘enterprise’ and very clean on a white canvas.",
+  },
+  {
+    key: "C",
+    name: "Warm premium (lighter)",
+    tokens: {
+      Ink: "#1E2426",
+      Canvas: "#FBFAF7",
+      Surface: "#FFFFFF",
+      Border: "#E7E2D8",
+      Accent: "#B8894A",
+      "Accent soft": "#F3E9DD",
+    },
+    image: "/reports/palettes/palette-C.png",
+    intent: "A lighter, more restrained warmth. A hint of ‘luxury’ without leaning brown.",
+  },
+];
+
+const logo = {
+  dark: "#2E3538",
+  light: "#FFFFFF",
+};
+---
+
+<BaseLayout title="Colour Palette Sprint Report — LBDC">
+  <main class="report">
+    <header class="hero">
+      <div class="kicker">Design Sprint Report</div>
+      <h1>Colour Palette Options for LBDC</h1>
+      <p class="lede">
+        Three palette directions (A/B/C) aligned to the current logo and your target feel:
+        <strong>premium</strong>, <strong>modern</strong>, <strong>clean</strong>, and <strong>trust</strong> — with a light/white canvas.
+      </p>
+      <div class="meta">
+        <div><span>Scope</span>Palette exploration for website rewrite</div>
+        <div><span>Outputs</span>Tokens + swatches + recommendation</div>
+        <div><span>Status</span>Ready for selection (leaning A)</div>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>1) Goals</h2>
+      <ul>
+        <li>Stay consistent with the logo’s base (cool charcoal + white).</li>
+        <li>Keep the overall canvas light and spacious (MetaLab / NexaWorks vibes).</li>
+        <li>Use accent colour with restraint (for CTAs, links, and key highlights only).</li>
+        <li>Maintain strong accessibility potential (contrast-friendly choices).</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>2) Brand anchor (from the logo)</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Primary brand pair</h3>
+          <div class="swatches">
+            <div class="swatch" style={`background:${logo.dark}`}>
+              <div class="swatchLabel">Logo dark<br />{logo.dark}</div>
+            </div>
+            <div class="swatch" style={`background:${logo.light}; border:1px solid rgba(0,0,0,0.15)`}>
+              <div class="swatchLabel">Logo light<br />{logo.light}</div>
+            </div>
+          </div>
+          <p class="small">
+            The logo is intentionally minimal. The site should feel equally confident: calm, precise, and not over-decorated.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>How we use colour (principles)</h3>
+          <ul class="small">
+            <li><strong>Neutrals first:</strong> typography, spacing, and hierarchy do the heavy lifting.</li>
+            <li><strong>Accent is semantic:</strong> CTA + link + selected states (not decoration).</li>
+            <li><strong>Consistent surfaces:</strong> subtle borders / hairlines, minimal shadows.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3) Palette directions</h2>
+      <div class="paletteGrid">
+        {palettes.map((p) => (
+          <article class="paletteCard">
+            <div class="paletteHeader">
+              <div class="badge">Palette {p.key}</div>
+              <h3>{p.name}</h3>
+              <p class="small">{p.intent}</p>
+            </div>
+
+            <div class="paletteImgWrap">
+              <img src={p.image} alt={`Palette ${p.key} swatches`} loading="lazy" />
+            </div>
+
+            <div class="tokens">
+              <h4>Tokens</h4>
+              <div class="tokenRows">
+                {Object.entries(p.tokens).map(([k, v]) => (
+                  <div class="tokenRow">
+                    <div class="tokenKey">{k}</div>
+                    <div class="tokenVal">
+                      <span class="dot" style={`background:${v}`} />
+                      <code>{v}</code>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4) Recommendation</h2>
+      <div class="callout">
+        <p>
+          <strong>Recommended default:</strong> <strong>Palette A</strong>.
+          It stays closest to the logo’s cool, understated confidence while adding a modern accent that doesn’t scream.
+        </p>
+        <p class="small">
+          If you want something more explicitly “finance / enterprise trust”, Palette B is the runner-up.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5) Next step</h2>
+      <ol>
+        <li>Pick the default palette (A or B).</li>
+        <li>Implement the theme switcher ticket (Issue #10) so you can test A/B/C live via <code>?theme=</code>.</li>
+        <li>Do a quick accessibility pass once the palette is selected (contrast + focus states).</li>
+      </ol>
+
+      <div class="links">
+        <a href="https://github.com/skippies-io/lbdc-website/issues/10" target="_blank" rel="noreferrer">Theme switcher ticket (Issue #10)</a>
+        <a href="https://github.com/skippies-io/lbdc-website/pull/9" target="_blank" rel="noreferrer">Merged foundation PR (PR #9)</a>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .report{max-width:1080px;margin:0 auto;padding:48px 20px 80px;}
+    .hero{padding:28px 0 10px;}
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.55);}
+    h1{margin:10px 0 12px;font-size:44px;line-height:1.1;letter-spacing:-0.02em;}
+    .lede{max-width:70ch;font-size:18px;line-height:1.6;color:rgba(0,0,0,.82);}
+
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+    .meta div{border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.7);}
+    .meta span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,0,0,.55);margin-bottom:6px;}
+
+    .section{margin-top:44px;}
+    h2{font-size:22px;margin:0 0 12px;letter-spacing:-0.01em;}
+    h3{font-size:18px;margin:0 0 8px;}
+    h4{font-size:14px;margin:0 0 8px;color:rgba(0,0,0,.7);text-transform:uppercase;letter-spacing:.12em;}
+    ul,ol{margin:0;padding-left:20px;}
+    li{margin:8px 0;}
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .card{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px 16px 14px;background:#fff;}
+
+    .swatches{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;}
+    .swatch{border-radius:14px;min-height:120px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.10);}
+    .swatchLabel{position:absolute;left:10px;top:10px;font-size:13px;line-height:1.25;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.78);border:1px solid rgba(0,0,0,.08)}
+
+    .paletteGrid{display:grid;grid-template-columns:1fr;gap:18px;}
+    .paletteCard{border:1px solid rgba(0,0,0,.10);border-radius:18px;overflow:hidden;background:#fff;}
+    .paletteHeader{padding:16px 16px 0;}
+    .badge{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:6px 10px;color:rgba(0,0,0,.65)}
+    .paletteImgWrap{padding:14px 16px 0;}
+    .paletteImgWrap img{width:100%;height:auto;border-radius:14px;border:1px solid rgba(0,0,0,.08)}
+    .tokens{padding:14px 16px 18px;}
+    .tokenRows{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;}
+    .tokenRow{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(0,0,0,.06);padding-top:10px;}
+    .tokenKey{color:rgba(0,0,0,.72);font-size:14px;}
+    .tokenVal{display:flex;gap:10px;align-items:center;}
+    .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(0,0,0,.18);display:inline-block;}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;}
+
+    .callout{border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px;background:rgba(255,255,255,.75)}
+    .small{color:rgba(0,0,0,.72);font-size:14px;line-height:1.55;}
+
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+    .links a{display:inline-block;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:10px 14px;text-decoration:none;color:rgba(0,0,0,.78);}
+    .links a:hover{border-color:rgba(0,0,0,.28)}
+
+    @media (min-width: 900px){
+      .paletteGrid{grid-template-columns:1fr 1fr 1fr;}
+      .paletteCard{display:flex;flex-direction:column;}
+      .tokenRows{grid-template-columns:1fr;}
+      h1{font-size:52px;}
+    }
+
+    @media (max-width: 860px){
+      .two-col{grid-template-columns:1fr;}
+      .meta{grid-template-columns:1fr;}
+    }
+  </style>
+</BaseLayout>
