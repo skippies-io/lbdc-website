@@ -11,7 +11,8 @@ interface Props {
 
 const { title, concept, activeScreen, description } = Astro.props;
 
-const base = import.meta.env.BASE_URL; // e.g. /lbdc-website/
+const rawBase = import.meta.env.BASE_URL; // Astro may provide '/lbdc-website' (no trailing slash)
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const sprintRoot = `${base}reports/sprint/`;
 
 const screens: Array<{ key: ScreenKey; name: string; href: (c: ConceptKey) => string }> = [
