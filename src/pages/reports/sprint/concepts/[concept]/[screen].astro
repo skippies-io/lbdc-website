@@ -21,7 +21,8 @@ if (!validScreens.includes(sk)) {
   throw new Error(`Invalid screen: ${screen}`);
 }
 
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const imgDesktop = `${base}reports/sprint/screens/${c.key}-${sk}-1280.png`;
 const imgMobile = `${base}reports/sprint/screens/${c.key}-${sk}-375.png`;
 

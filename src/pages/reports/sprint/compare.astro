@@ -2,7 +2,8 @@
 import SprintLayout from './_SprintLayout.astro';
 import { concepts, screens } from './_data';
 
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const sprintRoot = `${base}reports/sprint/`;
 ---
 
