@@ -1,0 +1,106 @@
+---
+import SprintLayout from '../../_SprintLayout.astro';
+import type { ConceptKey, ScreenKey } from '../../_data';
+import { conceptByKey, concepts, screens } from '../../_data';
+
+export function getStaticPaths() {
+  const conceptKeys = concepts.map((c) => c.key);
+  const screenKeys = screens.map((s) => s.key);
+
+  return conceptKeys.flatMap((concept) =>
+    screenKeys.map((screen) => ({ params: { concept, screen } }))
+  );
+}
+
+const { concept, screen } = Astro.params as { concept: string; screen: string };
+const c = conceptByKey(concept);
+const sk = (screen as ScreenKey);
+
+const validScreens: ScreenKey[] = ['home','service','about','contact'];
+if (!validScreens.includes(sk)) {
+  throw new Error(`Invalid screen: ${screen}`);
+}
+
+const base = import.meta.env.BASE_URL;
+const imgDesktop = `${base}reports/sprint/screens/${c.key}-${sk}-1280.png`;
+const imgMobile = `${base}reports/sprint/screens/${c.key}-${sk}-375.png`;
+
+const screenName = screens.find((s) => s.key === sk)?.name ?? sk;
+---
+
+<SprintLayout title={`Concept ${c.key} — ${screenName}`} concept={c.key as ConceptKey} activeScreen={sk}>
+  <div class="hero">
+    <div class="kicker">Concept {c.key}</div>
+    <h1>{c.name} — {screenName}</h1>
+    <p class="lede">{c.intent}</p>
+
+    <div class="meta">
+      <div><span>Palette</span>Based on {c.key === 'D' ? 'an additional fourth direction' : 'your palette direction'}.</div>
+      <div><span>Typography</span>{c.typographyNote}</div>
+      <div><span>Motion</span>{c.motionNote}</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>Mockup screens</h2>
+    <div class="shots">
+      <figure class="shot">
+        <figcaption>Desktop (1280px)</figcaption>
+        <img src={imgDesktop} alt={`Concept ${c.key} ${sk} desktop`} loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption>Mobile (375px)</figcaption>
+        <img src={imgMobile} alt={`Concept ${c.key} ${sk} mobile`} loading="lazy" />
+      </figure>
+    </div>
+
+    <p class="note">
+      These images are generated from the <code>/reports/sprint/render/</code> routes to keep the mockups consistent.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Tokens (summary)</h2>
+    <div class="tokens">
+      {Object.entries(c.tokens).map(([k, v]) => (
+        <div class="row">
+          <div class="k">{k}</div>
+          <div class="v"><span class="dot" style={`background:${v}`} /> <code>{v}</code></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.60)}
+    h1{margin:10px 0 10px;font-size:44px;line-height:1.08;letter-spacing:-0.02em;color:#111}
+    .lede{max-width:85ch;line-height:1.65;color:rgba(0,0,0,.82)}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+    .meta div{border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:12px 14px;background:#fff}
+    .meta span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,0,0,.55);margin-bottom:6px;}
+    .section{margin-top:40px;}
+    h2{font-size:20px;margin:0 0 12px;}
+
+    .shots{display:grid;grid-template-columns:1fr;gap:16px;}
+    .shot{border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;padding:14px;}
+    .shot figcaption{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.55);margin-bottom:10px;}
+    .shot img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(0,0,0,.08)}
+
+    .note{margin-top:12px;color:rgba(0,0,0,.65);font-size:13px}
+
+    .tokens{border:1px solid rgba(0,0,0,.10);border-radius:16px;background:#fff;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;}
+    .row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(0,0,0,.06);padding-top:10px;}
+    .k{color:rgba(0,0,0,.72);font-size:14px;}
+    .v{display:flex;gap:10px;align-items:center;}
+    .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(0,0,0,.18);display:inline-block;}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;color:#111;}
+
+    @media (min-width: 900px){
+      .shots{grid-template-columns:1fr 1fr;}
+    }
+    @media (max-width: 860px){
+      .meta{grid-template-columns:1fr;}
+      .tokens{grid-template-columns:1fr;}
+    }
+  </style>
+</SprintLayout>
