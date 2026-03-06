@@ -1,0 +1,171 @@
+---
+import type { ConceptKey, ScreenKey } from '../../_data';
+import { conceptByKey, concepts, screens } from '../../_data';
+import ConceptFrame from '../../_ConceptFrame.astro';
+
+export function getStaticPaths() {
+  const conceptKeys = concepts.map((c) => c.key);
+  const screenKeys = screens.map((s) => s.key);
+
+  return conceptKeys.flatMap((concept) =>
+    screenKeys.map((screen) => ({ params: { concept, screen } }))
+  );
+}
+
+const { concept, screen } = Astro.params as { concept: string; screen: string };
+const c = conceptByKey(concept);
+const sk = (screen as ScreenKey);
+
+const validScreens: ScreenKey[] = ['home','service','about','contact'];
+if (!validScreens.includes(sk)) {
+  throw new Error(`Invalid screen: ${screen}`);
+}
+
+const subtitleMap: Record<ScreenKey, string> = {
+  home: 'Premium, modern, clean. Anonymised proof. Third-person voice.',
+  service: 'A single service page template with clear structure and outcomes.',
+  about: 'A credible, calm “about” layout that reads fast and feels premium.',
+  contact: 'Conversion clarity: simple form + anti-spam note + alternative contact.',
+};
+---
+
+<!-- Render-only page for screenshot generation. Minimal chrome. -->
+<html lang="en-ZA" data-concept={c.key}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Render — Concept {c.key} — {sk}</title>
+    <style>
+      :root{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Inter,Roboto,Arial,sans-serif;}
+      body{margin:0;background:#fff;padding:24px;}
+      a{color:inherit}
+    </style>
+  </head>
+  <body>
+    <ConceptFrame concept={c.key as ConceptKey} screen={sk} title={`${c.name}`} subtitle={subtitleMap[sk]}>
+      {sk === 'home' && (
+        <div class="grid">
+          <div class="block">
+            <div class="eyebrow">Strategic advisory</div>
+            <h2>Clear thinking. Practical systems. Measurable outcomes.</h2>
+            <p>LeRoy Barnes helps growth-stage businesses align strategy, operating rhythms, and delivery.
+              Calm execution — without the theatre.</p>
+            <div class="proof">10-country Pan‑African payments • quarterly → weekly releases • +50% customer satisfaction (anonymised)</div>
+          </div>
+          <div class="block">
+            <div class="k">Service pillars</div>
+            <ul>
+              <li>Strategy and operating model</li>
+              <li>Product / delivery cadence</li>
+              <li>Performance and decision intelligence</li>
+            </ul>
+            <div class="k" style="margin-top:10px">How he works</div>
+            <ol>
+              <li>Diagnose</li>
+              <li>Design</li>
+              <li>Deliver</li>
+            </ol>
+          </div>
+        </div>
+      )}
+
+      {sk === 'service' && (
+        <div class="svc">
+          <h2>Service: Operating rhythm & delivery cadence</h2>
+          <p>Turn ambiguity into a weekly operating system: priorities, rituals, and decision rights that hold under pressure.</p>
+          <div class="cols">
+            <div>
+              <div class="k">What you get</div>
+              <ul>
+                <li>Operating cadence (weekly/monthly)</li>
+                <li>Metrics that drive behaviour</li>
+                <li>Clear ownership and escalation paths</li>
+              </ul>
+            </div>
+            <div>
+              <div class="k">Typical outcomes</div>
+              <ul>
+                <li>Faster decisions, fewer meetings</li>
+                <li>Predictable delivery and visibility</li>
+                <li>Teams aligned on what “done” means</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {sk === 'about' && (
+        <div class="about">
+          <h2>About LeRoy</h2>
+          <p>LeRoy is a pragmatic operator: strategy, product, and delivery — with a bias to measurable results.</p>
+          <div class="cols">
+            <div>
+              <div class="k">Principles</div>
+              <ul>
+                <li>Clarity beats complexity</li>
+                <li>Systems over heroics</li>
+                <li>Truthful metrics</li>
+              </ul>
+            </div>
+            <div>
+              <div class="k">Experience (anonymised)</div>
+              <ul>
+                <li>Multi-country payments and operations</li>
+                <li>Scaled delivery cadence materially</li>
+                <li>Led cross-functional transformation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {sk === 'contact' && (
+        <div class="contact">
+          <h2>Get in touch</h2>
+          <p>Briefly describe what you’re trying to achieve — LeRoy will respond within 1–2 business days.</p>
+          <div class="form">
+            <div class="row">
+              <label>Name</label>
+              <div class="input"></div>
+            </div>
+            <div class="row">
+              <label>Email</label>
+              <div class="input"></div>
+            </div>
+            <div class="row">
+              <label>Message</label>
+              <div class="input tall"></div>
+            </div>
+            <div class="hint">Spam protection will be added (no noisy captchas).</div>
+          </div>
+        </div>
+      )}
+
+      <style>
+        h2{margin:0 0 10px;font-size:28px;letter-spacing:-0.02em}
+        p{margin:0 0 12px;line-height:1.6;color:rgba(0,0,0,.78)}
+        ul,ol{margin:0;padding-left:18px;}
+        li{margin:8px 0;color:rgba(0,0,0,.80)}
+        .k{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.58);margin-bottom:8px;}
+        .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;}
+        .block{border:1px solid var(--c-border);border-radius:16px;padding:14px;background:rgba(255,255,255,.65)}
+        .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.56);margin-bottom:10px;}
+        .proof{margin-top:12px;padding:10px 12px;border-radius:14px;border:1px solid var(--c-border);background:var(--c-accentSoft);color:rgba(0,0,0,.74);font-size:13px;line-height:1.4}
+        .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;}
+
+        .form{border:1px solid var(--c-border);border-radius:16px;padding:14px;background:rgba(255,255,255,.65)}
+        .row{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;margin:10px 0}
+        label{font-size:13px;color:rgba(0,0,0,.72)}
+        .input{height:38px;border-radius:12px;border:1px solid var(--c-border);background:#fff}
+        .input.tall{height:120px}
+        .hint{margin-top:10px;font-size:12px;color:rgba(0,0,0,.62)}
+
+        @media (max-width: 640px){
+          .grid{grid-template-columns:1fr;}
+          .cols{grid-template-columns:1fr;}
+          .row{grid-template-columns:1fr;}
+        }
+      </style>
+    </ConceptFrame>
+  </body>
+</html>

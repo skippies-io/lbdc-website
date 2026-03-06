@@ -1,0 +1,116 @@
+---
+import SprintLayout from './_SprintLayout.astro';
+import { concepts } from './_data';
+
+type CriterionKey = 'Premium feel' | 'Clarity' | 'Mobile' | 'Trust' | 'Accessibility' | 'Maintainability';
+const criteria: CriterionKey[] = ['Premium feel','Clarity','Mobile','Trust','Accessibility','Maintainability'];
+
+// Equal weighting, 1-10 per criterion.
+// NOTE: These are initial sprint scores; adjust after your review.
+const scores: Record<string, Record<CriterionKey, number>> = {
+  A: { 'Premium feel': 9, 'Clarity': 8, 'Mobile': 8, 'Trust': 8, 'Accessibility': 8, 'Maintainability': 9 },
+  B: { 'Premium feel': 8, 'Clarity': 9, 'Mobile': 8, 'Trust': 9, 'Accessibility': 8, 'Maintainability': 9 },
+  C: { 'Premium feel': 8, 'Clarity': 8, 'Mobile': 8, 'Trust': 7, 'Accessibility': 8, 'Maintainability': 9 },
+  D: { 'Premium feel': 9, 'Clarity': 8, 'Mobile': 8, 'Trust': 8, 'Accessibility': 8, 'Maintainability': 8 },
+};
+
+function total(key: string) {
+  return criteria.reduce((sum, c) => sum + (scores[key]?.[c] ?? 0), 0);
+}
+
+const totals = concepts.map((c) => ({
+  key: c.key,
+  name: c.name,
+  total: total(c.key),
+  pct: Math.round((total(c.key) / (criteria.length * 10)) * 100),
+}));
+
+totals.sort((a,b) => b.total - a.total);
+const winner = totals[0];
+---
+
+<SprintLayout title="Design Sprint — Scorecard (Winner)">
+  <div class="hero">
+    <div class="kicker">Scorecard</div>
+    <h1>Winner: Concept {winner.key}</h1>
+    <p class="lede">
+      Equal-weight rubric (1–10). Totals shown out of 60 and as a percentage out of 100.
+      Scores are a starting point — the goal is to make the trade-offs explicit.
+    </p>
+
+    <div class="callout">
+      <div class="big">{winner.total}/60</div>
+      <div class="big">{winner.pct}%</div>
+      <div class="why">
+        <strong>Why it wins:</strong> best balance across the rubric, with no weak category.
+        If you prioritise “trust at first glance” above all else, Concept B is the closest runner-up.
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>Scores by concept</h2>
+    <div class="table">
+      <div class="row head">
+        <div class="cell first">Concept</div>
+        {criteria.map((c) => (<div class="cell">{c}</div>))}
+        <div class="cell">Total</div>
+        <div class="cell">%</div>
+      </div>
+
+      {concepts.map((c) => {
+        const t = total(c.key);
+        const pct = Math.round((t/(criteria.length*10))*100);
+        const isWin = c.key === winner.key;
+        return (
+          <div class:list={["row", isWin && "win"]}>
+            <div class="cell first"><strong>{c.key}</strong> <span class="nm">{c.name}</span></div>
+            {criteria.map((cr) => (
+              <div class="cell num">{scores[c.key]?.[cr] ?? 0}</div>
+            ))}
+            <div class="cell num"><strong>{t}</strong>/60</div>
+            <div class="cell num"><strong>{pct}%</strong></div>
+          </div>
+        );
+      })}
+    </div>
+
+    <p class="note">
+      Want to change weightings? Tell me which criterion matters most and we’ll rerun the scorecard.
+    </p>
+  </section>
+
+  <style>
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.60)}
+    h1{margin:10px 0 10px;font-size:44px;line-height:1.08;letter-spacing:-0.02em;color:#111}
+    .lede{max-width:90ch;line-height:1.65;color:rgba(0,0,0,.82)}
+
+    .callout{margin-top:18px;border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;padding:16px;display:grid;grid-template-columns:120px 120px 1fr;gap:14px;align-items:center;}
+    .big{font-size:32px;font-weight:800;letter-spacing:-0.02em}
+    .why{color:rgba(0,0,0,.72);line-height:1.5}
+
+    .section{margin-top:36px;}
+    h2{font-size:20px;margin:0 0 12px;}
+
+    .table{border:1px solid rgba(0,0,0,.10);border-radius:18px;overflow:auto;background:#fff}
+    .row{display:grid;grid-template-columns:260px repeat(6, 110px) 110px 90px;}
+    .row.head{background:rgba(0,0,0,.03);font-weight:700;}
+    .cell{padding:12px 14px;border-top:1px solid rgba(0,0,0,.06);border-right:1px solid rgba(0,0,0,.06);white-space:nowrap;}
+    .row.head .cell{border-top:0}
+    .cell:last-child{border-right:0}
+    .cell.first{white-space:normal}
+    .nm{display:block;font-weight:500;color:rgba(0,0,0,.65);font-size:12px;margin-top:3px;line-height:1.35}
+    .num{text-align:center}
+    .row.win{background:rgba(47,111,115,.08)}
+
+    .note{margin-top:12px;color:rgba(0,0,0,.65);font-size:13px}
+
+    @media (max-width: 760px){
+      .callout{grid-template-columns:1fr;}
+      .row{grid-template-columns:1fr;}
+      .row.head{display:none}
+      .cell{border-right:0}
+      .cell.num{text-align:left}
+    }
+  </style>
+</SprintLayout>

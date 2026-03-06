@@ -1,0 +1,73 @@
+---
+import SprintLayout from './_SprintLayout.astro';
+import { concepts } from './_data';
+
+const base = import.meta.env.BASE_URL;
+const sprintRoot = `${base}reports/sprint/`;
+---
+
+<SprintLayout title="Design Sprint Report — LBDC (Concepts + Scorecard)">
+  <div class="hero">
+    <div class="kicker">Chronicle-style report</div>
+    <h1>Design Sprint — LBDC Website</h1>
+    <p class="lede">
+      Four UI/UX concepts (including your A/B/C palette directions) explored across 4 key screens.
+      Includes mockups, comparison, and a scorecard with a single winner.
+    </p>
+    <div class="meta">
+      <div><span>Screens</span>Homepage • Service • About • Contact</div>
+      <div><span>Rubric</span>Premium • Clarity • Mobile • Trust • Accessibility • Maintainability</div>
+      <div><span>Next</span>Pick winner → implement theme switcher (Issue #10)</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>Concepts</h2>
+    <div class="grid">
+      {concepts.map((c) => (
+        <a class="card" href={`${sprintRoot}concepts/${c.key}/home/`}>
+          <div class="badge">Concept {c.key}</div>
+          <h3>{c.name}</h3>
+          <p class="small">{c.intent}</p>
+          <div class="more">Open concept →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Review flow (recommended)</h2>
+    <ol>
+      <li>Skim each concept’s <strong>Homepage</strong> first.</li>
+      <li>Then check <strong>Service</strong> and <strong>About</strong> for hierarchy + readability.</li>
+      <li>Finally check <strong>Contact</strong> for conversion clarity.</li>
+      <li>Use <a href={`${sprintRoot}compare/`}>Comparison</a> + <a href={`${sprintRoot}scorecard/`}>Scorecard</a> to pick the winner.</li>
+    </ol>
+  </section>
+
+  <style>
+    .hero{padding:12px 0 10px;}
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.60)}
+    h1{margin:10px 0 12px;font-size:52px;line-height:1.06;letter-spacing:-0.03em;color:#111}
+    .lede{max-width:78ch;font-size:18px;line-height:1.65;color:rgba(0,0,0,.82)}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+    .meta div{border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:12px 14px;background:#fff}
+    .meta span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,0,0,.55);margin-bottom:6px;}
+
+    .section{margin-top:42px;}
+    h2{font-size:22px;margin:0 0 12px;}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+    .card{display:block;border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px;background:#fff;text-decoration:none;color:inherit;}
+    .card:hover{border-color:rgba(0,0,0,.26)}
+    .badge{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:6px 10px;color:rgba(0,0,0,.65)}
+    h3{margin:10px 0 6px;font-size:18px;}
+    .small{margin:0;color:rgba(0,0,0,.72);line-height:1.55}
+    .more{margin-top:12px;color:rgba(0,0,0,.65)}
+
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr;}
+      .meta{grid-template-columns:1fr;}
+      h1{font-size:44px;}
+    }
+  </style>
+</SprintLayout>

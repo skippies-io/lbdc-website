@@ -1,0 +1,66 @@
+---
+import SprintLayout from './_SprintLayout.astro';
+import { concepts, screens } from './_data';
+
+const base = import.meta.env.BASE_URL;
+const sprintRoot = `${base}reports/sprint/`;
+---
+
+<SprintLayout title="Design Sprint — Comparison">
+  <div class="hero">
+    <div class="kicker">Side-by-side comparison</div>
+    <h1>Concept comparison</h1>
+    <p class="lede">Quick scanning view across concepts and screens. Open any cell to view the full concept screen.</p>
+  </div>
+
+  <section class="section">
+    <div class="table">
+      <div class="row head">
+        <div class="cell first">Screen</div>
+        {concepts.map((c) => (
+          <div class="cell"><div class="h">{c.key}</div><div class="s">{c.name}</div></div>
+        ))}
+      </div>
+
+      {screens.map((s) => (
+        <div class="row">
+          <div class="cell first"><strong>{s.name}</strong></div>
+          {concepts.map((c) => (
+            <a class="cell link" href={`${sprintRoot}concepts/${c.key}/${s.key}/`}>
+              View
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.60)}
+    h1{margin:10px 0 10px;font-size:44px;line-height:1.08;letter-spacing:-0.02em;color:#111}
+    .lede{max-width:85ch;line-height:1.65;color:rgba(0,0,0,.82)}
+    .section{margin-top:30px;}
+
+    .table{border:1px solid rgba(0,0,0,.10);border-radius:18px;overflow:hidden;background:#fff}
+    .row{display:grid;grid-template-columns:140px repeat(4, 1fr);}
+    .row.head{background:rgba(0,0,0,.03)}
+    .cell{padding:14px;border-top:1px solid rgba(0,0,0,.06);border-right:1px solid rgba(0,0,0,.06);}
+    .row.head .cell{border-top:0}
+    .cell:last-child{border-right:0}
+    .cell.first{font-size:13px;color:rgba(0,0,0,.72)}
+    .h{font-weight:700}
+    .s{font-size:12px;color:rgba(0,0,0,.62);margin-top:4px;line-height:1.35}
+    .link{text-decoration:none;color:rgba(0,0,0,.78)}
+    .link:hover{background:rgba(0,0,0,.03)}
+
+    @media (max-width: 980px){
+      .row{grid-template-columns:120px repeat(4, 1fr)}
+    }
+    @media (max-width: 760px){
+      .row{grid-template-columns:1fr}
+      .cell{border-right:0}
+      .row.head{display:none}
+      .cell.first{background:rgba(0,0,0,.03);border-top:0}
+    }
+  </style>
+</SprintLayout>
