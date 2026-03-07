@@ -5,6 +5,11 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const base = import.meta.env.BASE_URL;
+const withBase = (path) => {
+  const b = base.endsWith('/') ? base : `${base}/`;
+  const p = String(path || '').replace(/^\//, '');
+  return `${b}${p}`;
+};
 
 const experience = [
   {
@@ -187,7 +192,7 @@ const education = [
         Get in touch to discuss your product or transformation challenge.
         LeRoy responds within one to two business days.
       </p>
-      <a class="btn btn--accent btn--lg" href={`${base}contact/`}>Start a conversation →</a>
+      <a class="btn btn--accent btn--lg" href={withBase('contact/')}>Start a conversation →</a>
     </div>
   </section>
 

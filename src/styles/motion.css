@@ -19,13 +19,13 @@
  * Each step adds ~0.13 s to the delay.
  */
 [data-enter] {
-  animation: lbdc-fade-up 0.80s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  animation: lbdc-fade-up 1.05s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
-[data-enter="0"] { animation-delay: 0.08s; }
-[data-enter="1"] { animation-delay: 0.22s; }
-[data-enter="2"] { animation-delay: 0.38s; }
-[data-enter="3"] { animation-delay: 0.56s; }
-[data-enter="4"] { animation-delay: 0.76s; }
+[data-enter="0"] { animation-delay: 0.12s; }
+[data-enter="1"] { animation-delay: 0.32s; }
+[data-enter="2"] { animation-delay: 0.54s; }
+[data-enter="3"] { animation-delay: 0.78s; }
+[data-enter="4"] { animation-delay: 1.04s; }
 
 /* ── Scroll reveal ──────────────────────────────────────────────── */
 /*
@@ -36,8 +36,8 @@
   opacity: 0;
   transform: translateY(16px);
   transition:
-    opacity 0.70s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-    transform 0.70s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1));
+    opacity 0.92s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.92s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 [data-reveal].is-visible {
   opacity: 1;
