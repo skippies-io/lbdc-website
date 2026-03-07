@@ -16,9 +16,9 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
 
   <!-- PAGE HEADER ─────────────────────────────────────────────── -->
   <section class="page-hero section">
-    <div class="label">Get in touch</div>
-    <h1 class="page-hero__h1">Let's talk about<br>your business.</h1>
-    <p class="page-hero__sub">
+    <div class="label" data-enter="0">Get in touch</div>
+    <h1 class="page-hero__h1" data-enter="1">Let's talk about<br>your business.</h1>
+    <p class="page-hero__sub" data-enter="2">
       Briefly describe what you're working on and what you need.
       LeRoy responds within one to two business days.
     </p>
@@ -29,7 +29,7 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
     <div class="contact-inner">
 
       <!-- FORM ─────────────────────────────────────────────────── -->
-      <div class="form-wrap">
+      <div class="form-wrap" data-reveal>
         <form
           id="contact-form"
           method="POST"
@@ -128,7 +128,7 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
       </div>
 
       <!-- SIDEBAR ──────────────────────────────────────────────── -->
-      <div class="contact-sidebar">
+      <div class="contact-sidebar" data-reveal>
         <div class="sidebar-card">
           <div class="sidebar-card__label">Direct email</div>
           <a class="sidebar-card__value" href="mailto:leroy@lbdc.co.za">leroy@lbdc.co.za</a>
@@ -168,14 +168,15 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
     history.replaceState(null, '', location.pathname);
   }
 
-  // Client-side validation UX
+  // Client-side validation UX + loading state
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', () => {
       const btn = form.querySelector('.btn--submit') as HTMLButtonElement | null;
       if (!form.checkValidity()) return; // let browser handle
       if (btn) {
-        btn.textContent = 'Sending…';
+        btn.classList.add('btn--loading');
+        btn.setAttribute('aria-label', 'Sending message…');
         btn.disabled = true;
       }
     });

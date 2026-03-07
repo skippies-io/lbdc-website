@@ -65,11 +65,11 @@ const education = [
 
   <!-- PAGE HEADER ─────────────────────────────────────────────── -->
   <section class="page-hero section">
-    <div class="label">About LeRoy Barnes</div>
-    <h1 class="page-hero__h1">
+    <div class="label" data-enter="0">About LeRoy Barnes</div>
+    <h1 class="page-hero__h1" data-enter="1">
       Product-led.<br>Delivery-proven.<br>Pan-African.
     </h1>
-    <p class="page-hero__sub">
+    <p class="page-hero__sub" data-enter="2">
       A Product Lead and Digital Business professional with a demonstrated
       history driving delivery of large-scale, state-of-the-art solutions
       across banking, payments, and insurance — in some of Africa's most
@@ -80,7 +80,7 @@ const education = [
   <!-- BIO ─────────────────────────────────────────────────────── -->
   <section class="section bio">
     <div class="bio__inner">
-      <div class="bio__text">
+      <div class="bio__text" data-reveal>
         <div class="label">Background</div>
         <h2>Agile leadership.<br>Concrete action plans.</h2>
         <p>
@@ -102,7 +102,7 @@ const education = [
           execution that large institutions pay for internally.
         </p>
       </div>
-      <div class="bio__aside">
+      <div class="bio__aside" data-reveal>
         <div class="bio-stat">
           <span class="bio-stat__num">20<span class="bio-stat__plus">+</span></span>
           <span class="bio-stat__label">Years in digital<br>product &amp; banking</span>
@@ -132,14 +132,14 @@ const education = [
 
   <!-- EXPERIENCE ──────────────────────────────────────────────── -->
   <section class="section experience">
-    <div class="section__header">
+    <div class="section__header" data-reveal>
       <div class="label">Experience</div>
       <h2>Where the work<br>was done</h2>
     </div>
 
     <div class="exp-list">
       {experience.map((role) => (
-        <div class="exp-item">
+        <div class="exp-item" data-reveal>
           <div class="exp-item__meta">
             <div class="exp-item__period">{role.period}</div>
             <div class="exp-item__org">{role.org}</div>
@@ -159,7 +159,7 @@ const education = [
 
   <!-- EDUCATION ───────────────────────────────────────────────── -->
   <section class="section education">
-    <div class="section__header">
+    <div class="section__header" data-reveal>
       <div class="label">Education</div>
       <h2>Academic credentials</h2>
     </div>
@@ -178,7 +178,7 @@ const education = [
 
   <!-- CTA ────────────────────────────────────────────────────── -->
   <section class="section cta-band">
-    <div class="cta-band__inner">
+    <div class="cta-band__inner" data-reveal>
       <div class="label">Work together</div>
       <h2>Ready to work<br>with LeRoy?</h2>
       <p class="cta-band__sub">

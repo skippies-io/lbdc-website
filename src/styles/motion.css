@@ -1,0 +1,186 @@
+/* ================================================================
+   LBDC Motion — tasteful medium-intensity animations.
+   Respects prefers-reduced-motion throughout.
+   ================================================================ */
+
+/* ── Keyframes ──────────────────────────────────────────────────── */
+@keyframes lbdc-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lbdc-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hero entrance ──────────────────────────────────────────────── */
+/*
+ * Add data-enter="0|1|2|3|4" to hero children for staggered fade-up.
+ * Each step adds ~0.13 s to the delay.
+ */
+[data-enter] {
+  animation: lbdc-fade-up 0.65s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+[data-enter="0"] { animation-delay: 0.05s; }
+[data-enter="1"] { animation-delay: 0.18s; }
+[data-enter="2"] { animation-delay: 0.31s; }
+[data-enter="3"] { animation-delay: 0.46s; }
+[data-enter="4"] { animation-delay: 0.62s; }
+
+/* ── Scroll reveal ──────────────────────────────────────────────── */
+/*
+ * JS (IntersectionObserver in SiteLayout) adds .is-visible when the
+ * element scrolls into view. Siblings stagger via nth-child delay.
+ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.55s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.55s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Sibling stagger — works when multiple [data-reveal] share a parent */
+[data-reveal]:nth-child(2) { transition-delay: 0.09s; }
+[data-reveal]:nth-child(3) { transition-delay: 0.18s; }
+[data-reveal]:nth-child(4) { transition-delay: 0.27s; }
+[data-reveal]:nth-child(5) { transition-delay: 0.36s; }
+
+/* ── Button micro-interactions ──────────────────────────────────── */
+/*
+ * Extend .btn transition (defined in SiteLayout) to include transform
+ * and box-shadow so hovers feel springy, not just colour changes.
+ */
+.btn {
+  transition:
+    background    0.18s var(--da-ease, ease),
+    color         0.18s var(--da-ease, ease),
+    border-color  0.18s var(--da-ease, ease),
+    opacity       0.18s ease,
+    transform     0.18s var(--da-ease, ease),
+    box-shadow    0.18s ease;
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Loading spinner — add .btn--loading via JS on submit */
+.btn--loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  cursor: default;
+}
+.btn--loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: lbdc-spin 0.65s linear infinite;
+}
+/* Ghost button spinner uses ink colour */
+.btn--ghost.btn--loading::after {
+  border-color: rgba(0, 0, 0, 0.15);
+  border-top-color: var(--da-ink);
+}
+
+/* ── Nav micro-interactions ─────────────────────────────────────── */
+.nav__cta {
+  transition: border-color 0.15s ease, background 0.15s ease,
+              transform 0.18s var(--da-ease, ease), box-shadow 0.18s ease;
+}
+.nav__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+.nav__link {
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+/* ── Service card micro-interactions ────────────────────────────── */
+.svc {
+  transition: background 0.2s ease;
+}
+.svc:hover {
+  background: var(--da-surface, #f5f5f3);
+}
+.svc__link {
+  transition: opacity 0.15s ease, gap 0.15s ease;
+}
+.svc__link:hover {
+  opacity: 0.65;
+}
+
+/* ── Sidebar card hover ─────────────────────────────────────────── */
+.sidebar-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.sidebar-card:hover {
+  border-color: var(--da-accent, #2F6F73);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Form field focus polish ────────────────────────────────────── */
+.field__input {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.field__input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--da-accent, #2F6F73) 18%, transparent);
+}
+
+/* ── prefers-reduced-motion: reduce ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* Kill hero animations immediately */
+  [data-enter] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Show all reveals without motion */
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  [data-reveal]:nth-child(n) {
+    transition-delay: 0s;
+  }
+
+  /* Strip springy transforms from buttons — keep colour transitions */
+  .btn {
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .btn:hover:not(:disabled),
+  .nav__cta:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Static spinner (still indicates loading, but no spin) */
+  .btn--loading::after {
+    animation: none;
+    border-top-color: rgba(255, 255, 255, 0.6);
+  }
+  .btn--ghost.btn--loading::after {
+    border-top-color: var(--da-ink);
+  }
+
+  /* Disable scroll-behaviour smooth scroll */
+  html {
+    scroll-behavior: auto;
+  }
+}
