@@ -54,8 +54,11 @@ const currentPath = Astro.url.pathname;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
-    <link rel="icon" href={withBase('favicon.ico')} />
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('favicon/favicon-16.png')} />
+    <link rel="icon" href={withBase('favicon/favicon.ico')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('favicon/apple-touch-icon.png')} />
     <title>{title} — LBDC</title>
 
     {/* Palette init: runs before first paint to avoid flash */}
@@ -75,7 +78,10 @@ const currentPath = Astro.url.pathname;
     <!-- NAV ─────────────────────────────────────────────────────── -->
     {!bareNav && (
       <nav class="nav">
-        <a class="nav__brand" href={withBase('')} aria-label="LBDC — home">LBDC</a>
+        <a class="nav__brand" href={withBase('')} aria-label="LBDC — home">
+          <img class="nav__mark" src={withBase('brand/LBDC_logo.png')} alt="" width="18" height="18" loading="eager" decoding="async" />
+          LBDC
+        </a>
         <div class="nav__links">
           {navLinks.map(({ href, label }) => (
             <a
@@ -104,6 +110,16 @@ const currentPath = Astro.url.pathname;
           <a href={href}>{label}</a>
         ))}
       </div>
+      <!-- Subtle watermark mark (tasteful, low opacity) -->
+      <img
+        class="footer__wm"
+        src={withBase('brand/LBDC_logo.png')}
+        alt=""
+        width="140"
+        height="140"
+        loading="lazy"
+        decoding="async"
+      />
     </footer>
 
     <!-- PALETTE DEBUG WIDGET ────────────────────────────────────── -->
@@ -351,9 +367,19 @@ const currentPath = Astro.url.pathname;
     backdrop-filter: blur(12px);
   }
   .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-size: 16px;
     font-weight: 800;
     letter-spacing: var(--da-track-tight);
+  }
+  .nav__mark {
+    width: 18px;
+    height: 18px;
+    opacity: 0.9;
+    /* Keep it tasteful: knock colour back so it reads like a mark */
+    filter: grayscale(1) contrast(1.1) brightness(0.35);
   }
   .nav__links {
     display: flex;
@@ -374,11 +400,24 @@ const currentPath = Astro.url.pathname;
 
   /* ── Footer ──────────────────────────────────────────────────── */
   .footer {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 24px clamp(20px, 5vw, 80px);
     border-top: 1px solid var(--da-line);
+    overflow: hidden;
+  }
+  .footer__wm {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    width: 140px;
+    height: 140px;
+    transform: translateY(-50%);
+    opacity: 0.08;
+    pointer-events: none;
+    filter: grayscale(1) contrast(1.05) brightness(0.6);
   }
   .footer__brand {
     font-size: 15px;
@@ -438,5 +477,6 @@ const currentPath = Astro.url.pathname;
     .nav__links .nav__link { display: none; }
     .footer { flex-direction: column; gap: 16px; text-align: center; }
     .footer__right { display: none; }
+    .footer__wm { display: none; }
   }
 </style>
