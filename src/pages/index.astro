@@ -4,6 +4,8 @@
  * Design: Concept A (clean light, teal accent)
  */
 import SiteLayout from '../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <SiteLayout
@@ -23,8 +25,8 @@ import SiteLayout from '../layouts/SiteLayout.astro';
       payments, and insurance.
     </p>
     <div class="hero__actions" data-enter="3">
-      <a class="btn btn--primary" href="contact/">Get in touch</a>
-      <a class="btn btn--ghost" href="services/">See services →</a>
+      <a class="btn btn--primary" href={`${base}contact/`}>Get in touch</a>
+      <a class="btn btn--ghost" href={`${base}services/`}>See services →</a>
     </div>
 
     <!-- Proof ribbon -->
@@ -66,7 +68,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
           Roadmapping, OKRs, and prioritisation frameworks that align
           digital product teams with real business outcomes.
         </p>
-        <a class="svc__link" href="services/">Learn more →</a>
+        <a class="svc__link" href={`${base}services/`}>Learn more →</a>
       </article>
       <article class="svc" data-reveal>
         <div class="svc__num">02</div>
@@ -76,7 +78,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
           cross-functional operating model redesign — from quarterly to
           weekly release cycles.
         </p>
-        <a class="svc__link" href="services/">Learn more →</a>
+        <a class="svc__link" href={`${base}services/`}>Learn more →</a>
       </article>
       <article class="svc" data-reveal>
         <div class="svc__num">03</div>
@@ -86,7 +88,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
           payment gateway integrations, and fintech platforms across
           African markets.
         </p>
-        <a class="svc__link" href="services/">Learn more →</a>
+        <a class="svc__link" href={`${base}services/`}>Learn more →</a>
       </article>
     </div>
   </section>
@@ -140,7 +142,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
           He works directly with founders and executive teams.
           No account managers, no padding.
         </p>
-        <a class="btn btn--ghost" href="about/" style="margin-top: 24px;">About LeRoy →</a>
+        <a class="btn btn--ghost" href={`${base}about/`} style="margin-top: 24px;">About LeRoy →</a>
       </div>
       <div class="about-preview__right" data-reveal>
         <div class="credential">
@@ -174,7 +176,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         Briefly describe what you're trying to achieve.
         LeRoy responds within one to two business days.
       </p>
-      <a class="btn btn--accent btn--lg" href="contact/">Start a conversation →</a>
+      <a class="btn btn--accent btn--lg" href={`${base}contact/`}>Start a conversation →</a>
     </div>
   </section>
 
