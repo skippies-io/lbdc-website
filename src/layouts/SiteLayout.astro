@@ -166,6 +166,83 @@ const currentPath = Astro.url.pathname;
       })();
     </script>
 
+    <!-- COUNT-UP ────────────────────────────────────────────────── -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var countEls = document.querySelectorAll('.proof__num, .bio-stat__num');
+        if (!countEls.length) return;
+
+        // Parse a stat element into { node, prefix, value, suffix, originalText }
+        // Handles formats: "10", "13×", "+50%", "R320m" and nested spans (e.g. "20<span>+</span>")
+        function parseCountEl(el) {
+          // Find first direct text node (skips child elements like .bio-stat__plus)
+          var textNode = null;
+          for (var i = 0; i < el.childNodes.length; i++) {
+            if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
+              textNode = el.childNodes[i];
+              break;
+            }
+          }
+          var raw = textNode ? textNode.textContent.trim() : el.textContent.trim();
+          var m = raw.match(/^([+R]?)(\d+(?:\.\d+)?)([×%m]?)$/);
+          if (!m || parseFloat(m[2]) === 0) return null;
+          return {
+            node: textNode,
+            el: el,
+            prefix: m[1],
+            value: parseFloat(m[2]),
+            suffix: m[3],
+            originalText: raw,
+          };
+        }
+
+        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+        function animateCount(parsed) {
+          if (!parsed) return;
+          var duration = 1400;
+          var start = performance.now();
+          function frame(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var current = Math.round(easeOutCubic(progress) * parsed.value);
+            var text = parsed.prefix + current + parsed.suffix;
+            if (parsed.node) {
+              parsed.node.textContent = text;
+            } else {
+              parsed.el.textContent = text;
+            }
+            if (progress < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              // Restore exact original (handles any rounding edge cases)
+              if (parsed.node) {
+                parsed.node.textContent = parsed.originalText;
+              } else {
+                parsed.el.textContent = parsed.originalText;
+              }
+            }
+          }
+          requestAnimationFrame(frame);
+        }
+
+        var countObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                animateCount(parseCountEl(entry.target));
+                countObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+
+        countEls.forEach(function (el) { countObserver.observe(el); });
+      })();
+    </script>
+
   </body>
 </html>
 

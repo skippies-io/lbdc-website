@@ -19,13 +19,13 @@
  * Each step adds ~0.13 s to the delay.
  */
 [data-enter] {
-  animation: lbdc-fade-up 0.65s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  animation: lbdc-fade-up 0.80s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
-[data-enter="0"] { animation-delay: 0.05s; }
-[data-enter="1"] { animation-delay: 0.18s; }
-[data-enter="2"] { animation-delay: 0.31s; }
-[data-enter="3"] { animation-delay: 0.46s; }
-[data-enter="4"] { animation-delay: 0.62s; }
+[data-enter="0"] { animation-delay: 0.08s; }
+[data-enter="1"] { animation-delay: 0.22s; }
+[data-enter="2"] { animation-delay: 0.38s; }
+[data-enter="3"] { animation-delay: 0.56s; }
+[data-enter="4"] { animation-delay: 0.76s; }
 
 /* ── Scroll reveal ──────────────────────────────────────────────── */
 /*
@@ -36,18 +36,18 @@
   opacity: 0;
   transform: translateY(16px);
   transition:
-    opacity 0.55s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-    transform 0.55s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1));
+    opacity 0.70s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.70s var(--da-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 /* Sibling stagger — works when multiple [data-reveal] share a parent */
-[data-reveal]:nth-child(2) { transition-delay: 0.09s; }
-[data-reveal]:nth-child(3) { transition-delay: 0.18s; }
-[data-reveal]:nth-child(4) { transition-delay: 0.27s; }
-[data-reveal]:nth-child(5) { transition-delay: 0.36s; }
+[data-reveal]:nth-child(2) { transition-delay: 0.12s; }
+[data-reveal]:nth-child(3) { transition-delay: 0.24s; }
+[data-reveal]:nth-child(4) { transition-delay: 0.36s; }
+[data-reveal]:nth-child(5) { transition-delay: 0.48s; }
 
 /* ── Button micro-interactions ──────────────────────────────────── */
 /*

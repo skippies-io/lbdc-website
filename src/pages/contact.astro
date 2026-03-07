@@ -7,6 +7,7 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
+const base = import.meta.env.BASE_URL;
 ---
 
 <SiteLayout
@@ -123,7 +124,7 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
             Thanks for reaching out. LeRoy will be in touch within
             one to two business days.
           </p>
-          <a class="btn btn--ghost" href="contact/">Send another message</a>
+          <a class="btn btn--ghost" href={`${base}contact/`}>Send another message</a>
         </div>
       </div>
 
@@ -144,9 +145,9 @@ const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
         <div class="sidebar-card sidebar-card--services">
           <div class="sidebar-card__label">Services</div>
           <ul class="sidebar-services">
-            <li><a href="services/#product-management">Product Management &amp; Strategy</a></li>
-            <li><a href="services/#digital-transformation">Digital Transformation</a></li>
-            <li><a href="services/#banking-payments">Online Banking &amp; Digital Payments</a></li>
+            <li><a href={`${base}services/#product-management`}>Product Management &amp; Strategy</a></li>
+            <li><a href={`${base}services/#digital-transformation`}>Digital Transformation</a></li>
+            <li><a href={`${base}services/#banking-payments`}>Online Banking &amp; Digital Payments</a></li>
           </ul>
         </div>
       </div>
