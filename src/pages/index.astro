@@ -1,406 +1,364 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-// TODO: update title and description with final copy from LeRoy
-const pageTitle = 'LBDC — Strategic Advisory';
-const pageDescription =
-  'LeRoy Barnes advises growth-stage businesses on strategy, systems, and the decisions that compound over time.';
-
-// TODO: replace placeholder mailto with live contact destination (or Formspree endpoint — blocked on #7)
-const contactHref = 'mailto:hello@lbdc.co.za';
-
-const services = [
-  {
-    title: 'Strategic Advisory',
-    // TODO: refine service descriptions with LeRoy
-    description:
-      'Translating ambiguity into direction for leadership teams at decisive moments.',
-  },
-  {
-    title: 'Systems Design',
-    description:
-      'Building the operational and technical infrastructure that scales without losing coherence.',
-  },
-  {
-    title: 'Digital Transformation',
-    description:
-      'Guiding organisations through the people, process, and platform changes that actually stick.',
-  },
-  {
-    title: 'Executive Mentorship',
-    description:
-      'Working directly with founders and senior leaders on the challenges that resist easy answers.',
-  },
-];
+/**
+ * Home — LBDC V1
+ * Design: Concept A (clean light, teal accent)
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<SiteLayout
+  title="Home"
+  description="LBDC is an independent consulting practice specialising in product management, digital transformation, and online banking — serving organisations across Africa."
+>
 
-  <!-- ─── Navigation ───────────────────────────────────────────────────── -->
-  <header class="nav">
-    <nav class="nav__inner" aria-label="Main navigation">
-      {/* TODO: replace with final logotype / wordmark asset when available */}
-      <a href={import.meta.env.BASE_URL} class="nav__wordmark" aria-label="LBDC — home">
-        LBDC
-      </a>
-      <a href={contactHref} class="nav__cta">Get in touch</a>
-    </nav>
-  </header>
-
-  <main>
-
-    <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container">
-        <p class="hero__eyebrow" aria-hidden="true">
-          {/* TODO: confirm eyebrow label with LeRoy — or remove */}
-          Strategic Advisory
-        </p>
-        {/* TODO: finalise headline copy with LeRoy */}
-        <h1 id="hero-heading" class="hero__heading">
-          Built on clarity.<br />Measured in outcomes.
-        </h1>
-        {/* TODO: finalise subheadline copy with LeRoy */}
-        <p class="hero__sub">
-          LeRoy Barnes advises growth-stage businesses on the decisions
-          that determine trajectory.
-        </p>
-        <a href={contactHref} class="btn btn--primary">Get in touch</a>
-      </div>
-    </section>
-
-    <!-- ─── About ─────────────────────────────────────────────────────────── -->
-    <section class="about" aria-labelledby="about-heading">
-      <div class="container container--content">
-        <h2 id="about-heading" class="section-label">About</h2>
-        {/* TODO: finalise bio copy with LeRoy — anonymised outcomes, no client names */}
-        <p class="about__body">
-          LeRoy Barnes is an independent advisor working at the intersection
-          of strategy and execution. He has helped growth-stage businesses across
-          multiple sectors clarify their priorities, restructure their operations,
-          and build the capabilities that sustain long-term performance.
-        </p>
-        <p class="about__body">
-          His approach is direct, evidence-based, and oriented towards
-          outcomes that compound.
-        </p>
-      </div>
-    </section>
-
-    <!-- ─── Services ──────────────────────────────────────────────────────── -->
-    <section class="services" aria-labelledby="services-heading">
-      <div class="container">
-        <h2 id="services-heading" class="section-label">Capabilities</h2>
-        <ul class="services__grid" role="list">
-          {services.map((svc) => (
-            <li class="service-item">
-              <h3 class="service-item__title">{svc.title}</h3>
-              <p class="service-item__desc">{svc.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- ─── Contact CTA ───────────────────────────────────────────────────── -->
-    {/* TODO: replace this section with embedded contact form once #7 is resolved */}
-    <section class="cta-band" aria-labelledby="cta-heading">
-      <div class="container container--content">
-        {/* TODO: finalise CTA heading copy with LeRoy */}
-        <h2 id="cta-heading" class="cta-band__heading">
-          Ready to get started?
-        </h2>
-        <p class="cta-band__sub">
-          Reach out to discuss how LBDC can support your next stage of growth.
-        </p>
-        <a href={contactHref} class="btn btn--primary">Get in touch</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ─── Footer ───────────────────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span class="footer__copy">
-        {/* TODO: confirm legal name / trading name with LeRoy */}
-        &copy; {new Date().getFullYear()} LBDC. All rights reserved.
-      </span>
+  <!-- HERO ────────────────────────────────────────────────────── -->
+  <section class="hero section">
+    <div class="hero__label label">Product Management · Digital Transformation</div>
+    <h1 class="hero__h1">
+      From digital vision<br>to business value.
+    </h1>
+    <p class="hero__sub">
+      LeRoy Barnes is an independent consultant helping organisations turn
+      product strategy into shipped digital platforms — across banking,
+      payments, and insurance.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="contact/">Get in touch</a>
+      <a class="btn btn--ghost" href="services/">See services →</a>
     </div>
-  </footer>
 
-</BaseLayout>
+    <!-- Proof ribbon -->
+    <div class="proof" aria-label="Track record highlights">
+      <div class="proof__item">
+        <span class="proof__num">10</span>
+        <span class="proof__text">country pan-African<br>payments platform</span>
+      </div>
+      <div class="proof__div" aria-hidden="true"></div>
+      <div class="proof__item">
+        <span class="proof__num">13×</span>
+        <span class="proof__text">faster delivery cadence<br>achieved at Absa</span>
+      </div>
+      <div class="proof__div" aria-hidden="true"></div>
+      <div class="proof__item">
+        <span class="proof__num">+50%</span>
+        <span class="proof__text">user satisfaction<br>improvement delivered</span>
+      </div>
+      <div class="proof__div" aria-hidden="true"></div>
+      <div class="proof__item">
+        <span class="proof__num">R320m</span>
+        <span class="proof__text">P&amp;L responsibility<br>held at Absa Group</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW ─────────────────────────────────────────── -->
+  <section class="section services">
+    <div class="section__header">
+      <div class="label">What he does</div>
+      <h2>Three ways to work<br>with LeRoy</h2>
+    </div>
+
+    <div class="services__grid">
+      <article class="svc">
+        <div class="svc__num">01</div>
+        <h3 class="svc__title">Product Management &amp; Strategy</h3>
+        <p class="svc__body">
+          Roadmapping, OKRs, and prioritisation frameworks that align
+          digital product teams with real business outcomes.
+        </p>
+        <a class="svc__link" href="services/">Learn more →</a>
+      </article>
+      <article class="svc">
+        <div class="svc__num">02</div>
+        <h3 class="svc__title">Digital Transformation</h3>
+        <p class="svc__body">
+          Accelerating delivery cadence, platform modernisation, and
+          cross-functional operating model redesign — from quarterly to
+          weekly release cycles.
+        </p>
+        <a class="svc__link" href="services/">Learn more →</a>
+      </article>
+      <article class="svc">
+        <div class="svc__num">03</div>
+        <h3 class="svc__title">Online Banking &amp; Digital Payments</h3>
+        <p class="svc__body">
+          Product design and go-to-market for mobile banking apps,
+          payment gateway integrations, and fintech platforms across
+          African markets.
+        </p>
+        <a class="svc__link" href="services/">Learn more →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- HOW HE WORKS ─────────────────────────────────────────────── -->
+  <section class="section how">
+    <div class="section__header">
+      <div class="label">How it works</div>
+      <h2>A clear process,<br>every time</h2>
+    </div>
+
+    <div class="how__steps">
+      <div class="step">
+        <span class="step__n">1</span>
+        <div>
+          <h3 class="step__t">Diagnose</h3>
+          <p class="step__b">Understand the system as it actually works — not as it appears on paper.</p>
+        </div>
+      </div>
+      <div class="step__arrow" aria-hidden="true">→</div>
+      <div class="step">
+        <span class="step__n">2</span>
+        <div>
+          <h3 class="step__t">Design</h3>
+          <p class="step__b">Build the right interventions — roadmap, operating model, delivery cadence.</p>
+        </div>
+      </div>
+      <div class="step__arrow" aria-hidden="true">→</div>
+      <div class="step">
+        <span class="step__n">3</span>
+        <div>
+          <h3 class="step__t">Deliver</h3>
+          <p class="step__b">Embed, iterate, and hand off — with measurable outcomes that hold after he leaves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PREVIEW ──────────────────────────────────────────────── -->
+  <section class="section about-preview">
+    <div class="about-preview__inner">
+      <div class="about-preview__left">
+        <div class="label">About</div>
+        <h2>Founder-led.<br>No junior consultants.</h2>
+        <p>
+          LeRoy Barnes is a Product Lead and Digital Business professional
+          with a demonstrated history delivering large-scale digital
+          solutions in banking, payments, and insurance across Africa.
+        </p>
+        <p>
+          He works directly with founders and executive teams.
+          No account managers, no padding.
+        </p>
+        <a class="btn btn--ghost" href="about/" style="margin-top: 24px;">About LeRoy →</a>
+      </div>
+      <div class="about-preview__right">
+        <div class="credential">
+          <div class="credential__label">Selected experience</div>
+          <ul class="credential__list">
+            <li>Pan-African digital payments — 10 markets</li>
+            <li>Head of Digital, APA Insurance (Nairobi)</li>
+            <li>Head of Product, Absa International Banking</li>
+            <li>NovoFX mobile app + Western Union® at Absa</li>
+          </ul>
+        </div>
+        <div class="credential" style="margin-top:24px">
+          <div class="credential__label">Principles</div>
+          <ul class="credential__list">
+            <li>Strategy without delivery is just a slide deck</li>
+            <li>Agile leadership — translate ambiguity into action</li>
+            <li>Truthful metrics over vanity dashboards</li>
+            <li>Products shipped beat roadmaps planned</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA ─────────────────────────────────────────────────── -->
+  <section class="section cta-band">
+    <div class="cta-band__inner">
+      <div class="label">Get in touch</div>
+      <h2>Let's talk about<br>your business.</h2>
+      <p class="cta-band__sub">
+        Briefly describe what you're trying to achieve.
+        LeRoy responds within one to two business days.
+      </p>
+      <a class="btn btn--accent btn--lg" href="contact/">Start a conversation →</a>
+    </div>
+  </section>
+
+</SiteLayout>
 
 <style>
-  /* ─── Layout helpers ───────────────────────────────────────────────── */
-  .container {
-    width: 100%;
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: var(--space-6);
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .hero { border-top: none; }
+  .hero__label { margin-bottom: 20px; }
+  .hero__h1 {
+    font-size: var(--da-display);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 28px;
+    max-width: 18ch;
   }
-
-  .container--content {
-    max-width: var(--content-width);
-  }
-
-  /* ─── Section label (eyebrow above h2) ────────────────────────────── */
-  .section-label {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-block-end: var(--space-8);
-  }
-
-  /* ─── Buttons ─────────────────────────────────────────────────────── */
-  .btn {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    padding: var(--space-3) var(--space-8);
-    border-radius: var(--radius-sm);
-    transition:
-      background-color var(--transition-fast),
-      color var(--transition-fast),
-      border-color var(--transition-fast);
-    cursor: pointer;
-  }
-
-  .btn--primary {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-    border: 1px solid var(--color-accent);
-  }
-
-  .btn--primary:hover {
-    background-color: var(--color-accent-hover);
-    border-color: var(--color-accent-hover);
-  }
-
-  /* ─── Navigation ─────────────────────────────────────────────────── */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background-color: var(--color-bg);
-    border-block-end: 1px solid var(--color-border);
-    height: var(--nav-height);
-    display: flex;
-    align-items: center;
-  }
-
-  .nav__inner {
-    width: 100%;
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: var(--space-6);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav__wordmark {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--color-fg);
-    transition: color var(--transition-fast);
-  }
-
-  .nav__wordmark:hover {
-    color: var(--color-accent);
-  }
-
-  .nav__cta {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--color-fg-muted);
-    transition: color var(--transition-fast);
-  }
-
-  .nav__cta:hover {
-    color: var(--color-fg);
-  }
-
-  /* ─── Hero ────────────────────────────────────────────────────────── */
-  .hero {
-    padding-block: var(--space-32) var(--space-24);
-  }
-
-  .hero__eyebrow {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-block-end: var(--space-6);
-  }
-
-  .hero__heading {
-    font-size: var(--text-5xl);
-    font-weight: var(--weight-light);
-    letter-spacing: var(--tracking-tightest);
-    line-height: var(--leading-tight);
-    color: var(--color-fg);
-    margin-block-end: var(--space-6);
-    max-width: 14ch;
-  }
-
   .hero__sub {
-    font-size: var(--text-lg);
-    font-weight: var(--weight-light);
-    line-height: var(--leading-snug);
-    color: var(--color-fg-muted);
-    max-width: 46ch;
-    margin-block-end: var(--space-10);
+    font-size: var(--da-body-lg);
+    max-width: 56ch;
+    color: var(--da-ink-muted);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: var(--da-gap);
   }
 
-  /* ─── About ───────────────────────────────────────────────────────── */
-  .about {
-    padding-block: var(--space-24);
-    border-block-start: 1px solid var(--color-border);
+  /* Proof ribbon */
+  .proof {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--da-line);
+    padding-top: 36px;
+    margin-top: 8px;
   }
-
-  .about__body {
-    font-size: var(--text-lg);
-    line-height: var(--leading-normal);
-    color: var(--color-fg-muted);
-    max-width: 62ch;
+  .proof__item { padding-right: 24px; }
+  .proof__num {
+    display: block;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 800;
+    letter-spacing: var(--da-track-tight);
+    color: var(--da-accent);
+    line-height: 1;
+    margin-bottom: 6px;
   }
+  .proof__text { font-size: 13px; color: var(--da-ink-muted); line-height: 1.4; }
+  .proof__div { width: 1px; background: var(--da-line); margin: 0 24px 0 0; align-self: stretch; }
 
-  .about__body + .about__body {
-    margin-block-start: var(--space-4);
-  }
-
-  /* ─── Services ────────────────────────────────────────────────────── */
-  .services {
-    padding-block: var(--space-24);
-    border-block-start: 1px solid var(--color-border);
-  }
-
+  /* ── Services ─────────────────────────────────────────────────── */
   .services__grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-    list-style: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
   }
-
-  .service-item {
-    padding-block: var(--space-8);
-    border-block-start: 1px solid var(--color-border);
+  .svc {
+    padding: 36px 32px 36px 0;
+    border-right: 1px solid var(--da-line);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-
-  .service-item:last-child {
-    border-block-end: 1px solid var(--color-border);
+  .svc:last-child { border-right: 0; padding-right: 0; }
+  .svc:not(:first-child) { padding-left: 32px; }
+  .svc__num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--da-ink-faint);
+    margin-bottom: 4px;
   }
-
-  .service-item__title {
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-fg);
-    margin-block-end: var(--space-2);
+  .svc__title {
+    font-size: var(--da-h3);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.25;
   }
-
-  .service-item__desc {
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-    color: var(--color-fg-muted);
-    max-width: 48ch;
+  .svc__body { font-size: 14px; color: var(--da-ink-muted); line-height: 1.6; flex: 1; }
+  .svc__link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--da-accent);
+    margin-top: 4px;
+    transition: opacity 0.15s;
   }
+  .svc__link:hover { opacity: 0.7; }
 
-  /* ─── CTA band ────────────────────────────────────────────────────── */
-  .cta-band {
-    padding-block: var(--space-24);
-    border-block-start: 1px solid var(--color-border);
-  }
-
-  .cta-band__heading {
-    font-size: var(--text-3xl);
-    font-weight: var(--weight-light);
-    letter-spacing: var(--tracking-tight);
-    line-height: var(--leading-tight);
-    color: var(--color-fg);
-    margin-block-end: var(--space-4);
-  }
-
-  .cta-band__sub {
-    font-size: var(--text-base);
-    color: var(--color-fg-muted);
-    margin-block-end: var(--space-8);
-    max-width: 50ch;
-  }
-
-  /* ─── Footer ──────────────────────────────────────────────────────── */
-  .footer {
-    border-block-start: 1px solid var(--color-border);
-    padding-block: var(--space-8);
-  }
-
-  .footer__inner {
+  /* ── How ─────────────────────────────────────────────────────── */
+  .how__steps { display: flex; align-items: flex-start; gap: 0; }
+  .step { flex: 1; display: flex; gap: 16px; align-items: flex-start; }
+  .step__n {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--da-line-mid);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step__t { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .step__b { font-size: 14px; color: var(--da-ink-muted); line-height: 1.55; }
+  .step__arrow { font-size: 20px; color: var(--da-ink-faint); padding: 4px 20px 0; flex-shrink: 0; }
+
+  /* ── About preview ────────────────────────────────────────────── */
+  .about-preview { background: var(--da-surface); }
+  .about-preview__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--da-gap);
+  }
+  .about-preview__left h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .about-preview__left p {
+    font-size: 15px;
+    color: var(--da-ink-muted);
+    max-width: 44ch;
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+  .credential__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--da-line);
+  }
+  .credential__list { list-style: none; padding: 0; margin: 0; }
+  .credential__list li {
+    font-size: 14px;
+    color: var(--da-ink-muted);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--da-line);
+    line-height: 1.4;
   }
 
-  .footer__copy {
-    font-size: var(--text-xs);
-    color: var(--color-fg-subtle);
-    letter-spacing: var(--tracking-wide);
+  /* ── CTA band ─────────────────────────────────────────────────── */
+  .cta-band { background: var(--da-ink); }
+  .cta-band .label { color: rgba(255,255,255,0.45); }
+  .cta-band__inner h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .cta-band__sub {
+    font-size: var(--da-body);
+    color: rgba(255,255,255,0.6);
+    max-width: 50ch;
+    margin-bottom: 32px;
+    line-height: 1.6;
   }
 
-  /* ─── Responsive — tablet (≥ 768px) ──────────────────────────────── */
-  @media (min-width: 768px) {
-    .hero {
-      padding-block: var(--space-40) var(--space-32);
-    }
-
-    .hero__heading {
-      font-size: var(--text-6xl);
-    }
-
-    .services__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .service-item {
-      border-block-start: none;
-      border-block-end: none;
-      padding-inline-end: var(--space-12);
-    }
-
-    .service-item:last-child {
-      border-block-end: none;
-    }
-
-    /* Restore border lines via row separators for 2-col grid */
-    .services__grid {
-      row-gap: 0;
-      column-gap: var(--space-8);
-    }
-
-    .service-item {
-      padding-block: var(--space-8);
-      border-block-start: 1px solid var(--color-border);
-    }
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .proof { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .proof__div { display: none; }
+    .services__grid { grid-template-columns: 1fr; }
+    .svc { border-right: 0; border-bottom: 1px solid var(--da-line); padding: 28px 0; }
+    .svc:last-child { border-bottom: 0; }
+    .svc:not(:first-child) { padding-left: 0; }
+    .how__steps { flex-direction: column; gap: 24px; }
+    .step__arrow { display: none; }
+    .about-preview__inner { grid-template-columns: 1fr; }
   }
-
-  /* ─── Responsive — desktop (≥ 1024px) ────────────────────────────── */
-  @media (min-width: 1024px) {
-    .hero__heading {
-      font-size: var(--text-7xl);
-    }
-
-    .hero__sub {
-      font-size: var(--text-xl);
-    }
+  @media (max-width: 480px) {
+    .proof { grid-template-columns: 1fr 1fr; }
   }
 </style>
