@@ -137,7 +137,10 @@ const withBase = (path) => {
       <div class="contact-sidebar" data-reveal>
         <div class="sidebar-card">
           <div class="sidebar-card__label">Direct email</div>
-          <a class="sidebar-card__value" href="mailto:leroy@lbdc.co.za">leroy@lbdc.co.za</a>
+          <!-- Avoid publishing a clickable mailto to reduce scraping; the form is the primary contact route. -->
+          <div class="sidebar-card__value" id="direct-email" data-email-user="hello" data-email-domain="lbdc.co.za">
+            <button class="email-reveal" type="button">Show email</button>
+          </div>
         </div>
         <div class="sidebar-card">
           <div class="sidebar-card__label">Response time</div>
@@ -185,6 +188,23 @@ const withBase = (path) => {
         btn.setAttribute('aria-label', 'Sending message…');
         btn.disabled = true;
       }
+    });
+  }
+
+  // Email reveal (reduces casual scraping; form remains primary)
+  const emailWrap = document.getElementById('direct-email');
+  if (emailWrap) {
+    const btn = emailWrap.querySelector('.email-reveal');
+    btn?.addEventListener('click', () => {
+      const user = emailWrap.getAttribute('data-email-user');
+      const domain = emailWrap.getAttribute('data-email-domain');
+      if (!user || !domain) return;
+      const addr = `${user}@${domain}`;
+      const a = document.createElement('a');
+      a.className = 'email-link';
+      a.href = `mailto:${addr}`;
+      a.textContent = addr;
+      emailWrap.replaceChildren(a);
     });
   }
 </script>
@@ -326,6 +346,20 @@ const withBase = (path) => {
     color: var(--da-ink);
     word-break: break-all;
   }
+
+  /* Email reveal button (avoid default button chrome) */
+  .email-reveal {
+    appearance: none;
+    border: 1.5px solid var(--da-line-mid);
+    background: transparent;
+    color: var(--da-ink);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .email-reveal:hover { border-color: var(--da-ink); }
+
   a.sidebar-card__value { color: var(--da-accent); }
   a.sidebar-card__value:hover { opacity: 0.75; }
   .sidebar-services {
