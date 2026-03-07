@@ -1,0 +1,368 @@
+---
+/**
+ * About — LBDC V1
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const experience = [
+  {
+    role: 'Independent Contractor — Digital Product &amp; Transformation',
+    org: 'LBDC',
+    period: 'Oct 2021 – Present',
+    highlights: [
+      'Pan-African digital payments platform across 10 countries',
+      'Improved user satisfaction by 50%',
+      'Accelerated deployment cycles from quarterly to weekly (13× improvement)',
+      'Delivered DevOps, cloud, and platform business model masterclasses',
+    ],
+  },
+  {
+    role: 'Head of Digital',
+    org: 'APA Insurance Limited, Nairobi',
+    period: 'Aug 2020 – Jul 2021',
+    highlights: [
+      'Led Digital Factory of ~20 (product, design, dev, testing, DevOps)',
+      'Delivered Super App for motor, health, and life insurance',
+      'Launched USSD life insurance product for mass-market micro-insurance',
+      'Integrated payment gateway (card + mobile money rails)',
+    ],
+  },
+  {
+    role: 'Head: Product — International Banking',
+    org: 'Absa Group',
+    period: 'Jan 2017 – Oct 2019',
+    highlights: [
+      'P&amp;L accountability of R320 million across 5 product lines',
+      'Revenue grew 13% in 2018 — first double-digit growth in 5 years',
+      'Launched NovoFX mobile app; brought Western Union® to the Absa app (first in SA)',
+      'Payment volume growth 30%, revenue growth 24%',
+      'Managed Mastercard and Western Union® partnerships',
+    ],
+  },
+  {
+    role: 'Digital Product Owner',
+    org: 'Barclays Africa Group Limited',
+    period: 'Feb 2013 – Dec 2016',
+    highlights: [
+      'Product ownership across digital banking and payments products',
+      'Cross-functional delivery in a large-scale regulated environment',
+    ],
+  },
+];
+
+const education = [
+  { qual: 'Master of Management, Digital Business', inst: 'Wits Business School', period: '2022 – 2024' },
+  { qual: 'Postgraduate Diploma, Digital Business', inst: 'Wits Business School', period: '2020' },
+  { qual: 'Certificate, Product Management', inst: 'University of Cape Town', period: '2019 – 2020' },
+  { qual: 'BCom, Accounting &amp; Information Systems', inst: 'University of the Witwatersrand', period: '1998 – 2002' },
+];
+---
+
+<SiteLayout
+  title="About"
+  description="LeRoy Barnes — Product Lead and Digital Business professional with 20+ years delivering large-scale digital solutions in banking, payments, and insurance across Africa."
+>
+
+  <!-- PAGE HEADER ─────────────────────────────────────────────── -->
+  <section class="page-hero section">
+    <div class="label">About LeRoy Barnes</div>
+    <h1 class="page-hero__h1">
+      Product-led.<br>Delivery-proven.<br>Pan-African.
+    </h1>
+    <p class="page-hero__sub">
+      A Product Lead and Digital Business professional with a demonstrated
+      history driving delivery of large-scale, state-of-the-art solutions
+      across banking, payments, and insurance — in some of Africa's most
+      complex environments.
+    </p>
+  </section>
+
+  <!-- BIO ─────────────────────────────────────────────────────── -->
+  <section class="section bio">
+    <div class="bio__inner">
+      <div class="bio__text">
+        <div class="label">Background</div>
+        <h2>Agile leadership.<br>Concrete action plans.</h2>
+        <p>
+          LeRoy Barnes models an Agile leadership style with a keen ability to
+          translate strategy into concrete action plans — effectively. His
+          background spans product management, digital transformation, and
+          executive leadership at institutions that include Absa Group,
+          Barclays Africa, and APA Insurance.
+        </p>
+        <p>
+          He has P&amp;L accountability experience, cross-functional team
+          leadership (up to 20 direct and indirect reports), and a track
+          record of launching digital products that achieve market share,
+          revenue growth, and measurable user satisfaction improvements.
+        </p>
+        <p>
+          Today, through LBDC, he works directly with founders and executive
+          teams across Africa — delivering the same quality of thinking and
+          execution that large institutions pay for internally.
+        </p>
+      </div>
+      <div class="bio__aside">
+        <div class="bio-stat">
+          <span class="bio-stat__num">20<span class="bio-stat__plus">+</span></span>
+          <span class="bio-stat__label">Years in digital<br>product &amp; banking</span>
+        </div>
+        <div class="bio-stat">
+          <span class="bio-stat__num">10</span>
+          <span class="bio-stat__label">African markets<br>served directly</span>
+        </div>
+        <div class="bio-stat">
+          <span class="bio-stat__num">13×</span>
+          <span class="bio-stat__label">Delivery cadence<br>improvement achieved</span>
+        </div>
+        <div class="bio-divider"></div>
+        <div class="bio-tags">
+          <span class="bio-tag">Product Management</span>
+          <span class="bio-tag">Digital Transformation</span>
+          <span class="bio-tag">Online Banking</span>
+          <span class="bio-tag">Digital Payments</span>
+          <span class="bio-tag">Fintech</span>
+          <span class="bio-tag">OKRs</span>
+          <span class="bio-tag">Agile</span>
+          <span class="bio-tag">Pan-African</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE ──────────────────────────────────────────────── -->
+  <section class="section experience">
+    <div class="section__header">
+      <div class="label">Experience</div>
+      <h2>Where the work<br>was done</h2>
+    </div>
+
+    <div class="exp-list">
+      {experience.map((role) => (
+        <div class="exp-item">
+          <div class="exp-item__meta">
+            <div class="exp-item__period">{role.period}</div>
+            <div class="exp-item__org">{role.org}</div>
+          </div>
+          <div class="exp-item__detail">
+            <h3 class="exp-item__role" set:html={role.role} />
+            <ul class="exp-item__highlights">
+              {role.highlights.map((h) => (
+                <li set:html={h} />
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- EDUCATION ───────────────────────────────────────────────── -->
+  <section class="section education">
+    <div class="section__header">
+      <div class="label">Education</div>
+      <h2>Academic credentials</h2>
+    </div>
+    <div class="edu-list">
+      {education.map((e) => (
+        <div class="edu-item">
+          <div class="edu-item__period">{e.period}</div>
+          <div class="edu-item__detail">
+            <div class="edu-item__qual" set:html={e.qual} />
+            <div class="edu-item__inst">{e.inst}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA ────────────────────────────────────────────────────── -->
+  <section class="section cta-band">
+    <div class="cta-band__inner">
+      <div class="label">Work together</div>
+      <h2>Ready to work<br>with LeRoy?</h2>
+      <p class="cta-band__sub">
+        Get in touch to discuss your product or transformation challenge.
+        LeRoy responds within one to two business days.
+      </p>
+      <a class="btn btn--accent btn--lg" href="contact/">Start a conversation →</a>
+    </div>
+  </section>
+
+</SiteLayout>
+
+<style>
+  /* ── Page hero ────────────────────────────────────────────────── */
+  .page-hero { border-top: none; }
+  .page-hero__h1 {
+    font-size: var(--da-display);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 24px;
+    max-width: 16ch;
+  }
+  .page-hero__sub {
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  /* ── Bio ─────────────────────────────────────────────────────── */
+  .bio { background: var(--da-surface); }
+  .bio__inner {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--da-gap);
+    align-items: start;
+  }
+  .bio__text h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .bio__text p {
+    font-size: 15px;
+    color: var(--da-ink-muted);
+    line-height: 1.7;
+    max-width: 56ch;
+    margin-bottom: 14px;
+  }
+  .bio__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px;
+    border: 1px solid var(--da-line);
+    border-radius: var(--da-r);
+  }
+  .bio-stat__num {
+    display: block;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: var(--da-track-tight);
+    color: var(--da-accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .bio-stat__plus { font-size: 0.65em; vertical-align: super; }
+  .bio-stat__label { font-size: 13px; color: var(--da-ink-muted); line-height: 1.4; }
+  .bio-divider { height: 1px; background: var(--da-line); }
+  .bio-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bio-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border: 1px solid var(--da-line-mid);
+    border-radius: 999px;
+    color: var(--da-ink-muted);
+  }
+
+  /* ── Experience ──────────────────────────────────────────────── */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--da-line);
+  }
+  .exp-item:first-child { border-top: 1px solid var(--da-line); }
+  .exp-item__period {
+    font-size: 12px;
+    color: var(--da-ink-faint);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding-top: 3px;
+  }
+  .exp-item__org {
+    font-size: 12px;
+    color: var(--da-accent);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .exp-item__role {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: var(--da-track-head);
+  }
+  .exp-item__highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .exp-item__highlights li {
+    font-size: 14px;
+    color: var(--da-ink-muted);
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+  }
+  .exp-item__highlights li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--da-accent);
+    font-weight: 700;
+  }
+
+  /* ── Education ───────────────────────────────────────────────── */
+  .edu-list { display: flex; flex-direction: column; }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--da-line);
+  }
+  .edu-item:first-child { border-top: 1px solid var(--da-line); }
+  .edu-item__period {
+    font-size: 12px;
+    color: var(--da-ink-faint);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+  .edu-item__qual {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .edu-item__inst { font-size: 13px; color: var(--da-ink-muted); }
+
+  /* ── CTA band ─────────────────────────────────────────────────── */
+  .cta-band { background: var(--da-ink); }
+  .cta-band .label { color: rgba(255,255,255,0.45); }
+  .cta-band__inner h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .cta-band__sub {
+    font-size: var(--da-body);
+    color: rgba(255,255,255,0.6);
+    max-width: 50ch;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .bio__inner { grid-template-columns: 1fr; }
+    .bio__aside { order: -1; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    .edu-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

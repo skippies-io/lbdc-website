@@ -1,0 +1,38 @@
+/**
+ * Palette overrides — A / B / C
+ *
+ * Palette A (default, in tokens-deep-a.css):
+ *   Teal accent · off-white canvas · charcoal ink
+ *
+ * Palette B: Modern finance / confident blue
+ * Palette C: Warm premium / bronze accent
+ *
+ * Applied via data-palette="A|B|C" on <html>.
+ * Palette A is the default so no override needed.
+ */
+
+/* ── Palette B — Modern finance / confident blue ──────────────────── */
+[data-palette="B"] {
+  --da-bg:          #F8FAFC;
+  --da-surface:     #FFFFFF;
+  --da-ink:         #111827;
+  --da-ink-muted:   rgba(17, 24, 39, 0.55);
+  --da-ink-faint:   rgba(17, 24, 39, 0.22);
+  --da-line:        rgba(17, 24, 39, 0.10);
+  --da-line-mid:    rgba(17, 24, 39, 0.20);
+  --da-accent:      #1D4ED8;
+  --da-accent-dim:  rgba(29, 78, 216, 0.10);
+}
+
+/* ── Palette C — Warm premium / bronze ────────────────────────────── */
+[data-palette="C"] {
+  --da-bg:          #FBFAF7;
+  --da-surface:     #FFFFFF;
+  --da-ink:         #1E2426;
+  --da-ink-muted:   rgba(30, 36, 38, 0.55);
+  --da-ink-faint:   rgba(30, 36, 38, 0.22);
+  --da-line:        rgba(30, 36, 38, 0.09);
+  --da-line-mid:    rgba(30, 36, 38, 0.18);
+  --da-accent:      #B8894A;
+  --da-accent-dim:  rgba(184, 137, 74, 0.12);
+}

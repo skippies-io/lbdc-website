@@ -1,0 +1,342 @@
+---
+/**
+ * Contact — LBDC V1
+ * Form provider: Basin (https://usebasin.com)
+ * Spam protection: honeypot field (Basin also validates server-side)
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
+---
+
+<SiteLayout
+  title="Contact"
+  description="Get in touch with LeRoy Barnes at LBDC — digital product management, transformation, and banking consulting."
+>
+
+  <!-- PAGE HEADER ─────────────────────────────────────────────── -->
+  <section class="page-hero section">
+    <div class="label">Get in touch</div>
+    <h1 class="page-hero__h1">Let's talk about<br>your business.</h1>
+    <p class="page-hero__sub">
+      Briefly describe what you're working on and what you need.
+      LeRoy responds within one to two business days.
+    </p>
+  </section>
+
+  <!-- CONTACT LAYOUT ──────────────────────────────────────────── -->
+  <section class="section contact-body">
+    <div class="contact-inner">
+
+      <!-- FORM ─────────────────────────────────────────────────── -->
+      <div class="form-wrap">
+        <form
+          id="contact-form"
+          method="POST"
+          action={BASIN_ENDPOINT}
+          novalidate
+        >
+          {/* Honeypot — bots fill this, humans don't see it */}
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+            <label for="website">Leave this field empty</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          {/* Basin: redirect back to this page with ?success=1 after submission */}
+          <input type="hidden" name="_redirect" value="https://skippies-io.github.io/lbdc-website/contact/?success=1" />
+
+          <div class="field">
+            <label class="field__label" for="name">Full name <span aria-hidden="true">*</span></label>
+            <input
+              class="field__input"
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              placeholder="Your full name"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="email">Email address <span aria-hidden="true">*</span></label>
+            <input
+              class="field__input"
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@company.com"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="organisation">Organisation</label>
+            <input
+              class="field__input"
+              type="text"
+              id="organisation"
+              name="organisation"
+              autocomplete="organization"
+              placeholder="Company or institution (optional)"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="service">Area of interest</label>
+            <select class="field__input field__select" id="service" name="service">
+              <option value="">— Select one —</option>
+              <option value="product-management">Product Management &amp; Strategy</option>
+              <option value="digital-transformation">Digital Transformation</option>
+              <option value="banking-payments">Online Banking &amp; Digital Payments</option>
+              <option value="other">Other / General enquiry</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="message">What are you working on? <span aria-hidden="true">*</span></label>
+            <textarea
+              class="field__input field__textarea"
+              id="message"
+              name="message"
+              required
+              rows="5"
+              placeholder="Briefly describe your challenge or what you'd like to achieve..."
+            ></textarea>
+          </div>
+
+          <button class="btn btn--primary btn--submit" type="submit">
+            Send message
+          </button>
+
+          <p class="form-note">
+            No spam. Your details are only used to respond to your enquiry.
+          </p>
+        </form>
+
+        {/* Success state — shown when ?success=1 is in URL */}
+        <div class="form-success" id="form-success" hidden>
+          <div class="form-success__icon" aria-hidden="true">✓</div>
+          <h2 class="form-success__heading">Message received.</h2>
+          <p class="form-success__body">
+            Thanks for reaching out. LeRoy will be in touch within
+            one to two business days.
+          </p>
+          <a class="btn btn--ghost" href="contact/">Send another message</a>
+        </div>
+      </div>
+
+      <!-- SIDEBAR ──────────────────────────────────────────────── -->
+      <div class="contact-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-card__label">Direct email</div>
+          <a class="sidebar-card__value" href="mailto:leroy@lbdc.co.za">leroy@lbdc.co.za</a>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-card__label">Response time</div>
+          <div class="sidebar-card__value">1 – 2 business days</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-card__label">Based in</div>
+          <div class="sidebar-card__value">Johannesburg, South Africa</div>
+        </div>
+        <div class="sidebar-card sidebar-card--services">
+          <div class="sidebar-card__label">Services</div>
+          <ul class="sidebar-services">
+            <li><a href="services/#product-management">Product Management &amp; Strategy</a></li>
+            <li><a href="services/#digital-transformation">Digital Transformation</a></li>
+            <li><a href="services/#banking-payments">Online Banking &amp; Digital Payments</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</SiteLayout>
+
+<script>
+  // Show success state if ?success=1 is present (Basin redirects here after submit)
+  const params = new URLSearchParams(location.search);
+  if (params.get('success') === '1') {
+    const form = document.getElementById('contact-form');
+    const success = document.getElementById('form-success');
+    if (form) form.hidden = true;
+    if (success) success.hidden = false;
+    // Clean URL without reload
+    history.replaceState(null, '', location.pathname);
+  }
+
+  // Client-side validation UX
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      const btn = form.querySelector('.btn--submit') as HTMLButtonElement | null;
+      if (!form.checkValidity()) return; // let browser handle
+      if (btn) {
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+      }
+    });
+  }
+</script>
+
+<style>
+  /* ── Page hero ────────────────────────────────────────────────── */
+  .page-hero { border-top: none; }
+  .page-hero__h1 {
+    font-size: var(--da-display);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 24px;
+    max-width: 20ch;
+  }
+  .page-hero__sub {
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    max-width: 56ch;
+    line-height: 1.6;
+  }
+
+  /* ── Contact layout ──────────────────────────────────────────── */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--da-gap);
+    align-items: start;
+  }
+
+  /* ── Form ────────────────────────────────────────────────────── */
+  .form-wrap {
+    max-width: 560px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--da-ink);
+    letter-spacing: 0.01em;
+  }
+  .field__label span { color: var(--da-accent); }
+  .field__input {
+    font-family: var(--da-font);
+    font-size: 15px;
+    color: var(--da-ink);
+    background: var(--da-surface);
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: var(--da-r);
+    padding: 12px 14px;
+    transition: border-color 0.15s;
+    outline: none;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .field__input:focus {
+    border-color: var(--da-accent);
+  }
+  .field__input::placeholder { color: var(--da-ink-faint); }
+  .field__select { cursor: pointer; }
+  .field__textarea { resize: vertical; min-height: 120px; }
+
+  .btn--submit {
+    align-self: flex-start;
+    min-width: 160px;
+    justify-content: center;
+  }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--da-ink-faint);
+    margin-top: -4px;
+  }
+
+  /* ── Success state ────────────────────────────────────────────── */
+  .form-success {
+    padding: 40px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: var(--da-r);
+    text-align: center;
+  }
+  .form-success[hidden] { display: none; }
+  .form-success__icon {
+    font-size: 32px;
+    color: var(--da-accent);
+    margin-bottom: 16px;
+  }
+  .form-success__heading {
+    font-size: var(--da-h3);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .form-success__body {
+    font-size: 15px;
+    color: var(--da-ink-muted);
+    max-width: 40ch;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────────── */
+  .contact-sidebar {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--da-line);
+    border-radius: var(--da-r);
+    overflow: hidden;
+  }
+  .sidebar-card {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--da-line);
+  }
+  .sidebar-card:last-child { border-bottom: 0; }
+  .sidebar-card__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-bottom: 6px;
+  }
+  .sidebar-card__value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--da-ink);
+    word-break: break-all;
+  }
+  a.sidebar-card__value { color: var(--da-accent); }
+  a.sidebar-card__value:hover { opacity: 0.75; }
+  .sidebar-services {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sidebar-services li { font-size: 13px; }
+  .sidebar-services a { color: var(--da-ink-muted); transition: color 0.15s; }
+  .sidebar-services a:hover { color: var(--da-accent); }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .contact-inner { grid-template-columns: 1fr; }
+    .contact-sidebar { position: static; }
+    .form-wrap { max-width: 100%; }
+  }
+</style>

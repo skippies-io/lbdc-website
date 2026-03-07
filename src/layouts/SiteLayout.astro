@@ -1,0 +1,330 @@
+---
+/**
+ * SiteLayout — the main shell for all V1 site pages.
+ *
+ * Responsibilities:
+ * - Inject design tokens (Palette A base + B/C overrides)
+ * - Apply palette from ?palette= query param or localStorage (no FOUC)
+ * - Render Nav + page slot + Footer
+ */
+import '../styles/tokens-deep-a.css';
+import '../styles/palettes.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Hides the default Nav (e.g. for full-bleed pages) */
+  bareNav?: boolean;
+}
+
+const {
+  title = 'LBDC',
+  description = 'Product management and digital transformation consulting — online banking, payments, and pan-African fintech.',
+  bareNav = false,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+
+const navLinks = [
+  { href: `${base}services/`, label: 'Services' },
+  { href: `${base}about/`,    label: 'About' },
+  { href: `${base}contact/`,  label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
+    <title>{title} — LBDC</title>
+
+    {/* Palette init: runs before first paint to avoid flash */}
+    <script is:inline>
+      (function () {
+        var VALID = ['A', 'B', 'C'];
+        var qp = new URLSearchParams(location.search).get('palette');
+        var stored = localStorage.getItem('lbdc-palette');
+        var palette = VALID.includes(qp) ? qp : VALID.includes(stored) ? stored : 'A';
+        if (qp && VALID.includes(qp)) localStorage.setItem('lbdc-palette', qp);
+        document.documentElement.dataset.palette = palette;
+      })();
+    </script>
+  </head>
+  <body>
+
+    <!-- NAV ─────────────────────────────────────────────────────── -->
+    {!bareNav && (
+      <nav class="nav">
+        <a class="nav__brand" href={base} aria-label="LBDC — home">LBDC</a>
+        <div class="nav__links">
+          {navLinks.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={['nav__link', { 'nav__link--active': currentPath === href }]}
+            >
+              {label}
+            </a>
+          ))}
+          <a class="nav__cta" href={`${base}contact/`}>Get in touch</a>
+        </div>
+      </nav>
+    )}
+
+    <!-- PAGE CONTENT ────────────────────────────────────────────── -->
+    <slot />
+
+    <!-- FOOTER ──────────────────────────────────────────────────── -->
+    <footer class="footer">
+      <div class="footer__left">
+        <span class="footer__brand">LBDC</span>
+        <span class="footer__tag">&copy; {new Date().getFullYear()} LeRoy Barnes</span>
+      </div>
+      <div class="footer__right">
+        {navLinks.map(({ href, label }) => (
+          <a href={href}>{label}</a>
+        ))}
+      </div>
+    </footer>
+
+    <!-- PALETTE DEBUG WIDGET ────────────────────────────────────── -->
+    <div class="pal-widget" aria-label="Palette switcher" role="group">
+      <span class="pal-widget__label">Theme</span>
+      {['A', 'B', 'C'].map((p) => (
+        <button
+          class="pal-widget__btn"
+          data-p={p}
+          aria-label={`Switch to palette ${p}`}
+          type="button"
+        >
+          {p}
+        </button>
+      ))}
+    </div>
+
+    <script is:inline>
+      (function () {
+        var widget = document.querySelector('.pal-widget');
+        if (!widget) return;
+
+        function updateActive() {
+          var current = document.documentElement.dataset.palette || 'A';
+          widget.querySelectorAll('.pal-widget__btn').forEach(function (btn) {
+            btn.classList.toggle('pal-widget__btn--active', btn.dataset.p === current);
+          });
+        }
+
+        widget.querySelectorAll('.pal-widget__btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var p = btn.dataset.p;
+            document.documentElement.dataset.palette = p;
+            localStorage.setItem('lbdc-palette', p);
+            // Update URL without reload
+            var url = new URL(location.href);
+            url.searchParams.set('palette', p);
+            history.replaceState(null, '', url.toString());
+            updateActive();
+          });
+        });
+
+        updateActive();
+      })();
+    </script>
+
+  </body>
+</html>
+
+<style is:global>
+  /* ── Reset ─────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--da-font);
+    background: var(--da-bg);
+    color: var(--da-ink);
+    font-size: var(--da-body);
+    line-height: var(--da-lead-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--da-accent);
+    outline-offset: 3px;
+    border-radius: var(--da-r);
+  }
+  img, svg { display: block; max-width: 100%; }
+  ::selection { background: var(--da-accent-dim); }
+
+  /* ── Shared label (eyebrow) ─────────────────────────────────── */
+  .label {
+    font-size: var(--da-label);
+    font-weight: 600;
+    letter-spacing: var(--da-track-label);
+    text-transform: uppercase;
+    color: var(--da-ink-muted);
+    margin-bottom: 14px;
+  }
+
+  /* ── Shared buttons ─────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.18s var(--da-ease), color 0.18s var(--da-ease), border-color 0.18s var(--da-ease);
+  }
+  .btn--primary {
+    background: var(--da-ink);
+    color: #fff;
+    border: 1.5px solid var(--da-ink);
+  }
+  .btn--primary:hover {
+    background: var(--da-accent);
+    border-color: var(--da-accent);
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--da-ink);
+    border: 1.5px solid var(--da-line-mid);
+  }
+  .btn--ghost:hover { border-color: var(--da-ink); }
+  .btn--lg { padding: 16px 28px; font-size: 16px; }
+  .btn--accent {
+    background: var(--da-accent);
+    color: #fff;
+    border: 1.5px solid var(--da-accent);
+  }
+  .btn--accent:hover { opacity: 0.85; }
+
+  /* ── Section base ────────────────────────────────────────────── */
+  .section {
+    padding: var(--da-section) clamp(20px, 5vw, 80px);
+    border-top: 1px solid var(--da-line);
+  }
+  .section:first-of-type { border-top: none; }
+  .section__header { margin-bottom: var(--da-gap); }
+  .section__header h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+  }
+
+  /* ── Nav ─────────────────────────────────────────────────────── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px clamp(20px, 5vw, 80px);
+    border-bottom: 1px solid var(--da-line);
+    background: color-mix(in srgb, var(--da-bg) 92%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .nav__brand {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: var(--da-track-tight);
+  }
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+  }
+  .nav__link { color: var(--da-ink-muted); transition: color 0.15s; }
+  .nav__link:hover, .nav__link--active { color: var(--da-ink); }
+  .nav__cta {
+    padding: 10px 18px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: 999px;
+    color: var(--da-ink);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .nav__cta:hover { border-color: var(--da-ink); background: var(--da-accent-dim); }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px clamp(20px, 5vw, 80px);
+    border-top: 1px solid var(--da-line);
+  }
+  .footer__brand {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: var(--da-track-tight);
+    margin-right: 16px;
+  }
+  .footer__tag { font-size: 12px; color: var(--da-ink-muted); }
+  .footer__left { display: flex; align-items: center; gap: 16px; }
+  .footer__right { display: flex; gap: 20px; font-size: 13px; color: var(--da-ink-muted); }
+  .footer__right a:hover { color: var(--da-ink); }
+
+  /* ── Palette debug widget ────────────────────────────────────── */
+  .pal-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--da-surface);
+    border: 1px solid var(--da-line-mid);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    z-index: 200;
+  }
+  .pal-widget__label {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-right: 2px;
+  }
+  .pal-widget__btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--da-line-mid);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--da-ink-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pal-widget__btn:hover { border-color: var(--da-accent); color: var(--da-accent); }
+  .pal-widget__btn--active {
+    background: var(--da-accent);
+    border-color: var(--da-accent);
+    color: #fff;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    .nav__links .nav__link { display: none; }
+    .footer { flex-direction: column; gap: 16px; text-align: center; }
+    .footer__right { display: none; }
+  }
+</style>
