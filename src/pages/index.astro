@@ -13,22 +13,22 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- HERO ────────────────────────────────────────────────────── -->
   <section class="hero section">
-    <div class="hero__label label">Product Management · Digital Transformation</div>
-    <h1 class="hero__h1">
+    <div class="hero__label label" data-enter="0">Product Management · Digital Transformation</div>
+    <h1 class="hero__h1" data-enter="1">
       From digital vision<br>to business value.
     </h1>
-    <p class="hero__sub">
+    <p class="hero__sub" data-enter="2">
       LeRoy Barnes is an independent consultant helping organisations turn
       product strategy into shipped digital platforms — across banking,
       payments, and insurance.
     </p>
-    <div class="hero__actions">
+    <div class="hero__actions" data-enter="3">
       <a class="btn btn--primary" href="contact/">Get in touch</a>
       <a class="btn btn--ghost" href="services/">See services →</a>
     </div>
 
     <!-- Proof ribbon -->
-    <div class="proof" aria-label="Track record highlights">
+    <div class="proof" aria-label="Track record highlights" data-enter="4">
       <div class="proof__item">
         <span class="proof__num">10</span>
         <span class="proof__text">country pan-African<br>payments platform</span>
@@ -53,13 +53,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- SERVICES PREVIEW ─────────────────────────────────────────── -->
   <section class="section services">
-    <div class="section__header">
+    <div class="section__header" data-reveal>
       <div class="label">What he does</div>
       <h2>Three ways to work<br>with LeRoy</h2>
     </div>
 
     <div class="services__grid">
-      <article class="svc">
+      <article class="svc" data-reveal>
         <div class="svc__num">01</div>
         <h3 class="svc__title">Product Management &amp; Strategy</h3>
         <p class="svc__body">
@@ -68,7 +68,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </p>
         <a class="svc__link" href="services/">Learn more →</a>
       </article>
-      <article class="svc">
+      <article class="svc" data-reveal>
         <div class="svc__num">02</div>
         <h3 class="svc__title">Digital Transformation</h3>
         <p class="svc__body">
@@ -78,7 +78,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </p>
         <a class="svc__link" href="services/">Learn more →</a>
       </article>
-      <article class="svc">
+      <article class="svc" data-reveal>
         <div class="svc__num">03</div>
         <h3 class="svc__title">Online Banking &amp; Digital Payments</h3>
         <p class="svc__body">
@@ -93,13 +93,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- HOW HE WORKS ─────────────────────────────────────────────── -->
   <section class="section how">
-    <div class="section__header">
+    <div class="section__header" data-reveal>
       <div class="label">How it works</div>
       <h2>A clear process,<br>every time</h2>
     </div>
 
     <div class="how__steps">
-      <div class="step">
+      <div class="step" data-reveal>
         <span class="step__n">1</span>
         <div>
           <h3 class="step__t">Diagnose</h3>
@@ -107,7 +107,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </div>
       </div>
       <div class="step__arrow" aria-hidden="true">→</div>
-      <div class="step">
+      <div class="step" data-reveal>
         <span class="step__n">2</span>
         <div>
           <h3 class="step__t">Design</h3>
@@ -115,7 +115,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </div>
       </div>
       <div class="step__arrow" aria-hidden="true">→</div>
-      <div class="step">
+      <div class="step" data-reveal>
         <span class="step__n">3</span>
         <div>
           <h3 class="step__t">Deliver</h3>
@@ -128,7 +128,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   <!-- ABOUT PREVIEW ──────────────────────────────────────────────── -->
   <section class="section about-preview">
     <div class="about-preview__inner">
-      <div class="about-preview__left">
+      <div class="about-preview__left" data-reveal>
         <div class="label">About</div>
         <h2>Founder-led.<br>No junior consultants.</h2>
         <p>
@@ -142,7 +142,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </p>
         <a class="btn btn--ghost" href="about/" style="margin-top: 24px;">About LeRoy →</a>
       </div>
-      <div class="about-preview__right">
+      <div class="about-preview__right" data-reveal>
         <div class="credential">
           <div class="credential__label">Selected experience</div>
           <ul class="credential__list">
@@ -167,7 +167,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- CONTACT CTA ─────────────────────────────────────────────────── -->
   <section class="section cta-band">
-    <div class="cta-band__inner">
+    <div class="cta-band__inner" data-reveal>
       <div class="label">Get in touch</div>
       <h2>Let's talk about<br>your business.</h2>
       <p class="cta-band__sub">

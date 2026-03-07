@@ -12,9 +12,9 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- PAGE HEADER ─────────────────────────────────────────────── -->
   <section class="page-hero section">
-    <div class="label">Services</div>
-    <h1 class="page-hero__h1">Digital expertise,<br>delivered directly.</h1>
-    <p class="page-hero__sub">
+    <div class="label" data-enter="0">Services</div>
+    <h1 class="page-hero__h1" data-enter="1">Digital expertise,<br>delivered directly.</h1>
+    <p class="page-hero__sub" data-enter="2">
       LBDC specialises in three interrelated disciplines — product management,
       digital transformation, and online banking &amp; payments. Most engagements
       draw on all three.
@@ -23,7 +23,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- SERVICE 01 ──────────────────────────────────────────────── -->
   <section class="section svc-detail" id="product-management">
-    <div class="svc-detail__inner">
+    <div class="svc-detail__inner" data-reveal>
       <div class="svc-detail__meta">
         <div class="svc-num">01</div>
         <h2 class="svc-detail__title">Product Management<br>&amp; Strategy</h2>
@@ -59,7 +59,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- SERVICE 02 ──────────────────────────────────────────────── -->
   <section class="section svc-detail" id="digital-transformation">
-    <div class="svc-detail__inner">
+    <div class="svc-detail__inner" data-reveal>
       <div class="svc-detail__meta">
         <div class="svc-num">02</div>
         <h2 class="svc-detail__title">Digital<br>Transformation</h2>
@@ -96,7 +96,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- SERVICE 03 ──────────────────────────────────────────────── -->
   <section class="section svc-detail" id="banking-payments">
-    <div class="svc-detail__inner">
+    <div class="svc-detail__inner" data-reveal>
       <div class="svc-detail__meta">
         <div class="svc-num">03</div>
         <h2 class="svc-detail__title">Online Banking &amp;<br>Digital Payments</h2>
@@ -132,20 +132,20 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- ENGAGEMENT MODEL ────────────────────────────────────────── -->
   <section class="section engage">
-    <div class="section__header">
+    <div class="section__header" data-reveal>
       <div class="label">How engagements work</div>
       <h2>Flexible to your context</h2>
     </div>
     <div class="engage__grid">
-      <div class="engage__item">
+      <div class="engage__item" data-reveal>
         <h3>Retained Advisory</h3>
         <p>Ongoing monthly engagement — strategy reviews, product guidance, and a senior sounding board on demand.</p>
       </div>
-      <div class="engage__item">
+      <div class="engage__item" data-reveal>
         <h3>Embedded Sprint</h3>
         <p>A focused 4–12 week engagement to solve a specific challenge — delivery cadence, roadmap, or product launch.</p>
       </div>
-      <div class="engage__item">
+      <div class="engage__item" data-reveal>
         <h3>Fractional CPO</h3>
         <p>Part-time Chief Product Officer — for organisations that need senior product leadership without a full-time hire.</p>
       </div>
@@ -154,7 +154,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
   <!-- CTA ────────────────────────────────────────────────────── -->
   <section class="section cta-band">
-    <div class="cta-band__inner">
+    <div class="cta-band__inner" data-reveal>
       <div class="label">Ready to start?</div>
       <h2>Tell LeRoy what<br>you're working on.</h2>
       <p class="cta-band__sub">
