@@ -7,12 +7,17 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
+
 const base = import.meta.env.BASE_URL;
 const withBase = (path) => {
   const b = base.endsWith('/') ? base : `${base}/`;
   const p = String(path || '').replace(/^\//, '');
   return `${b}${p}`;
 };
+
+// Basin requires an absolute redirect URL.
+// This uses Astro.site (astro.config.mjs) so it will track the domain when we cut over.
+const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
 ---
 
 <SiteLayout
@@ -49,7 +54,7 @@ const withBase = (path) => {
           </div>
 
           {/* Basin: redirect back to this page with ?success=1 after submission */}
-          <input type="hidden" name="_redirect" value="https://skippies-io.github.io/lbdc-website/contact/?success=1" />
+          <input type="hidden" name="_redirect" value={redirectUrl} />
 
           <div class="field">
             <label class="field__label" for="name">Full name <span aria-hidden="true">*</span></label>
@@ -137,9 +142,9 @@ const withBase = (path) => {
       <div class="contact-sidebar" data-reveal>
         <div class="sidebar-card">
           <div class="sidebar-card__label">Direct email</div>
-          <!-- Avoid publishing a clickable mailto to reduce scraping; the form is the primary contact route. -->
           <div class="sidebar-card__value" id="direct-email" data-email-user="hello" data-email-domain="lbdc.co.za">
-            <button class="email-reveal" type="button">Show email</button>
+            <a class="email-link" href="mailto:hello@lbdc.co.za">hello@lbdc.co.za</a>
+            <div class="sidebar-card__hint">If the form fails to submit, email directly.</div>
           </div>
         </div>
         <div class="sidebar-card">
@@ -191,21 +196,18 @@ const withBase = (path) => {
     });
   }
 
-  // Email reveal (reduces casual scraping; form remains primary)
+  // Ensure the email link is correct even if we change it later.
+  // (Keeps the address out of the HTML source if we ever revert to obfuscation.)
   const emailWrap = document.getElementById('direct-email');
-  if (emailWrap) {
-    const btn = emailWrap.querySelector('.email-reveal');
-    btn?.addEventListener('click', () => {
-      const user = emailWrap.getAttribute('data-email-user');
-      const domain = emailWrap.getAttribute('data-email-domain');
-      if (!user || !domain) return;
+  const emailLink = emailWrap?.querySelector('.email-link') as HTMLAnchorElement | null;
+  if (emailWrap && emailLink) {
+    const user = emailWrap.getAttribute('data-email-user');
+    const domain = emailWrap.getAttribute('data-email-domain');
+    if (user && domain) {
       const addr = `${user}@${domain}`;
-      const a = document.createElement('a');
-      a.className = 'email-link';
-      a.href = `mailto:${addr}`;
-      a.textContent = addr;
-      emailWrap.replaceChildren(a);
-    });
+      emailLink.href = `mailto:${addr}`;
+      emailLink.textContent = addr;
+    }
   }
 </script>
 
@@ -347,21 +349,17 @@ const withBase = (path) => {
     word-break: break-all;
   }
 
-  /* Email reveal button (avoid default button chrome) */
-  .email-reveal {
-    appearance: none;
-    border: 1.5px solid var(--da-line-mid);
-    background: transparent;
-    color: var(--da-ink);
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-weight: 600;
-    cursor: pointer;
+  .email-link {
+    color: var(--da-accent);
   }
-  .email-reveal:hover { border-color: var(--da-ink); }
+  .email-link:hover { opacity: 0.75; }
 
-  a.sidebar-card__value { color: var(--da-accent); }
-  a.sidebar-card__value:hover { opacity: 0.75; }
+  .sidebar-card__hint {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--da-ink-faint);
+  }
   .sidebar-services {
     list-style: none;
     padding: 0;
