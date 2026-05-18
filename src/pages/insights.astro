@@ -1,0 +1,49 @@
+---
+/**
+ * Insights — Coming soon
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path) => {
+  const b = base.endsWith('/') ? base : `${base}/`;
+  const p = String(path || '').replace(/^\//, '');
+  return `${b}${p}`;
+};
+---
+
+<SiteLayout
+  title="Insights"
+  description="Insights from LBDC — coming soon."
+>
+  <section class="page-hero section">
+    <div class="label" data-enter="0">Insights</div>
+    <h1 class="page-hero__h1" data-enter="1">Coming soon.</h1>
+    <p class="page-hero__sub" data-enter="2">
+      Short, practical notes on product strategy, digital transformation, and payments —
+      written from the field.
+    </p>
+
+    <div class="insights-cta" data-enter="3">
+      <a class="btn btn--primary" href={withBase('contact/')}>Get in touch →</a>
+      <div class="insights-cta__hint">Want a specific topic covered? Tell me what you're working on.</div>
+    </div>
+  </section>
+
+  <style>
+    .insights-cta {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .insights-cta__hint {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--da-ink-faint);
+      max-width: 56ch;
+    }
+  </style>
+</SiteLayout>
