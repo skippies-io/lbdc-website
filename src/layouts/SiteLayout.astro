@@ -55,6 +55,7 @@ const currentPath = Astro.url.pathname;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <link rel="canonical" href={`${Astro.site}${Astro.url.pathname}`} />
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon/favicon-32.png')} />
     <link rel="icon" type="image/png" sizes="16x16" href={withBase('favicon/favicon-16.png')} />
