@@ -4,7 +4,7 @@
  *
  * Responsibilities:
  * - Inject design tokens (Palette A base + B/C overrides)
- * - Apply palette from ?palette= query param or localStorage (no FOUC)
+ * - Lock public theme to Palette A (no query/localStorage switching)
  * - Render Nav + page slot + Footer
  */
 import '../styles/tokens-deep-a.css';
@@ -64,12 +64,9 @@ const currentPath = Astro.url.pathname;
     {/* Palette init: runs before first paint to avoid flash */}
     <script is:inline>
       (function () {
-        var VALID = ['A', 'B', 'C'];
-        var qp = new URLSearchParams(location.search).get('palette');
-        var stored = localStorage.getItem('lbdc-palette');
-        var palette = VALID.includes(qp) ? qp : VALID.includes(stored) ? stored : 'A';
-        if (qp && VALID.includes(qp)) localStorage.setItem('lbdc-palette', qp);
-        document.documentElement.dataset.palette = palette;
+        // Public release: lock the site to Palette A.
+        // (We intentionally ignore query params / localStorage to avoid accidental exposure.)
+        document.documentElement.dataset.palette = 'A';
       })();
     </script>
   </head>
@@ -122,49 +119,6 @@ const currentPath = Astro.url.pathname;
       />
     </footer>
 
-    <!-- PALETTE DEBUG WIDGET ────────────────────────────────────── -->
-    <div class="pal-widget" aria-label="Palette switcher" role="group">
-      <span class="pal-widget__label">Theme</span>
-      {['A', 'B', 'C'].map((p) => (
-        <button
-          class="pal-widget__btn"
-          data-p={p}
-          aria-label={`Switch to palette ${p}`}
-          type="button"
-        >
-          {p}
-        </button>
-      ))}
-    </div>
-
-    <script is:inline>
-      (function () {
-        var widget = document.querySelector('.pal-widget');
-        if (!widget) return;
-
-        function updateActive() {
-          var current = document.documentElement.dataset.palette || 'A';
-          widget.querySelectorAll('.pal-widget__btn').forEach(function (btn) {
-            btn.classList.toggle('pal-widget__btn--active', btn.dataset.p === current);
-          });
-        }
-
-        widget.querySelectorAll('.pal-widget__btn').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var p = btn.dataset.p;
-            document.documentElement.dataset.palette = p;
-            localStorage.setItem('lbdc-palette', p);
-            // Update URL without reload
-            var url = new URL(location.href);
-            url.searchParams.set('palette', p);
-            history.replaceState(null, '', url.toString());
-            updateActive();
-          });
-        });
-
-        updateActive();
-      })();
-    </script>
 
     <!-- SCROLL REVEAL ───────────────────────────────────────────── -->
     <script is:inline>
@@ -430,47 +384,6 @@ const currentPath = Astro.url.pathname;
   .footer__right { display: flex; gap: 20px; font-size: 13px; color: var(--da-ink-muted); }
   .footer__right a:hover { color: var(--da-ink); }
 
-  /* ── Palette debug widget ────────────────────────────────────── */
-  .pal-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--da-surface);
-    border: 1px solid var(--da-line-mid);
-    border-radius: 999px;
-    padding: 6px 10px;
-    font-size: 11px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    z-index: 200;
-  }
-  .pal-widget__label {
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--da-ink-faint);
-    margin-right: 2px;
-  }
-  .pal-widget__btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1.5px solid var(--da-line-mid);
-    background: transparent;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--da-ink-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .pal-widget__btn:hover { border-color: var(--da-accent); color: var(--da-accent); }
-  .pal-widget__btn--active {
-    background: var(--da-accent);
-    border-color: var(--da-accent);
-    color: #fff;
-  }
 
   /* ── Responsive ──────────────────────────────────────────────── */
   @media (max-width: 480px) {
