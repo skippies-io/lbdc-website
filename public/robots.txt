@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://skippies-io.github.io/lbdc-website/sitemap.xml
