@@ -90,14 +90,32 @@ const currentPath = Astro.url.pathname;
           LBDC
         </a>
         <div class="nav__links">
-          {navLinks.map(({ href, label }) => (
-            <a
-              href={href}
-              class:list={['nav__link', { 'nav__link--active': currentPath === href }]}
-            >
-              {label}
-            </a>
-          ))}
+          <div class="nav__primary" aria-label="Primary">
+            {navLinks.map(({ href, label }) => (
+              <a
+                href={href}
+                class:list={['nav__link', { 'nav__link--active': currentPath === href }]}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          <details class="nav__menu">
+            <summary class="nav__menu-btn">Menu</summary>
+            <div class="nav__menu-panel" role="menu" aria-label="Primary menu">
+              {navLinks.map(({ href, label }) => (
+                <a
+                  href={href}
+                  role="menuitem"
+                  class:list={['nav__link', { 'nav__link--active': currentPath === href }]}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </details>
+
           <a class="nav__cta" href={withBase('contact/')}>Get in touch</a>
         </div>
       </nav>
@@ -249,7 +267,7 @@ const currentPath = Astro.url.pathname;
     overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; }
-  a:focus-visible, button:focus-visible {
+  a:focus-visible, button:focus-visible, summary:focus-visible {
     outline: 2px solid var(--da-accent);
     outline-offset: 3px;
     border-radius: var(--da-r);
@@ -351,6 +369,43 @@ const currentPath = Astro.url.pathname;
     gap: 28px;
     font-size: 14px;
   }
+  .nav__primary { display: flex; align-items: center; gap: 28px; }
+
+  /* Mobile menu (details/summary) — accessible, no JS */
+  .nav__menu { display: none; position: relative; }
+  .nav__menu-btn {
+    list-style: none;
+    padding: 10px 14px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: 999px;
+    color: var(--da-ink);
+    cursor: pointer;
+    user-select: none;
+  }
+  /* Hide default marker */
+  .nav__menu-btn::-webkit-details-marker { display: none; }
+  .nav__menu[open] .nav__menu-btn { border-color: var(--da-ink); background: var(--da-accent-dim); }
+
+  .nav__menu-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    min-width: 220px;
+    padding: 10px;
+    border: 1px solid var(--da-line);
+    border-radius: var(--da-r);
+    background: var(--da-bg);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nav__menu-panel .nav__link {
+    padding: 10px 12px;
+    border-radius: var(--da-r-sm);
+  }
+  .nav__menu-panel .nav__link:hover { background: color-mix(in srgb, var(--da-accent-dim) 80%, transparent); }
+
   .nav__link { color: var(--da-ink-muted); transition: color 0.15s; }
   .nav__link:hover, .nav__link--active { color: var(--da-ink); }
   .nav__cta {
@@ -397,9 +452,11 @@ const currentPath = Astro.url.pathname;
 
   /* ── Responsive ──────────────────────────────────────────────── */
   @media (max-width: 480px) {
-    .nav__links .nav__link { display: none; }
+    .nav__primary { display: none; }
+    .nav__menu { display: block; }
+
     .footer { flex-direction: column; gap: 16px; text-align: center; }
-    .footer__right { display: none; }
+    .footer__right { flex-wrap: wrap; justify-content: center; }
     .footer__wm { display: none; }
   }
 </style>
