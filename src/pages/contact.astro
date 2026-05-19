@@ -17,6 +17,8 @@ const withBase = (path) => {
 
 // Basin requires an absolute redirect URL.
 // This uses Astro.site (astro.config.mjs) so it will track the domain when we cut over.
+// Note: we intentionally avoid manipulating history entries after redirect so the
+// browser back button behaves predictably.
 const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
 ---
 
@@ -178,8 +180,6 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
     const success = document.getElementById('form-success');
     if (form) form.hidden = true;
     if (success) success.hidden = false;
-    // Clean URL without reload
-    history.replaceState(null, '', location.pathname);
   }
 
   // Client-side validation UX + loading state
