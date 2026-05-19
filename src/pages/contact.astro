@@ -183,15 +183,44 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
   }
 
   // Client-side validation UX + loading state
+  //
+  // We submit via fetch (AJAX) so users stay on-site after submit.
+  // This avoids Basin's hosted success page (and its “Back to Home” link
+  // pointing to https://skippies-io.github.io which 404s for this repo).
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
-    form.addEventListener('submit', () => {
+    form.addEventListener('submit', async (event) => {
       const btn = form.querySelector('.btn--submit') as HTMLButtonElement | null;
-      if (!form.checkValidity()) return; // let browser handle
+      if (!form.checkValidity()) return; // let browser handle invalid
+      event.preventDefault();
+
       if (btn) {
         btn.classList.add('btn--loading');
         btn.setAttribute('aria-label', 'Sending message…');
         btn.disabled = true;
+      }
+
+      try {
+        const body = new FormData(form);
+        const res = await fetch(form.action, {
+          method: "POST",
+          body,
+          headers: { Accept: "application/json" },
+        });
+
+        if (!res.ok) throw new Error(`Basin submit failed: ${res.status}`);
+
+        const success = document.getElementById('form-success');
+        if (success) success.hidden = false;
+        form.hidden = true;
+      } catch (err) {
+        if (btn) {
+          btn.classList.remove('btn--loading');
+          btn.removeAttribute('aria-label');
+          btn.disabled = false;
+        }
+        alert('Sorry — something went wrong sending your message. Please try again, or email hello@lbdc.co.za.');
+        console.error(err);
       }
     });
   }
