@@ -16,6 +16,8 @@ const {
   title = 'LBDC',
   description = 'Product management and digital transformation consulting — online banking, payments, and pan-African fintech.',
 } = Astro.props;
+
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? 'G-20KBH2YJCT';
 ---
 
 <!doctype html>
@@ -31,6 +33,21 @@ const {
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+
+    {
+      import.meta.env.PROD && GA_MEASUREMENT_ID && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+          <script is:inline>
+            {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+          </script>
+        </>
+      )
+    }
+
     <title>{title}</title>
   </head>
   <body>
