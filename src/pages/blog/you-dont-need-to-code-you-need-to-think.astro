@@ -1,0 +1,180 @@
+---
+/**
+ * Blog post: You don't need to code. You need to think.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path) => {
+  const b = base.endsWith('/') ? base : `${base}/`;
+  const p = String(path || '').replace(/^\//, '');
+  return `${b}${p}`;
+};
+
+const title = "You don't need to code. You need to think.";
+const description = "AI hasn't just made coding easier — it's democratised the ability to bend machines to your will. A reflection by LeRoy Barnes.";
+const author = 'LeRoy Barnes';
+const date = '13 June 2026';
+const slug = 'you-dont-need-to-code-you-need-to-think';
+---
+
+<SiteLayout title={title} description={description}>
+
+  <!-- ARTICLE HERO ──────────────────────────────────────────────── -->
+  <section class="post-hero section">
+    <a class="back-link" href={withBase('blog/')} data-enter="0">← Insights</a>
+    <div class="label" data-enter="1">Insights</div>
+    <h1 class="post-hero__h1" data-enter="2">{title}</h1>
+    <div class="post-hero__byline" data-enter="3">
+      <span class="byline__author">{author}</span>
+      <span class="byline__sep">—</span>
+      <span class="byline__date">{date}</span>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY ──────────────────────────────────────────────── -->
+  <article class="post-body section">
+    <div class="prose" data-reveal>
+
+      <p>AI hasn't just made coding easier; it's democratised the most powerful skill in software: the ability to bend machines to your will.</p>
+
+      <p>Antony Muriithi, a Nairobi-based software engineer working to make tech accessible to all, and I were once in a taxi on our way to his barber. I needed a haircut, and he offered to introduce me to the guy who makes him look fresh. As we made our way from Westlands to Royal African Barbers in the CBD, Antony told me he believed that everyone should learn Python. For him, Python was easy enough to learn and write scripts that can automate tasks to improve productivity, mine data for insights, or get applications to exchange data, like syncing your CRM with your project management tool.</p>
+
+      <p>Think about what scripting actually is. It's the ability to tell a machine exactly what you want, in a language it understands, and have it do it repeatedly, reliably, without you having to be in the room.</p>
+
+      <p>That skill has always been the great divider. Programmers had it. The rest of us had to ask nicely, wait for someone to build it, or work around it.</p>
+
+      <p>Not anymore.</p>
+
+      <p>I'm not a programmer. My background is business analysis, product management, and digital transformation. But over the last few months, I've built things I genuinely didn't think were possible for someone like me.</p>
+
+      <p>A system that reads my emails, identifies what needs action, and reports to me every morning. An automated invoicing flow connected to my accounting software. A daily brief assembled from multiple services is delivered to my phone. Scripts that retry when they fail, log what they did, and alert me when something breaks.</p>
+
+      <p>I didn't write a single line of code myself.</p>
+
+      <p>What I did was think and experiment — sitting with a problem until I could describe it precisely, then working with AI to build it: iterating, testing, fixing, adjusting until it did exactly what I needed.</p>
+
+      <p>Here's what surprised me, though: the more I did it, the more I started thinking differently.</p>
+
+      <p>When you work with AI to solve real problems, you develop a kind of structured thinking that mirrors how machines process things. You stop saying "it would be nice if…" and start saying "given X input, I want Y output, under these conditions." You anticipate failure modes. You ask: What does done actually look like?</p>
+
+      <p>That's not a programmer skill, it's a thinking skill. AI has made it accessible to anyone willing to play with it.</p>
+
+      <p>The old gatekeeping skill was knowing how to write the code. The new power skill is knowing how to think the problem through.</p>
+
+      <p>If you've been waiting for someone technical to build the things you need — stop waiting. The tools are there. The barrier is lower than you think.</p>
+
+      <p>The only real question is: can you think clearly about what you want?</p>
+
+    </div>
+  </article>
+
+  <!-- POST FOOTER ───────────────────────────────────────────────── -->
+  <section class="section post-footer">
+    <div class="post-footer__inner" data-reveal>
+      <div class="label">Continue reading</div>
+      <a class="back-link-lg" href={withBase('blog/')}>← All Insights</a>
+    </div>
+    <div class="post-footer__cta" data-reveal>
+      <div class="label">Work together</div>
+      <p class="post-footer__cta-text">
+        Got a product or transformation challenge? Let's talk.
+      </p>
+      <a class="btn btn--accent" href={withBase('contact/')}>Get in touch →</a>
+    </div>
+  </section>
+
+</SiteLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .post-hero { border-top: none; }
+
+  .back-link {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--da-accent);
+    letter-spacing: 0.01em;
+    margin-bottom: 24px;
+    transition: opacity 0.15s;
+  }
+  .back-link:hover { opacity: 0.7; }
+
+  .post-hero__h1 {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 24px;
+    max-width: 22ch;
+  }
+
+  .post-hero__byline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--da-ink-muted);
+  }
+  .byline__author { font-weight: 600; color: var(--da-ink); }
+  .byline__sep { color: var(--da-ink-faint); }
+
+  /* ── Prose body ──────────────────────────────────────────────── */
+  .post-body { background: var(--da-surface); }
+
+  .prose {
+    max-width: 68ch;
+  }
+
+  .prose p {
+    font-size: clamp(16px, 1.8vw, 18px);
+    line-height: 1.75;
+    color: var(--da-ink-muted);
+    margin-bottom: 28px;
+  }
+  .prose p:first-child {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--da-ink);
+    font-weight: 500;
+    line-height: 1.55;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* ── Post footer ─────────────────────────────────────────────── */
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .back-link-lg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--da-accent);
+    transition: opacity 0.15s;
+  }
+  .back-link-lg:hover { opacity: 0.7; }
+
+  .post-footer__cta { text-align: right; }
+  .post-footer__cta-text {
+    font-size: 15px;
+    color: var(--da-ink-muted);
+    margin-bottom: 16px;
+    max-width: 40ch;
+    line-height: 1.55;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .post-footer {
+      flex-direction: column;
+      gap: 32px;
+    }
+    .post-footer__cta { text-align: left; }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+/**
+ * Insights — Blog index
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path) => {
+  const b = base.endsWith('/') ? base : `${base}/`;
+  const p = String(path || '').replace(/^\//, '');
+  return `${b}${p}`;
+};
+
+const posts = [
+  {
+    slug: 'you-dont-need-to-code-you-need-to-think',
+    title: "You don't need to code. You need to think.",
+    date: '13 June 2026',
+    excerpt:
+      "AI hasn't just made coding easier — it's democratised the most powerful skill in software: the ability to bend machines to your will.",
+  },
+];
+---
+
+<SiteLayout
+  title="Insights"
+  description="Short, practical notes on product strategy, digital transformation, and payments — written from the field by LeRoy Barnes."
+>
+
+  <!-- PAGE HEADER ─────────────────────────────────────────────── -->
+  <section class="page-hero section">
+    <div class="label" data-enter="0">Insights</div>
+    <h1 class="page-hero__h1" data-enter="1">
+      From the field.
+    </h1>
+    <p class="page-hero__sub" data-enter="2">
+      Short, practical notes on product strategy, digital transformation,
+      and payments — written from 20+ years in African banking and fintech.
+    </p>
+  </section>
+
+  <!-- POST LIST ───────────────────────────────────────────────── -->
+  <section class="section post-list">
+    {posts.map((post) => (
+      <article class="post-card" data-reveal>
+        <div class="post-card__meta">
+          <span class="post-card__date">{post.date}</span>
+        </div>
+        <h2 class="post-card__title">{post.title}</h2>
+        <p class="post-card__excerpt">{post.excerpt}</p>
+        <a class="post-card__link" href={withBase(`blog/${post.slug}/`)}>
+          Read more →
+        </a>
+      </article>
+    ))}
+  </section>
+
+</SiteLayout>
+
+<style>
+  /* ── Page hero ────────────────────────────────────────────────── */
+  .page-hero { border-top: none; }
+  .page-hero__h1 {
+    font-size: var(--da-display);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 24px;
+  }
+  .page-hero__sub {
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  /* ── Post list ───────────────────────────────────────────────── */
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .post-card {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--da-line);
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 48px;
+    align-items: start;
+  }
+  .post-card:first-child { border-top: 1px solid var(--da-line); }
+
+  .post-card__meta {
+    padding-top: 4px;
+  }
+  .post-card__date {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--da-ink-faint);
+    text-transform: uppercase;
+  }
+
+  .post-card__title {
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--da-ink);
+  }
+
+  .post-card__excerpt {
+    font-size: 15px;
+    color: var(--da-ink-muted);
+    line-height: 1.65;
+    max-width: 64ch;
+    margin-bottom: 20px;
+  }
+
+  .post-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--da-accent);
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s;
+  }
+  .post-card__link:hover { opacity: 0.7; }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .post-card {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 36px 0;
+    }
+  }
+</style>
