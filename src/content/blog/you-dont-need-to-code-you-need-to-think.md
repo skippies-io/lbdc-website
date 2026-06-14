@@ -8,7 +8,7 @@ slug: you-dont-need-to-code-you-need-to-think
 
 AI hasn't just made coding easier; it's democratised the most powerful skill in software: the ability to bend machines to your will.
 
-[Antony Muriithi](https://www.linkedin.com/in/antony-muriithi-b53915114/), a Nairobi-based software engineer working to make tech accessible to all, and I were once in a taxi on our way to his barber. I needed a haircut, and he offered to introduce me to the guy who makes him look fresh. As we made our way from Westlands to Royal African Barbers in the CBD, Antony told me he believed that everyone should learn Python. For him, Python was easy enough to learn and write scripts that can automate tasks to improve productivity, mine data for insights, or get applications to exchange data, like syncing your CRM with your project management tool.
+[Antony Muriithi](https://www.linkedin.com/in/antony-muriithi-b53915114/), a talented Nairobi-based software engineer working to make tech accessible to all, and I were once in a taxi on our way to his barber. I needed a haircut, and he offered to introduce me to the guy who makes him look fresh. As we made our way from Westlands to Royal African Barbers in the CBD, Antony told me he believed that everyone should learn Python. For him, Python was easy enough to learn and write scripts that can automate tasks to improve productivity, mine data for insights, or get applications to exchange data, like syncing your CRM with your project management tool.
 
 Think about what scripting actually is. It's the ability to tell a machine exactly what you want, in a language it understands, and have it do it repeatedly, reliably, without you having to be in the room.
 
@@ -34,4 +34,4 @@ The old gatekeeping skill was knowing how to write the code. The new power skill
 
 If you've been waiting for someone technical to build the things you need — stop waiting. The tools are there. The barrier is lower than you think.
 
-The only real question is: can you think clearly about what you want?
+The only real question is, can you think clearly about what you want?
