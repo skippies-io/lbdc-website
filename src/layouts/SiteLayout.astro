@@ -35,6 +35,14 @@ const withBase = (path: string) => {
   return `${b}${p}`;
 };
 
+// Astro.site always ends with '/' and pathnames start with '/', so naive
+// concatenation produces double slashes. This helper joins them safely.
+const siteUrl = (path: string) => {
+  const s = String(Astro.site ?? '').replace(/\/$/, '');
+  const p = path.replace(/^\//, '');
+  return p ? `${s}/${p}` : s;
+};
+
 const navLinks = [
   { href: withBase('services/'), label: 'Services' },
   { href: withBase('about/'),    label: 'About' },
@@ -56,15 +64,15 @@ const currentPath = Astro.url.pathname;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`${Astro.site}${Astro.url.pathname}`} />
-    <meta property="og:image" content={`${Astro.site}${withBase('og-image.png')}`} />
+    <meta property="og:url" content={siteUrl(Astro.url.pathname)} />
+    <meta property="og:image" content={siteUrl(withBase('og-image.png'))} />
     <meta property="og:image:alt" content="LBDC" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${Astro.site}${withBase('og-image.png')}`} />
+    <meta name="twitter:image" content={siteUrl(withBase('og-image.png'))} />
     <meta name="twitter:image:alt" content="LBDC" />
-    <link rel="canonical" href={`${Astro.site}${Astro.url.pathname}`} />
+    <link rel="canonical" href={siteUrl(Astro.url.pathname)} />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-20KBH2YJCT"></script>
