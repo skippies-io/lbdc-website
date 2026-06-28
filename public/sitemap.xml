@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://skippies-io.github.io/lbdc-website/</loc>
+    <loc>https://www.lbdc.co.za/</loc>
   </url>
   <url>
-    <loc>https://skippies-io.github.io/lbdc-website/services/</loc>
+    <loc>https://www.lbdc.co.za/services/</loc>
   </url>
   <url>
-    <loc>https://skippies-io.github.io/lbdc-website/about/</loc>
+    <loc>https://www.lbdc.co.za/about/</loc>
   </url>
   <url>
-    <loc>https://skippies-io.github.io/lbdc-website/insights/</loc>
+    <loc>https://www.lbdc.co.za/blog/</loc>
   </url>
   <url>
-    <loc>https://skippies-io.github.io/lbdc-website/contact/</loc>
+    <loc>https://www.lbdc.co.za/blog/you-dont-need-to-code-you-need-to-think/</loc>
+  </url>
+  <url>
+    <loc>https://www.lbdc.co.za/contact/</loc>
   </url>
 </urlset>
