@@ -13,7 +13,13 @@ const withBase = (path) => {
   return `${b}${p}`;
 };
 
-const sipPromptRedirectUrl = `${Astro.site}${withBase('services/?sip=1#sip-and-prompt')}`;
+const siteUrl = (path) => {
+  const s = String(Astro.site ?? '').replace(/\/$/, '');
+  const p = path.replace(/^\//, '');
+  return p ? `${s}/${p}` : s;
+};
+
+const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'));
 ---
 
 <SiteLayout
@@ -319,6 +325,54 @@ const sipPromptRedirectUrl = `${Astro.site}${withBase('services/?sip=1#sip-and-p
       <a class="btn btn--accent btn--lg" href={withBase('contact/')}>Get in touch →</a>
     </div>
   </section>
+
+  <script>
+  const sipParams = new URLSearchParams(location.search);
+  if (sipParams.get('sip') === '1') {
+    const sipForm = document.getElementById('sip-prompt-form');
+    const sipSuccess = document.getElementById('sip-prompt-success');
+    if (sipForm) sipForm.hidden = true;
+    if (sipSuccess) sipSuccess.hidden = false;
+  }
+
+  const sipPromptForm = document.getElementById('sip-prompt-form') as HTMLFormElement | null;
+  if (sipPromptForm) {
+    sipPromptForm.addEventListener('submit', async (event) => {
+      const btn = sipPromptForm.querySelector('.btn--submit') as HTMLButtonElement | null;
+      if (!sipPromptForm.checkValidity()) return;
+      event.preventDefault();
+
+      if (btn) {
+        btn.classList.add('btn--loading');
+        btn.setAttribute('aria-label', 'Registering interest...');
+        btn.disabled = true;
+      }
+
+      try {
+        const body = new FormData(sipPromptForm);
+        const res = await fetch(sipPromptForm.action, {
+          method: 'POST',
+          body,
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!res.ok) throw new Error(`Basin submit failed: ${res.status}`);
+
+        const sipSuccess = document.getElementById('sip-prompt-success');
+        if (sipSuccess) sipSuccess.hidden = false;
+        sipPromptForm.hidden = true;
+      } catch (err) {
+        if (btn) {
+          btn.classList.remove('btn--loading');
+          btn.removeAttribute('aria-label');
+          btn.disabled = false;
+        }
+        alert('Sorry — something went wrong registering your interest. Please try again, or email hello@lbdc.co.za.');
+        console.error(err);
+      }
+    });
+  }
+  </script>
 
 </SiteLayout>
 
@@ -637,51 +691,3 @@ const sipPromptRedirectUrl = `${Astro.site}${withBase('services/?sip=1#sip-and-p
     }
   }
 </style>
-
-<script>
-  const sipParams = new URLSearchParams(location.search);
-  if (sipParams.get('sip') === '1') {
-    const sipForm = document.getElementById('sip-prompt-form');
-    const sipSuccess = document.getElementById('sip-prompt-success');
-    if (sipForm) sipForm.hidden = true;
-    if (sipSuccess) sipSuccess.hidden = false;
-  }
-
-  const sipPromptForm = document.getElementById('sip-prompt-form') as HTMLFormElement | null;
-  if (sipPromptForm) {
-    sipPromptForm.addEventListener('submit', async (event) => {
-      const btn = sipPromptForm.querySelector('.btn--submit') as HTMLButtonElement | null;
-      if (!sipPromptForm.checkValidity()) return;
-      event.preventDefault();
-
-      if (btn) {
-        btn.classList.add('btn--loading');
-        btn.setAttribute('aria-label', 'Registering interest...');
-        btn.disabled = true;
-      }
-
-      try {
-        const body = new FormData(sipPromptForm);
-        const res = await fetch(sipPromptForm.action, {
-          method: 'POST',
-          body,
-          headers: { Accept: 'application/json' },
-        });
-
-        if (!res.ok) throw new Error(`Basin submit failed: ${res.status}`);
-
-        const sipSuccess = document.getElementById('sip-prompt-success');
-        if (sipSuccess) sipSuccess.hidden = false;
-        sipPromptForm.hidden = true;
-      } catch (err) {
-        if (btn) {
-          btn.classList.remove('btn--loading');
-          btn.removeAttribute('aria-label');
-          btn.disabled = false;
-        }
-        alert('Sorry — something went wrong registering your interest. Please try again, or email hello@lbdc.co.za.');
-        console.error(err);
-      }
-    });
-  }
-</script>
