@@ -90,11 +90,23 @@ const currentPath = Astro.url.pathname;
     <link rel="apple-touch-icon" sizes="180x180" href={withBase('favicon/apple-touch-icon.png')} />
     <title>{title} — LBDC</title>
 
-    {/* Palette init: runs before first paint to avoid flash */}
+    {/* Theme init: runs before first paint to avoid flash */}
     <script is:inline>
       (function () {
-        // Public release: lock the site to Palette A.
-        // (We intentionally ignore query params / localStorage to avoid accidental exposure.)
+        var storedTheme = null;
+        try {
+          storedTheme = window.localStorage.getItem('lbdc-theme');
+        } catch (error) {
+          storedTheme = null;
+        }
+
+        var systemPrefersDark = window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme === 'light' || storedTheme === 'dark'
+          ? storedTheme
+          : (systemPrefersDark ? 'dark' : 'light');
+
+        document.documentElement.dataset.theme = theme;
         document.documentElement.dataset.palette = 'A';
       })();
     </script>
@@ -136,6 +148,12 @@ const currentPath = Astro.url.pathname;
           </details>
 
           <a class="nav__cta" href={withBase('contact/')}>Get in touch</a>
+          <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <span class="theme-toggle__track" aria-hidden="true">
+              <span class="theme-toggle__thumb"></span>
+            </span>
+            <span class="theme-toggle__text">Dark</span>
+          </button>
         </div>
       </nav>
     )}
@@ -269,6 +287,55 @@ const currentPath = Astro.url.pathname;
       })();
     </script>
 
+    <!-- THEME TOGGLE ────────────────────────────────────────────── -->
+    <script is:inline>
+      (function () {
+        var toggle = document.querySelector('.theme-toggle');
+        if (!toggle) return;
+
+        var text = toggle.querySelector('.theme-toggle__text');
+        var media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+
+        function getStoredTheme() {
+          try {
+            return window.localStorage.getItem('lbdc-theme');
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function setStoredTheme(theme) {
+          try {
+            window.localStorage.setItem('lbdc-theme', theme);
+          } catch (error) {
+            // Storage can be unavailable in private browsing; the current page still updates.
+          }
+        }
+
+        function applyTheme(theme) {
+          document.documentElement.dataset.theme = theme;
+          toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+          toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+          if (text) text.textContent = theme === 'dark' ? 'Light' : 'Dark';
+        }
+
+        toggle.addEventListener('click', function () {
+          var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          setStoredTheme(nextTheme);
+          applyTheme(nextTheme);
+        });
+
+        if (media && typeof media.addEventListener === 'function') {
+          media.addEventListener('change', function (event) {
+            if (getStoredTheme()) return;
+            applyTheme(event.matches ? 'dark' : 'light');
+          });
+        }
+
+        applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+      })();
+    </script>
+
   </body>
 </html>
 
@@ -284,6 +351,7 @@ const currentPath = Astro.url.pathname;
     line-height: var(--da-lead-body);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background 0.18s var(--da-ease), color 0.18s var(--da-ease);
   }
   a { color: inherit; text-decoration: none; }
   a:focus-visible, button:focus-visible, summary:focus-visible {
@@ -318,13 +386,13 @@ const currentPath = Astro.url.pathname;
     transition: background 0.18s var(--da-ease), color 0.18s var(--da-ease), border-color 0.18s var(--da-ease);
   }
   .btn--primary {
-    background: var(--da-ink);
-    color: #fff;
-    border: 1.5px solid var(--da-ink);
+    background: var(--da-button-primary-bg);
+    color: var(--da-button-primary-text);
+    border: 1.5px solid var(--da-button-primary-border);
   }
   .btn--primary:hover {
-    background: var(--da-accent);
-    border-color: var(--da-accent);
+    background: var(--da-button-primary-hover-bg);
+    border-color: var(--da-button-primary-hover-border);
   }
   .btn--ghost {
     background: transparent;
@@ -335,7 +403,7 @@ const currentPath = Astro.url.pathname;
   .btn--lg { padding: 16px 28px; font-size: 16px; }
   .btn--accent {
     background: var(--da-accent);
-    color: #fff;
+    color: var(--da-on-accent);
     border: 1.5px solid var(--da-accent);
   }
   .btn--accent:hover { opacity: 0.85; }
@@ -385,7 +453,7 @@ const currentPath = Astro.url.pathname;
   .nav__links {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: 18px;
     font-size: 14px;
   }
   .nav__primary { display: flex; align-items: center; gap: 28px; }
@@ -436,6 +504,53 @@ const currentPath = Astro.url.pathname;
   }
   .nav__cta:hover { border-color: var(--da-ink); background: var(--da-accent-dim); }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 78px;
+    min-height: 38px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--da-ink);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .theme-toggle:hover {
+    border-color: var(--da-ink);
+    background: var(--da-accent-dim);
+  }
+  .theme-toggle__track {
+    position: relative;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 16px;
+    border: 1px solid var(--da-line-mid);
+    border-radius: 999px;
+    background: var(--da-surface);
+  }
+  .theme-toggle__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--da-ink);
+    transition: transform 0.18s var(--da-ease), background 0.18s var(--da-ease);
+  }
+  [data-theme="dark"] .theme-toggle__thumb { transform: translateX(12px); background: var(--da-accent); }
+  .theme-toggle__text {
+    display: inline-block;
+    min-width: 34px;
+    text-align: left;
+  }
+
   /* ── Footer ──────────────────────────────────────────────────── */
   .footer {
     position: relative;
@@ -468,11 +583,36 @@ const currentPath = Astro.url.pathname;
   .footer__right { display: flex; gap: 20px; font-size: 13px; color: var(--da-ink-muted); }
   .footer__right a:hover { color: var(--da-ink); }
 
+  [data-theme="dark"] .cta-band,
+  [data-theme="dark"] .contact {
+    background: var(--da-contrast-bg) !important;
+  }
+  [data-theme="dark"] .cta-band .label,
+  [data-theme="dark"] .contact .label {
+    color: var(--da-contrast-label) !important;
+  }
+  [data-theme="dark"] .cta-band h2,
+  [data-theme="dark"] .contact h2 {
+    color: var(--da-contrast-text) !important;
+  }
+  [data-theme="dark"] .cta-band__sub,
+  [data-theme="dark"] .contact__sub,
+  [data-theme="dark"] .contact p {
+    color: var(--da-contrast-muted) !important;
+  }
+
 
   /* ── Responsive ──────────────────────────────────────────────── */
   @media (max-width: 480px) {
     .nav__primary { display: none; }
     .nav__menu { display: block; }
+    .nav__links { gap: 10px; }
+    .nav__cta { display: none; }
+    .theme-toggle {
+      min-width: 70px;
+      padding-inline: 9px;
+    }
+    .theme-toggle__text { min-width: 30px; }
 
     .footer { flex-direction: column; gap: 16px; text-align: center; }
     .footer__right { flex-wrap: wrap; justify-content: center; }
