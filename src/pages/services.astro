@@ -4,17 +4,21 @@
  */
 import SiteLayout from '../layouts/SiteLayout.astro';
 
+const BASIN_ENDPOINT = 'https://usebasin.com/f/f28bdade2111';
+
 const base = import.meta.env.BASE_URL;
 const withBase = (path) => {
   const b = base.endsWith('/') ? base : `${base}/`;
   const p = String(path || '').replace(/^\//, '');
   return `${b}${p}`;
 };
+
+const sipPromptRedirectUrl = `${Astro.site}${withBase('services/?sip=1#sip-and-prompt')}`;
 ---
 
 <SiteLayout
   title="Services"
-  description="Product management, digital transformation, and online banking consulting services from LeRoy Barnes — LBDC."
+  description="Product management, digital transformation, AI training, and online banking consulting services from LeRoy Barnes — LBDC."
 >
 
   <!-- PAGE HEADER ─────────────────────────────────────────────── -->
@@ -22,9 +26,9 @@ const withBase = (path) => {
     <div class="label" data-enter="0">Services</div>
     <h1 class="page-hero__h1" data-enter="1">Digital expertise,<br>delivered directly.</h1>
     <p class="page-hero__sub" data-enter="2">
-      LBDC specialises in three interrelated disciplines — product management,
-      digital transformation, and online banking &amp; payments. Most engagements
-      draw on all three.
+      LBDC specialises in four interrelated disciplines — product management,
+      digital transformation, AI training, and online banking &amp; payments.
+      Most engagements draw on more than one.
     </p>
   </section>
 
@@ -132,6 +136,150 @@ const withBase = (path) => {
             <h3>Insurance Digital Products</h3>
             <p>Super App design, USSD micro-insurance products, and embedded insurance — drawing on experience from APA Insurance in Nairobi.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE 04 ──────────────────────────────────────────────── -->
+  <section class="section svc-detail" id="ai-training">
+    <div class="svc-detail__inner" data-reveal>
+      <div class="svc-detail__meta">
+        <div class="svc-num">04</div>
+        <h2 class="svc-detail__title">AI<br>Training</h2>
+        <a class="btn btn--primary" href="#sip-and-prompt">Join Sip &amp; Prompt →</a>
+      </div>
+      <div class="svc-detail__body">
+        <p class="svc-detail__lead">
+          AI enablement is not about chasing tools. It is about helping
+          people think clearly, frame better questions, and turn everyday
+          work into repeatable systems that save time and improve decisions.
+        </p>
+        <div class="svc-items">
+          <div class="svc-item">
+            <h3>Prompting for real work</h3>
+            <p>Teach teams how to move from vague requests to precise prompts, useful outputs, and better judgement about what to trust.</p>
+          </div>
+          <div class="svc-item">
+            <h3>AI workflow design</h3>
+            <p>Map repetitive tasks and design simple AI-assisted workflows for research, writing, analysis, reporting, and follow-up.</p>
+          </div>
+          <div class="svc-item">
+            <h3>Executive enablement</h3>
+            <p>Practical sessions for leaders who need to understand what AI can change, where it fits, and how to sponsor adoption responsibly.</p>
+          </div>
+          <div class="svc-item">
+            <h3>Team adoption</h3>
+            <p>Hands-on enablement for teams that need shared language, guardrails, and confidence using AI in day-to-day delivery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIP & PROMPT ────────────────────────────────────────────── -->
+  <section class="section sip-programme" id="sip-and-prompt">
+    <div class="sip-programme__intro" data-reveal>
+      <div>
+        <div class="label">AI Enablement programme</div>
+        <h2>Sip &amp; Prompt</h2>
+      </div>
+      <p>
+        A practical AI training session for professionals and teams who want
+        to learn how to think with AI, write better prompts, and apply
+        automation to real work without needing to code.
+      </p>
+    </div>
+
+    <div class="sip-programme__grid">
+      <div class="programme-card" data-reveal>
+        <div class="programme-card__label">What participants learn</div>
+        <ul class="programme-list">
+          <li>How to turn fuzzy ideas into clear prompts and usable outputs.</li>
+          <li>How to use AI for research, writing, analysis, automation, and decision support.</li>
+          <li>How to spot weak answers, protect sensitive information, and keep humans in control.</li>
+          <li>How to leave with reusable prompts and workflow ideas for their own context.</li>
+        </ul>
+      </div>
+
+      <div class="programme-card" data-reveal>
+        <div class="programme-card__label">Formats</div>
+        <ul class="programme-list">
+          <li>Individual coaching for professionals building personal AI fluency.</li>
+          <li>Team sessions for departments that need shared practice and examples.</li>
+          <li>Corporate workshops tailored to specific business workflows.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="signup-panel" data-reveal>
+      <div class="signup-panel__copy">
+        <div class="label">Register interest</div>
+        <h3>Join the next Sip &amp; Prompt session.</h3>
+        <p>
+          Share your details and the format you are interested in.
+          LeRoy will follow up with availability and fit.
+        </p>
+      </div>
+
+      <div class="signup-panel__form">
+        <form id="sip-prompt-form" method="POST" action={BASIN_ENDPOINT} novalidate>
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+            <label for="sip-website">Leave this field empty</label>
+            <input type="text" id="sip-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <input type="hidden" name="_redirect" value={sipPromptRedirectUrl} />
+          <input type="hidden" name="source" value="sip-and-prompt" />
+          <input type="hidden" name="programme" value="Sip & Prompt" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label class="field__label" for="sip-name">Full name <span aria-hidden="true">*</span></label>
+              <input class="field__input" type="text" id="sip-name" name="name" required autocomplete="name" placeholder="Your full name" />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="sip-email">Email address <span aria-hidden="true">*</span></label>
+              <input class="field__input" type="email" id="sip-email" name="email" required autocomplete="email" placeholder="you@company.com" />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="sip-organisation">Organisation</label>
+              <input class="field__input" type="text" id="sip-organisation" name="organisation" autocomplete="organization" placeholder="Company or institution" />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="sip-role">Role</label>
+              <input class="field__input" type="text" id="sip-role" name="role" autocomplete="organization-title" placeholder="Your role" />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="sip-format">Preferred format <span aria-hidden="true">*</span></label>
+              <select class="field__input field__select" id="sip-format" name="preferred_format" required>
+                <option value="">Select one</option>
+                <option value="individual">Individual coaching</option>
+                <option value="team">Team session</option>
+                <option value="corporate">Corporate workshop</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="sip-goals">What would you like to learn?</label>
+              <textarea class="field__input field__textarea" id="sip-goals" name="goals" rows="4" placeholder="Tell LeRoy what you want to use AI for..."></textarea>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--submit" type="submit">Register interest</button>
+          <p class="form-note">No spam. Your details are only used to follow up about Sip &amp; Prompt.</p>
+        </form>
+
+        <div class="form-success" id="sip-prompt-success" hidden>
+          <div class="form-success__icon" aria-hidden="true">✓</div>
+          <h3 class="form-success__heading">Interest registered.</h3>
+          <p class="form-success__body">
+            Thanks. LeRoy will follow up with Sip &amp; Prompt availability and next steps.
+          </p>
         </div>
       </div>
     </div>
@@ -253,6 +401,173 @@ const withBase = (path) => {
     line-height: 1.6;
   }
 
+  /* ── Sip & Prompt ────────────────────────────────────────────── */
+  .sip-programme {
+    background: var(--da-surface);
+  }
+  .sip-programme__intro {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--da-gap);
+    align-items: end;
+    margin-bottom: var(--da-gap);
+  }
+  .sip-programme__intro h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+  }
+  .sip-programme__intro p {
+    max-width: 62ch;
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    line-height: 1.65;
+  }
+  .sip-programme__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--da-line);
+    border-bottom: 1px solid var(--da-line);
+    margin-bottom: var(--da-gap);
+  }
+  .programme-card {
+    padding: 32px 32px 32px 0;
+    border-right: 1px solid var(--da-line);
+  }
+  .programme-card:last-child {
+    border-right: 0;
+    padding-left: 32px;
+    padding-right: 0;
+  }
+  .programme-card__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-bottom: 14px;
+  }
+  .programme-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .programme-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--da-line);
+    color: var(--da-ink-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .programme-list li:last-child {
+    border-bottom: 0;
+  }
+  .signup-panel {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--da-gap);
+    align-items: start;
+  }
+  .signup-panel__copy h3 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .signup-panel__copy p {
+    color: var(--da-ink-muted);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .signup-panel__form {
+    max-width: 760px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field:last-child {
+    grid-column: 1 / -1;
+  }
+  .field__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--da-ink);
+    letter-spacing: 0.01em;
+  }
+  .field__label span {
+    color: var(--da-accent);
+  }
+  .field__input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: var(--da-r);
+    background: var(--da-bg);
+    color: var(--da-ink);
+    font-family: var(--da-font);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field__input:focus {
+    border-color: var(--da-accent);
+  }
+  .field__input::placeholder {
+    color: var(--da-ink-faint);
+  }
+  .field__select {
+    cursor: pointer;
+  }
+  .field__textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  .btn--submit {
+    min-width: 170px;
+    justify-content: center;
+  }
+  .form-note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--da-ink-faint);
+  }
+  .form-success {
+    padding: 40px;
+    border: 1.5px solid var(--da-line-mid);
+    border-radius: var(--da-r);
+    text-align: center;
+  }
+  .form-success[hidden] {
+    display: none;
+  }
+  .form-success__icon {
+    font-size: 32px;
+    color: var(--da-accent);
+    margin-bottom: 16px;
+  }
+  .form-success__heading {
+    font-size: var(--da-h3);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .form-success__body {
+    max-width: 42ch;
+    margin: 0 auto;
+    color: var(--da-ink-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
   /* ── Engagement model ─────────────────────────────────────────── */
   .engage__grid {
     display: grid;
@@ -300,5 +615,73 @@ const withBase = (path) => {
     .engage__item { border-right: 0; border-bottom: 1px solid var(--da-line); padding: 24px 0; }
     .engage__item:not(:first-child) { padding-left: 0; }
     .engage__item:last-child { border-bottom: 0; }
+    .sip-programme__intro,
+    .signup-panel {
+      grid-template-columns: 1fr;
+    }
+    .sip-programme__grid,
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+    .programme-card {
+      border-right: 0;
+      border-bottom: 1px solid var(--da-line);
+      padding: 28px 0;
+    }
+    .programme-card:last-child {
+      border-bottom: 0;
+      padding-left: 0;
+    }
+    .field:last-child {
+      grid-column: auto;
+    }
   }
 </style>
+
+<script>
+  const sipParams = new URLSearchParams(location.search);
+  if (sipParams.get('sip') === '1') {
+    const sipForm = document.getElementById('sip-prompt-form');
+    const sipSuccess = document.getElementById('sip-prompt-success');
+    if (sipForm) sipForm.hidden = true;
+    if (sipSuccess) sipSuccess.hidden = false;
+  }
+
+  const sipPromptForm = document.getElementById('sip-prompt-form') as HTMLFormElement | null;
+  if (sipPromptForm) {
+    sipPromptForm.addEventListener('submit', async (event) => {
+      const btn = sipPromptForm.querySelector('.btn--submit') as HTMLButtonElement | null;
+      if (!sipPromptForm.checkValidity()) return;
+      event.preventDefault();
+
+      if (btn) {
+        btn.classList.add('btn--loading');
+        btn.setAttribute('aria-label', 'Registering interest...');
+        btn.disabled = true;
+      }
+
+      try {
+        const body = new FormData(sipPromptForm);
+        const res = await fetch(sipPromptForm.action, {
+          method: 'POST',
+          body,
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!res.ok) throw new Error(`Basin submit failed: ${res.status}`);
+
+        const sipSuccess = document.getElementById('sip-prompt-success');
+        if (sipSuccess) sipSuccess.hidden = false;
+        sipPromptForm.hidden = true;
+      } catch (err) {
+        if (btn) {
+          btn.classList.remove('btn--loading');
+          btn.removeAttribute('aria-label');
+          btn.disabled = false;
+        }
+        alert('Sorry — something went wrong registering your interest. Please try again, or email hello@lbdc.co.za.');
+        console.error(err);
+      }
+    });
+  }
+</script>
