@@ -15,19 +15,19 @@ const withBase = (path) => {
 
 <SiteLayout
   title="Home"
-  description="LBDC is an independent consulting practice specialising in product management, digital transformation, and online banking — serving organisations across Africa."
+  description="LBDC is an independent consulting practice specialising in product management, digital transformation, AI enablement, and online banking — serving organisations across Africa."
 >
 
   <!-- HERO ────────────────────────────────────────────────────── -->
   <section class="hero section">
-    <div class="hero__label label" data-enter="0">Product Management · Digital Transformation</div>
+    <div class="hero__label label" data-enter="0">Product Management · Digital Transformation · AI Enablement</div>
     <h1 class="hero__h1" data-enter="1">
       From digital vision<br>to business value.
     </h1>
     <p class="hero__sub" data-enter="2">
       LeRoy Barnes is an independent consultant helping organisations turn
       product strategy into shipped digital platforms — across banking,
-      payments, and insurance.
+      payments, insurance, and applied AI.
     </p>
     <div class="hero__actions" data-enter="3">
       <a class="btn btn--primary" href={withBase('contact/')}>Get in touch</a>
@@ -62,7 +62,7 @@ const withBase = (path) => {
   <section class="section services">
     <div class="section__header" data-reveal>
       <div class="label">What he does</div>
-      <h2>Three ways to work<br>with LeRoy</h2>
+      <h2>Four ways to work<br>with LeRoy</h2>
     </div>
 
     <div class="services__grid">
@@ -94,6 +94,15 @@ const withBase = (path) => {
           African markets.
         </p>
         <a class="svc__link" href={withBase('services/')}>Learn more →</a>
+      </article>
+      <article class="svc" data-reveal>
+        <div class="svc__num">04</div>
+        <h3 class="svc__title">AI Enablement</h3>
+        <p class="svc__body">
+          Practical AI training for professionals and teams who need to
+          think clearly, prompt well, and apply automation to real work.
+        </p>
+        <a class="svc__link" href={withBase('services/#ai-training')}>Learn more →</a>
       </article>
     </div>
   </section>
@@ -238,18 +247,18 @@ const withBase = (path) => {
   /* ── Services ─────────────────────────────────────────────────── */
   .services__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
   }
   .svc {
-    padding: 36px 32px 36px 0;
+    padding: 36px 24px 36px 0;
     border-right: 1px solid var(--da-line);
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
   .svc:last-child { border-right: 0; padding-right: 0; }
-  .svc:not(:first-child) { padding-left: 32px; }
+  .svc:not(:first-child) { padding-left: 24px; }
   .svc__num {
     font-size: 11px;
     font-weight: 700;
