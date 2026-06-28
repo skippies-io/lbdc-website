@@ -24,6 +24,18 @@
   --da-accent:     #2F6F73;
   --da-accent-dim: rgba(47, 111, 115, 0.12);
 
+  /* Theme-aware controls */
+  --da-on-accent: #FFFFFF;
+  --da-button-primary-bg: var(--da-ink);
+  --da-button-primary-text: #FFFFFF;
+  --da-button-primary-border: var(--da-ink);
+  --da-button-primary-hover-bg: var(--da-accent);
+  --da-button-primary-hover-border: var(--da-accent);
+  --da-contrast-bg: var(--da-ink);
+  --da-contrast-text: #FFFFFF;
+  --da-contrast-muted: rgba(255, 255, 255, 0.60);
+  --da-contrast-label: rgba(255, 255, 255, 0.45);
+
   /* Type scale */
   --da-font:        -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
@@ -51,4 +63,30 @@
 
   /* Transitions */
   --da-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --da-bg:        #0F1312;
+  --da-surface:   #171D1C;
+  --da-ink:       #F2F4EF;
+  --da-ink-muted: rgba(242, 244, 239, 0.68);
+  --da-ink-faint: rgba(242, 244, 239, 0.34);
+  --da-line:      rgba(242, 244, 239, 0.13);
+  --da-line-mid:  rgba(242, 244, 239, 0.24);
+
+  --da-accent:     #69B5AD;
+  --da-accent-dim: rgba(105, 181, 173, 0.16);
+  --da-on-accent:  #06110F;
+
+  --da-button-primary-bg: #F2F4EF;
+  --da-button-primary-text: #0F1312;
+  --da-button-primary-border: #F2F4EF;
+  --da-button-primary-hover-bg: var(--da-accent);
+  --da-button-primary-hover-border: var(--da-accent);
+  --da-contrast-bg: #0A0D0C;
+  --da-contrast-text: #F7F8F4;
+  --da-contrast-muted: rgba(247, 248, 244, 0.68);
+  --da-contrast-label: rgba(247, 248, 244, 0.52);
 }
