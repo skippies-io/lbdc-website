@@ -153,7 +153,6 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       <div class="svc-detail__meta">
         <div class="svc-num">04</div>
         <h2 class="svc-detail__title">AI<br>Training</h2>
-        <a class="btn btn--primary" href={withBase('sip-and-prompt/')}>Join Sip &amp; Prompt →</a>
       </div>
       <div class="svc-detail__body">
         <p class="svc-detail__lead">
@@ -179,7 +178,48 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
             <p>Hands-on enablement for teams that need shared language, guardrails, and confidence using AI in day-to-day delivery.</p>
           </div>
         </div>
+        <div class="svc-detail__action">
+          <a class="btn btn--primary" href="#sip-sign-up">Join Sip &amp; Prompt →</a>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- COURSES ─────────────────────────────────────────────────── -->
+  <section class="section courses" id="courses">
+    <div class="courses__intro" data-reveal>
+      <div>
+        <div class="label">Courses</div>
+        <h2>Practical AI training formats</h2>
+      </div>
+      <p>
+        Structured sessions for individuals, teams, and leaders who need to
+        move from curiosity to confident AI use in real work.
+      </p>
+    </div>
+
+    <div class="courses__grid">
+      <article class="course-card" data-reveal>
+        <div class="course-card__label">Hands-on AI fluency</div>
+        <h3>Sip &amp; Prompt</h3>
+        <p>
+          A practical session for professionals and teams who want to think
+          clearly with AI, write better prompts, and apply automation to
+          everyday work.
+        </p>
+        <a class="course-card__link" href="#sip-sign-up">Join Sip &amp; Prompt →</a>
+      </article>
+
+      <article class="course-card" data-reveal>
+        <div class="course-card__label">Leadership enablement</div>
+        <h3>AI for Executives</h3>
+        <p>
+          A focused course for leaders who need to understand where AI fits,
+          how to sponsor adoption responsibly, and what good governance looks
+          like.
+        </p>
+        <a class="course-card__link" href={withBase('contact/')}>Enquire →</a>
+      </article>
     </div>
   </section>
 
@@ -218,7 +258,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       </div>
     </div>
 
-    <div class="signup-panel" data-reveal>
+    <div class="signup-panel" id="sip-sign-up" data-reveal>
       <div class="signup-panel__copy">
         <div class="label">Register interest</div>
         <h3>Join the next Sip &amp; Prompt session.</h3>
@@ -454,10 +494,84 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
     color: var(--da-ink-muted);
     line-height: 1.6;
   }
+  .svc-detail__action {
+    margin-top: var(--da-gap);
+  }
+
+  /* ── Courses ─────────────────────────────────────────────────── */
+  .courses {
+    background: var(--da-surface);
+  }
+  .courses__intro {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--da-gap);
+    align-items: end;
+    margin-bottom: var(--da-gap);
+  }
+  .courses__intro h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.1;
+    max-width: 14ch;
+  }
+  .courses__intro p {
+    max-width: 62ch;
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    line-height: 1.65;
+  }
+  .courses__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--da-line);
+    border-bottom: 1px solid var(--da-line);
+  }
+  .course-card {
+    padding: 36px 36px 36px 0;
+    border-right: 1px solid var(--da-line);
+  }
+  .course-card:last-child {
+    border-right: 0;
+    padding-left: 36px;
+    padding-right: 0;
+  }
+  .course-card__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-bottom: 14px;
+  }
+  .course-card h3 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .course-card p {
+    color: var(--da-ink-muted);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 48ch;
+    margin-bottom: 22px;
+  }
+  .course-card__link {
+    color: var(--da-accent);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .course-card__link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 
   /* ── Sip & Prompt ────────────────────────────────────────────── */
   .sip-programme {
-    background: var(--da-surface);
+    background: var(--da-bg);
   }
   .sip-programme__intro {
     display: grid;
@@ -669,6 +783,22 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
     .engage__item { border-right: 0; border-bottom: 1px solid var(--da-line); padding: 24px 0; }
     .engage__item:not(:first-child) { padding-left: 0; }
     .engage__item:last-child { border-bottom: 0; }
+    .courses__intro {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .courses__grid {
+      grid-template-columns: 1fr;
+    }
+    .course-card {
+      border-right: 0;
+      border-bottom: 1px solid var(--da-line);
+      padding: 28px 0;
+    }
+    .course-card:last-child {
+      border-bottom: 0;
+      padding-left: 0;
+    }
     .sip-programme__intro,
     .signup-panel {
       grid-template-columns: 1fr;
