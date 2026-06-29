@@ -1,0 +1,234 @@
+---
+/**
+ * Sip & Prompt — dedicated share page.
+ *
+ * Anchor links do not carry page-specific metadata in chat previews, so this
+ * route gives the programme its own title and description while linking to the
+ * existing registration form on Services.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path) => {
+  const b = base.endsWith('/') ? base : `${base}/`;
+  const p = String(path || '').replace(/^\//, '');
+  return `${b}${p}`;
+};
+---
+
+<SiteLayout
+  title="Sip & Prompt"
+  description="Sip & Prompt is practical AI training from LBDC for professionals and teams who want to think clearly, prompt well, and apply AI to real work."
+>
+
+  <section class="page-hero section">
+    <div class="label" data-enter="0">AI Training programme</div>
+    <h1 class="page-hero__h1" data-enter="1">Sip &amp; Prompt</h1>
+    <p class="page-hero__sub" data-enter="2">
+      Practical AI training for professionals and teams who want to think
+      clearly with AI, write better prompts, and apply automation to real work
+      without needing to code.
+    </p>
+    <div class="page-hero__actions" data-enter="3">
+      <a class="btn btn--primary" href={withBase('services/#sip-and-prompt')}>Register interest →</a>
+      <a class="btn btn--ghost" href={withBase('services/#ai-training')}>View AI Training →</a>
+    </div>
+  </section>
+
+  <section class="section programme">
+    <div class="programme__intro" data-reveal>
+      <div class="label">What it covers</div>
+      <h2>Build useful AI habits around real work.</h2>
+    </div>
+
+    <div class="programme__grid">
+      <article class="programme-card" data-reveal>
+        <div class="programme-card__label">Prompting</div>
+        <h3>Ask better questions</h3>
+        <p>
+          Move from vague requests to structured prompts, sharper context, and
+          outputs that are easier to review and reuse.
+        </p>
+      </article>
+
+      <article class="programme-card" data-reveal>
+        <div class="programme-card__label">Workflow</div>
+        <h3>Apply AI to everyday tasks</h3>
+        <p>
+          Use AI for research, writing, analysis, reporting, follow-up, and
+          repeatable knowledge work.
+        </p>
+      </article>
+
+      <article class="programme-card" data-reveal>
+        <div class="programme-card__label">Judgement</div>
+        <h3>Know what to trust</h3>
+        <p>
+          Spot weak answers, protect sensitive information, and keep human
+          judgement in control.
+        </p>
+      </article>
+
+      <article class="programme-card" data-reveal>
+        <div class="programme-card__label">Formats</div>
+        <h3>Individual, team, or corporate</h3>
+        <p>
+          Book coaching, team sessions, or corporate workshops tailored to the
+          workflows people actually use.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section cta-band">
+    <div class="cta-band__inner" data-reveal>
+      <div class="label">Register interest</div>
+      <h2>Join the next<br>Sip &amp; Prompt session.</h2>
+      <p class="cta-band__sub">
+        Share your details and preferred format. LeRoy will follow up with
+        availability and fit.
+      </p>
+      <a class="btn btn--accent btn--lg" href={withBase('services/#sip-and-prompt')}>Register interest →</a>
+    </div>
+  </section>
+
+</SiteLayout>
+
+<style>
+  .page-hero { border-top: none; }
+  .page-hero__h1 {
+    font-size: var(--da-display);
+    font-weight: 700;
+    letter-spacing: var(--da-track-tight);
+    line-height: var(--da-lead-tight);
+    margin-bottom: 24px;
+    max-width: 12ch;
+  }
+  .page-hero__sub {
+    font-size: var(--da-body-lg);
+    color: var(--da-ink-muted);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+  .page-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .programme__intro {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--da-gap);
+    align-items: start;
+    margin-bottom: var(--da-gap);
+  }
+  .programme__intro h2 {
+    font-size: var(--da-h2);
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.12;
+    max-width: 15ch;
+  }
+  .programme__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--da-line);
+    border-bottom: 1px solid var(--da-line);
+  }
+  .programme-card {
+    padding: 32px 26px;
+    border-right: 1px solid var(--da-line);
+  }
+  .programme-card:first-child {
+    padding-left: 0;
+  }
+  .programme-card:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+  .programme-card__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--da-ink-faint);
+    margin-bottom: 16px;
+  }
+  .programme-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: var(--da-track-head);
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .programme-card p {
+    color: var(--da-ink-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cta-band {
+    background: var(--da-ink);
+    color: var(--da-bg);
+    border-top: 0;
+  }
+  .cta-band__inner {
+    max-width: 760px;
+  }
+  .cta-band .label {
+    color: rgba(255,255,255,0.5);
+  }
+  .cta-band h2 {
+    font-size: var(--da-h1);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: var(--da-track-tight);
+    margin: 16px 0 20px;
+  }
+  .cta-band__sub {
+    font-size: var(--da-body-lg);
+    color: rgba(255,255,255,0.68);
+    line-height: 1.6;
+    max-width: 52ch;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .programme__intro {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .programme__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .programme-card:nth-child(2) {
+      border-right: 0;
+      padding-right: 0;
+    }
+    .programme-card:nth-child(3) {
+      padding-left: 0;
+      border-top: 1px solid var(--da-line);
+    }
+    .programme-card:nth-child(4) {
+      border-top: 1px solid var(--da-line);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .programme__grid {
+      grid-template-columns: 1fr;
+    }
+    .programme-card,
+    .programme-card:first-child,
+    .programme-card:last-child {
+      padding: 24px 0;
+      border-right: 0;
+      border-top: 1px solid var(--da-line);
+    }
+    .programme-card:first-child {
+      border-top: 0;
+    }
+  }
+</style>
