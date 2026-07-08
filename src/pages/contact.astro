@@ -57,6 +57,8 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
 
           {/* Basin: redirect back to this page with ?success=1 after submission */}
           <input type="hidden" name="_redirect" value={redirectUrl} />
+          <input type="hidden" id="enquiry-source" name="enquiry_source" value="contact_page" />
+          <input type="hidden" id="enquiry-page" name="enquiry_page" value="contact" />
 
           <div class="field">
             <label class="field__label" for="name">Full name <span aria-hidden="true">*</span></label>
@@ -146,7 +148,7 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
         <div class="sidebar-card">
           <div class="sidebar-card__label">Direct email</div>
           <div class="sidebar-card__value" id="direct-email" data-email-user="hello" data-email-domain="lbdc.co.za">
-            <a class="email-link" href="mailto:hello@lbdc.co.za">hello@lbdc.co.za</a>
+            <a class="email-link" href="mailto:hello@lbdc.co.za" data-lbdc-track="email_click" data-lbdc-label="contact_sidebar_email">hello@lbdc.co.za</a>
             <div class="sidebar-card__hint">If the form fails to submit, email directly.</div>
           </div>
         </div>
@@ -161,10 +163,10 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
         <div class="sidebar-card sidebar-card--services">
           <div class="sidebar-card__label">Services</div>
           <ul class="sidebar-services">
-            <li><a href={withBase('services/#product-management')}>Product Management &amp; Strategy</a></li>
-            <li><a href={withBase('services/#digital-transformation')}>Digital Transformation</a></li>
-            <li><a href={withBase('services/#banking-payments')}>Online Banking &amp; Digital Payments</a></li>
-            <li><a href={withBase('sip-and-prompt/')}>AI Training / Sip &amp; Prompt</a></li>
+            <li><a href={withBase('services/#product-management')} data-lbdc-track="contact_sidebar_service_click" data-lbdc-label="product_management">Product Management &amp; Strategy</a></li>
+            <li><a href={withBase('services/#digital-transformation')} data-lbdc-track="contact_sidebar_service_click" data-lbdc-label="digital_transformation">Digital Transformation</a></li>
+            <li><a href={withBase('services/#banking-payments')} data-lbdc-track="contact_sidebar_service_click" data-lbdc-label="banking_payments">Online Banking &amp; Digital Payments</a></li>
+            <li><a href={withBase('sip-and-prompt/?source=contact_sidebar')} data-lbdc-track="contact_sidebar_service_click" data-lbdc-label="ai_training">AI Training / Sip &amp; Prompt</a></li>
           </ul>
         </div>
       </div>
@@ -183,6 +185,20 @@ const redirectUrl = `${Astro.site}${withBase('contact/?success=1')}`;
     if (form) form.hidden = true;
     if (success) success.hidden = false;
   }
+
+  const requestedService = params.get('service');
+  const requestedSource = params.get('source');
+  const serviceSelect = document.getElementById('service') as HTMLSelectElement | null;
+  const sourceInput = document.getElementById('enquiry-source') as HTMLInputElement | null;
+  const pageInput = document.getElementById('enquiry-page') as HTMLInputElement | null;
+
+  if (serviceSelect && requestedService) {
+    const hasRequestedOption = Array.from(serviceSelect.options).some((option) => option.value === requestedService);
+    if (hasRequestedOption) serviceSelect.value = requestedService;
+  }
+
+  if (sourceInput && requestedSource) sourceInput.value = requestedSource;
+  if (pageInput) pageInput.value = location.href;
 
   // Client-side validation UX + loading state
   //

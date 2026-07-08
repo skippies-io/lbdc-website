@@ -11,6 +11,12 @@ const withBase = (path) => {
   const p = String(path || '').replace(/^\//, '');
   return `${b}${p}`;
 };
+
+const contactUrl = (source, service = '') => {
+  const params = new URLSearchParams({ source });
+  if (service) params.set('service', service);
+  return withBase(`contact/?${params.toString()}`);
+};
 ---
 
 <SiteLayout
@@ -30,8 +36,8 @@ const withBase = (path) => {
       payments, insurance, and applied AI.
     </p>
     <div class="hero__actions" data-enter="3">
-      <a class="btn btn--primary" href={withBase('contact/')}>Get in touch</a>
-      <a class="btn btn--ghost" href={withBase('services/')}>See services →</a>
+      <a class="btn btn--primary" href={contactUrl('home_hero')} data-lbdc-track="cta_click" data-lbdc-label="home_hero_get_in_touch">Get in touch</a>
+      <a class="btn btn--ghost" href={withBase('services/?source=home_hero_services')} data-lbdc-track="cta_click" data-lbdc-label="home_hero_services">See services →</a>
     </div>
 
     <!-- Proof ribbon -->
@@ -73,7 +79,7 @@ const withBase = (path) => {
           Roadmapping, OKRs, and prioritisation frameworks that align
           digital product teams with real business outcomes.
         </p>
-        <a class="svc__link" href={withBase('services/')}>Learn more →</a>
+        <a class="svc__link" href={withBase('services/#product-management')} data-lbdc-track="service_interest_click" data-lbdc-label="home_product_management">Learn more →</a>
       </article>
       <article class="svc" data-reveal>
         <div class="svc__num">02</div>
@@ -83,7 +89,7 @@ const withBase = (path) => {
           cross-functional operating model redesign — from quarterly to
           weekly release cycles.
         </p>
-        <a class="svc__link" href={withBase('services/')}>Learn more →</a>
+        <a class="svc__link" href={withBase('services/#digital-transformation')} data-lbdc-track="service_interest_click" data-lbdc-label="home_digital_transformation">Learn more →</a>
       </article>
       <article class="svc" data-reveal>
         <div class="svc__num">03</div>
@@ -93,7 +99,7 @@ const withBase = (path) => {
           payment gateway integrations, and fintech platforms across
           African markets.
         </p>
-        <a class="svc__link" href={withBase('services/')}>Learn more →</a>
+        <a class="svc__link" href={withBase('services/#banking-payments')} data-lbdc-track="service_interest_click" data-lbdc-label="home_banking_payments">Learn more →</a>
       </article>
       <article class="svc" data-reveal>
         <div class="svc__num">04</div>
@@ -102,7 +108,7 @@ const withBase = (path) => {
           Practical AI training for professionals and teams who need to
           think clearly, prompt well, and apply automation to real work.
         </p>
-        <a class="svc__link" href={withBase('sip-and-prompt/')}>Learn more →</a>
+        <a class="svc__link" href={withBase('sip-and-prompt/?source=home_ai_training')} data-lbdc-track="service_interest_click" data-lbdc-label="home_ai_training">Learn more →</a>
       </article>
     </div>
   </section>
@@ -156,7 +162,7 @@ const withBase = (path) => {
           He works directly with founders and executive teams.
           No account managers, no padding.
         </p>
-        <a class="btn btn--ghost" href={withBase('about/')} style="margin-top: 24px;">About LeRoy →</a>
+        <a class="btn btn--ghost" href={withBase('about/?source=home_about_preview')} style="margin-top: 24px;" data-lbdc-track="cta_click" data-lbdc-label="home_about_preview">About LeRoy →</a>
       </div>
       <div class="about-preview__right" data-reveal>
         <div class="credential">
@@ -190,7 +196,7 @@ const withBase = (path) => {
         Briefly describe what you're trying to achieve.
         LeRoy responds within one to two business days.
       </p>
-      <a class="btn btn--accent btn--lg" href={withBase('contact/')}>Start a conversation →</a>
+      <a class="btn btn--accent btn--lg" href={contactUrl('home_bottom_cta')} data-lbdc-track="cta_click" data-lbdc-label="home_bottom_start_conversation">Start a conversation →</a>
     </div>
   </section>
 
