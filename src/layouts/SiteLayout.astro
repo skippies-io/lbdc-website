@@ -52,6 +52,35 @@ const navLinks = [
 
 const currentPath = Astro.url.pathname;
 
+const organisationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'LBDC',
+  url: siteUrl(''),
+  logo: siteUrl(withBase('brand/LBDC_logo.png')),
+  image: siteUrl(withBase('og-image.png')),
+  email: 'hello@lbdc.co.za',
+  founder: {
+    '@type': 'Person',
+    name: 'LeRoy Barnes',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Johannesburg',
+    addressCountry: 'ZA',
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'South Africa' },
+    { '@type': 'Place', name: 'Africa' },
+  ],
+  serviceType: [
+    'Product management consulting',
+    'Digital transformation consulting',
+    'AI training',
+    'Online banking and digital payments consulting',
+  ],
+};
+
 ---
 
 <!doctype html>
@@ -73,6 +102,7 @@ const currentPath = Astro.url.pathname;
     <meta name="twitter:image" content={siteUrl(withBase('og-image.png'))} />
     <meta name="twitter:image:alt" content="LBDC" />
     <link rel="canonical" href={siteUrl(Astro.url.pathname)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organisationJsonLd)} />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-20KBH2YJCT"></script>
@@ -147,7 +177,14 @@ const currentPath = Astro.url.pathname;
             </div>
           </details>
 
-          <a class="nav__cta" href={withBase('contact/')}>Get in touch</a>
+          <a
+            class="nav__cta"
+            href={withBase('contact/?source=nav_cta')}
+            data-lbdc-track="cta_click"
+            data-lbdc-label="nav_get_in_touch"
+          >
+            Get in touch
+          </a>
           <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
             <span class="theme-toggle__track" aria-hidden="true">
               <span class="theme-toggle__thumb"></span>
@@ -169,7 +206,13 @@ const currentPath = Astro.url.pathname;
       </div>
       <div class="footer__right">
         {navLinks.map(({ href, label }) => (
-          <a href={href}>{label}</a>
+          <a
+            href={href}
+            data-lbdc-track="footer_nav_click"
+            data-lbdc-label={label.toLowerCase()}
+          >
+            {label}
+          </a>
         ))}
       </div>
       <!-- Subtle watermark mark (tasteful, low opacity) -->
@@ -284,6 +327,90 @@ const currentPath = Astro.url.pathname;
         );
 
         countEls.forEach(function (el) { countObserver.observe(el); });
+      })();
+    </script>
+
+    <!-- CONVERSION TRACKING ────────────────────────────────────── -->
+    <script is:inline>
+      (function () {
+        var STORAGE_KEY = 'lbdc-attribution';
+        var TRACKED_PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'source', 'service'];
+        var searchParams = new URLSearchParams(window.location.search);
+
+        function readAttribution() {
+          try {
+            return JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || '{}') || {};
+          } catch (error) {
+            return {};
+          }
+        }
+
+        function writeAttribution(data) {
+          try {
+            window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          } catch (error) {
+            // Session storage can be unavailable; tracking still works for the current page.
+          }
+        }
+
+        function collectCurrentAttribution() {
+          var attribution = readAttribution();
+          TRACKED_PARAMS.forEach(function (param) {
+            var value = searchParams.get(param);
+            if (value) attribution[param] = value;
+          });
+
+          if (!attribution.landing_page) attribution.landing_page = window.location.href;
+          attribution.current_page = window.location.href;
+          attribution.referrer = document.referrer || attribution.referrer || '';
+          writeAttribution(attribution);
+          return attribution;
+        }
+
+        function trackEvent(name, params) {
+          if (typeof window.gtag !== 'function') return;
+          window.gtag('event', name, params || {});
+        }
+
+        var attribution = collectCurrentAttribution();
+
+        document.querySelectorAll('form').forEach(function (form) {
+          Object.keys(attribution).forEach(function (key) {
+            if (!attribution[key]) return;
+            var inputName = 'attribution_' + key;
+            var input = form.querySelector('input[name="' + inputName + '"]');
+            if (!input) {
+              input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = inputName;
+              form.appendChild(input);
+            }
+            input.value = attribution[key];
+          });
+
+          form.addEventListener('submit', function () {
+            trackEvent('form_submit', {
+              form_id: form.id || 'unknown',
+              source: attribution.source || '',
+              service: attribution.service || '',
+              utm_source: attribution.utm_source || '',
+              utm_campaign: attribution.utm_campaign || ''
+            });
+          });
+        });
+
+        document.querySelectorAll('[data-lbdc-track]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            trackEvent(el.getAttribute('data-lbdc-track'), {
+              event_label: el.getAttribute('data-lbdc-label') || el.textContent.trim(),
+              link_url: el.href || '',
+              source: attribution.source || '',
+              service: attribution.service || '',
+              utm_source: attribution.utm_source || '',
+              utm_campaign: attribution.utm_campaign || ''
+            });
+          });
+        });
       })();
     </script>
 

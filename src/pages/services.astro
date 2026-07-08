@@ -19,6 +19,12 @@ const siteUrl = (path) => {
   return p ? `${s}/${p}` : s;
 };
 
+const contactUrl = (source, service = '') => {
+  const params = new URLSearchParams({ source });
+  if (service) params.set('service', service);
+  return withBase(`contact/?${params.toString()}`);
+};
+
 const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'));
 ---
 
@@ -44,7 +50,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       <div class="svc-detail__meta">
         <div class="svc-num">01</div>
         <h2 class="svc-detail__title">Product Management<br>&amp; Strategy</h2>
-        <a class="btn btn--primary" href={withBase('contact/')}>Enquire →</a>
+        <a class="btn btn--primary" href={contactUrl('services_product_management', 'product-management')} data-lbdc-track="service_enquiry_click" data-lbdc-label="product_management">Enquire →</a>
       </div>
       <div class="svc-detail__body">
         <p class="svc-detail__lead">
@@ -80,7 +86,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       <div class="svc-detail__meta">
         <div class="svc-num">02</div>
         <h2 class="svc-detail__title">Digital<br>Transformation</h2>
-        <a class="btn btn--primary" href={withBase('contact/')}>Enquire →</a>
+        <a class="btn btn--primary" href={contactUrl('services_digital_transformation', 'digital-transformation')} data-lbdc-track="service_enquiry_click" data-lbdc-label="digital_transformation">Enquire →</a>
       </div>
       <div class="svc-detail__body">
         <p class="svc-detail__lead">
@@ -117,7 +123,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       <div class="svc-detail__meta">
         <div class="svc-num">03</div>
         <h2 class="svc-detail__title">Online Banking &amp;<br>Digital Payments</h2>
-        <a class="btn btn--primary" href={withBase('contact/')}>Enquire →</a>
+        <a class="btn btn--primary" href={contactUrl('services_banking_payments', 'banking-payments')} data-lbdc-track="service_enquiry_click" data-lbdc-label="banking_payments">Enquire →</a>
       </div>
       <div class="svc-detail__body">
         <p class="svc-detail__lead">
@@ -153,7 +159,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
       <div class="svc-detail__meta">
         <div class="svc-num">04</div>
         <h2 class="svc-detail__title">AI<br>Training</h2>
-        <a class="btn btn--primary" href="#courses">Enquire →</a>
+        <a class="btn btn--primary" href="#courses" data-lbdc-track="service_enquiry_click" data-lbdc-label="ai_training_courses">Enquire →</a>
       </div>
       <div class="svc-detail__body">
         <p class="svc-detail__lead">
@@ -205,7 +211,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
           clearly with AI, write better prompts, and apply automation to
           everyday work.
         </p>
-        <a class="course-card__link" href="#sip-sign-up">Join Sip &amp; Prompt →</a>
+        <a class="course-card__link" href="#sip-sign-up" data-lbdc-track="course_interest_click" data-lbdc-label="sip_and_prompt">Join Sip &amp; Prompt →</a>
       </article>
 
       <article class="course-card" data-reveal>
@@ -216,7 +222,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
           how to sponsor adoption responsibly, and what good governance looks
           like.
         </p>
-        <a class="course-card__link" href={withBase('contact/')}>Enquire →</a>
+        <a class="course-card__link" href={contactUrl('services_ai_executives', 'ai-training')} data-lbdc-track="course_interest_click" data-lbdc-label="ai_for_executives">Enquire →</a>
       </article>
     </div>
   </section>
@@ -360,7 +366,7 @@ const sipPromptRedirectUrl = siteUrl(withBase('services/?sip=1#sip-and-prompt'))
         Every engagement starts with a conversation.
         No pitch, no deck — just a direct discussion about your challenge.
       </p>
-      <a class="btn btn--accent btn--lg" href={withBase('contact/')}>Get in touch →</a>
+      <a class="btn btn--accent btn--lg" href={contactUrl('services_bottom_cta')} data-lbdc-track="cta_click" data-lbdc-label="services_bottom_get_in_touch">Get in touch →</a>
     </div>
   </section>
 
