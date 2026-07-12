@@ -12,8 +12,9 @@ const withBase = (path) => {
   return `${b}${p}`;
 };
 
-const allPosts = await getCollection('insights');
-const posts = allPosts
+const insightPosts = await getCollection('insights');
+const blogPosts = await getCollection('blog');
+const posts = [...insightPosts, ...blogPosts]
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map(post => ({
     slug: post.data.slug ?? post.id,
