@@ -1,6 +1,6 @@
 ---
 title: "You don't need to code. You need to think."
-description: "AI hasn't just made coding easier — it's democratised the ability to bend machines to your will. A reflection by LeRoy Barnes."
+description: "AI hasn't just made coding easier, it's democratised the ability to bend machines to your will. A reflection by LeRoy Barnes."
 author: LeRoy Barnes
 date: 2026-06-13
 slug: you-dont-need-to-code-you-need-to-think
