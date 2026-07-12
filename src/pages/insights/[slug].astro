@@ -3,7 +3,10 @@ import { getCollection, render } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('insights');
+  const insightPosts = await getCollection('insights');
+  const blogPosts = await getCollection('blog');
+  const posts = [...insightPosts, ...blogPosts];
+
   return posts.map(post => ({
     params: { slug: post.data.slug ?? post.id },
     props: { post },
@@ -51,9 +54,9 @@ const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 
     <div class="post-footer__cta" data-reveal>
       <div class="label">Work with LBDC</div>
       <p class="post-footer__cta-text">
-        Need to turn a strong platform into a sharper product strategy?
+        Need clearer product strategy or sharper digital execution?
       </p>
-      <a class="btn btn--accent" href={withBase('contact/?source=insight_platform_treasury')}>
+      <a class="btn btn--accent" href={withBase('contact/?source=insight_article')}>
         Get in touch →
       </a>
     </div>
