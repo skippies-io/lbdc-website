@@ -1,0 +1,21 @@
+---
+const destination = '/';
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://www.lbdc.co.za/" />
+    <title>Redirecting to LBDC</title>
+    <script is:inline>
+      window.location.replace('/');
+    </script>
+  </head>
+  <body>
+    <p><a href="/">Continue to LBDC</a></p>
+  </body>
+</html>
