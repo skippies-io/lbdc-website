@@ -22,9 +22,10 @@ const withBase = (path) => {
 
 const { title, description, author, date } = post.data;
 const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const canonicalPath = `/insights/${post.data.slug ?? post.id}/`;
 ---
 
-<SiteLayout title={title} description={description}>
+<SiteLayout title={title} description={description} canonicalPath={canonicalPath}>
 
   <!-- ARTICLE HERO ──────────────────────────────────────────────── -->
   <section class="post-hero section">
