@@ -14,6 +14,7 @@ import '../styles/motion.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalPath?: string;
   /** Hides the default Nav (e.g. for full-bleed pages) */
   bareNav?: boolean;
 }
@@ -21,6 +22,7 @@ interface Props {
 const {
   title = 'LBDC',
   description = 'Product management and digital transformation consulting — online banking, payments, and pan-African fintech.',
+  canonicalPath,
   bareNav = false,
 } = Astro.props;
 
@@ -51,6 +53,7 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
+const canonicalUrl = canonicalPath ? siteUrl(canonicalPath) : siteUrl(Astro.url.pathname);
 
 const organisationJsonLd = {
   '@context': 'https://schema.org',
@@ -93,7 +96,7 @@ const organisationJsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl(Astro.url.pathname)} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={siteUrl(withBase('og-image.png'))} />
     <meta property="og:image:alt" content="LBDC" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -101,7 +104,7 @@ const organisationJsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={siteUrl(withBase('og-image.png'))} />
     <meta name="twitter:image:alt" content="LBDC" />
-    <link rel="canonical" href={siteUrl(Astro.url.pathname)} />
+    <link rel="canonical" href={canonicalUrl} />
     <script type="application/ld+json" set:html={JSON.stringify(organisationJsonLd)} />
 
     <!-- Google Analytics -->
