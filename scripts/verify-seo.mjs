@@ -42,4 +42,12 @@ for (const url of urls) {
   }
 }
 
+const legacyHome = await readFile('dist/home/index.html', 'utf8');
+if (legacyHome.includes('name="robots" content="noindex')) {
+  throw new Error('Legacy /home/ compatibility page must not emit noindex.');
+}
+if (!legacyHome.includes(`<link rel="canonical" href="${SITE}/"`)) {
+  throw new Error('Legacy /home/ compatibility page must canonicalise to the live home page.');
+}
+
 console.log(`SEO verification passed: ${urls.length} sitemap URLs checked.`);
